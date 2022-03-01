@@ -22,6 +22,7 @@ Scan Screen            |  Add Device Screen          |  Home Screen            |
 More Screen            |  Setting Screen          |  General Setting Screen
 :-------------------------:|:-------------------------:|:-------------------------:
 ![More](docs/images/v1.0.0/more.jpg)   |  ![Setting](docs/images/v1.0.0/settings.jpg) |  ![Home](docs/images/v1.0.0/general-setting.jpg)
+
 The application supports Android 6.0 (API 23) and above.
 
 ## Features include:
