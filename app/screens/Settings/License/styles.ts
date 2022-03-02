@@ -9,9 +9,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollView: {},
-  subView: {
-    marginHorizontal: 32,
-  },
+  subView: {},
+  listItem: { paddingHorizontal: 16 },
 });
 
 export default styles;
