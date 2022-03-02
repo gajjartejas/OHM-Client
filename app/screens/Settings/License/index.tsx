@@ -64,6 +64,7 @@ const License = ({ navigation }: Props) => {
   const renderItem = ({ item, index }: { item: IFinalLicense; index: number }) => {
     return (
       <List.Item
+        style={styles.listItem}
         titleStyle={{ color: colors.onSurface }}
         descriptionStyle={{ color: `${colors.onSurface}88` }}
         onPress={() => onPressItem(item, index)}
