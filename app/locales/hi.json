@@ -70,7 +70,7 @@
   
     "ABOUT_INFO_TITLE": "OpenHardwaremonitor Client के बारे में",
     "ABOUT_INFO_HEADER": "जानकारी",
-    "ABOUT_INFO_DESC_TITLE": "अपने डिवाइस के बारे में विस्तृत मात्रा में सिस्टम जानकारी जानें और इसके राज्य की निगरानी करें",
+    "ABOUT_INFO_DESC_TITLE": "`OpenHardwaremonitor Client` एंड्रॉइड और आईओएस के लिए एक अनौपचारिक ओपन हार्डवेयर मॉनिटर क्लाइंट ऐप है जो प्रतिक्रिया-मूल में लिखा गया है। इस ऐप का उपयोग करके आप ओपन हार्डवेयर मॉनिटर वेब सर्वर की निगरानी कर सकते हैं।",
     "ABOUT_INFO_AUTHOR_NAME_TITLE": "गज्जर तेजस।",
     "ABOUT_DEVELOPER_TITLE": "डेवलपर",
     "ABOUT_PORTFOLIO_TITLE": "विभाग",
