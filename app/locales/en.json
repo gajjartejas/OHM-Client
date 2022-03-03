@@ -70,7 +70,7 @@
 
   "ABOUT_INFO_TITLE": "About OpenHardwareMonitor Client",
   "ABOUT_INFO_HEADER": "Information",
-  "ABOUT_INFO_DESC_TITLE": "Learn the vast amount of system information about your device and monitor its state",
+  "ABOUT_INFO_DESC_TITLE": "`OHM-Client` is an unofficial open hardware monitor client app for android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
   "ABOUT_INFO_AUTHOR_NAME_TITLE": "Tejas Gajjar",
   "ABOUT_DEVELOPER_TITLE": "Developer",
   "ABOUT_PORTFOLIO_TITLE": "Portfolio",
