@@ -152,6 +152,7 @@ const MoreTab = ({ navigation }: Props) => {
       <ScrollView style={styles.container}>
         <View style={styles.container}>
           <ImageBackground source={Config.Images.icons.about_bg} style={styles.imageBackground}>
+            <View style={[styles.imageBackgroundCover, { backgroundColor: `${colors.background}88` }]} />
             <Image source={Config.Images.icons.app_icon} resizeMode="contain" style={styles.appIcon} />
             <Text style={[styles.appNameText, { color: colors.text }]}>{t('APPNAME')}</Text>
             <Text style={[styles.appVersion, { color: colors.text }]}>v{DeviceInfo.getVersion()}</Text>
