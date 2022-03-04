@@ -21,7 +21,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 20,
   },
-  appIcon: { width: 50, height: 50, borderRadius: 20, marginTop: 16 },
+  imageBackgroundCover: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  appIcon: { width: 50, height: 50, borderRadius: 25, marginTop: 16 },
   appNameText: { marginTop: 20, fontSize: 18 },
   appVersion: {
     marginTop: 20,
