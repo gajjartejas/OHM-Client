@@ -18,7 +18,7 @@ const Constant = {
   MORE_APPS_MIUI_ADS_HELPER_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.tejasgajjar.miuiadshelper',
 
   CHANGE_LOG: `${GITHUB_PROJECT_LINK}/releases`,
-  FAQ: `${GITHUB_PROJECT_LINK}/blob/main/docs/privacy.md`,
+  FAQ: `${GITHUB_PROJECT_LINK}/blob/main/docs/faqs.md`,
   TRANSLATE_APP: 'https://crowdin.com/project/openhardwaremonitorclient',
   PRIVACY_POLICY: `${GITHUB_PROJECT_LINK}/blob/main/docs/privacy.md`,
   TERMS_OF_SERVICE: `${GITHUB_PROJECT_LINK}/blob/main/docs/terms.md`,

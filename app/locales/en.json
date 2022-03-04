@@ -1,5 +1,5 @@
 {
-  "APPNAME": "OpenHardwareMonitor Client",
+  "APPNAME": "OHMClient",
   "CLOSE": "CLOSE",
   "SAVE": "SAVE",
 
@@ -18,7 +18,7 @@
   "ABOUT_COPY_RIGHT": "Copyright 2021-2022",
   "ABOUT_GITHUB": "Contribute on Github",
   "ABOUT_SETTING": "Settings",
-  "ABOUT_APP": "About OpenHardwareMonitor",
+  "ABOUT_APP": "About OHMClient",
   "ABOUT_SEND_FEEDBACK": "Send Feedback",
   "ABOUT_SEND_FEEDBACK_DETAIL": "You can send your valuable feedback to Telegram channel or send mail directly.",
 
@@ -26,7 +26,7 @@
   "DASHBOARD_DISCONNECTED": "Disconnected",
 
   "MORE_APPS_TITLE": "More Apps",
-  "MORE_APPS_1_TITLE": "OpenHardwareMonitor Client",
+  "MORE_APPS_1_TITLE": "OHMClient Client",
   "MORE_APPS_1_DESC": "`OHM-Client` is an unofficial open hardware monitor client app for android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
   "MORE_APPS_2_TITLE": "MIUI - Ads helper",
   "MORE_APPS_2_DESC": "This application allows you to enable/disable ads or recommendations for various apps in Xiaomi (MIUI) devices.",
@@ -68,9 +68,9 @@
 
   "TRANSLATORS_TITLE": "Translators",
 
-  "ABOUT_INFO_TITLE": "About OpenHardwareMonitor Client",
+  "ABOUT_INFO_TITLE": "About OHMClient Client",
   "ABOUT_INFO_HEADER": "Information",
-  "ABOUT_INFO_DESC_TITLE": "`OHM-Client` is an unofficial open hardware monitor client app for android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
+  "ABOUT_INFO_DESC_TITLE": "OHMClient is an unofficial open hardware monitor client app for android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
   "ABOUT_INFO_AUTHOR_NAME_TITLE": "Tejas Gajjar",
   "ABOUT_DEVELOPER_TITLE": "Developer",
   "ABOUT_PORTFOLIO_TITLE": "Portfolio",
