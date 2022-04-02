@@ -8,6 +8,7 @@ import {
   IDeviceRAM,
   IDeviceSensorData,
   IDeviceChipset,
+  IDeviceNIC,
 } from 'app/models/models/deviceInfo';
 import { IAPIHardwareType, IAPISensorType, IAPISystemType } from 'app/models/api/deviceInfo';
 
@@ -296,14 +297,53 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
       let powersVM = convertArrayToVM(power.power!);
       return { id: power.id, values: powersVM, title: IAPISensorType.Power, sections: null };
     });
+    //Throughput
+    let throughputs = getObjectFromType(hddInfo.hdd, IAPISensorType.Throughput) as IDeviceHDD[];
+    let throughputsVMs = throughputs.map(throughput => {
+      let throughputsVM = convertArrayToVM(throughput.throughput!);
+      return { id: throughput.id, values: throughputsVM, title: IAPISensorType.Throughput, sections: null };
+    });
     return {
       id: hddInfo.id,
-      title: IAPIHardwareType.HDD,
+      title: `${IAPIHardwareType.HDD} - ${hddInfo.text}`,
       values: null,
-      sections: [...temperaturesVMs, ...loadsVMs, ...powersVMs],
+      sections: [...temperaturesVMs, ...loadsVMs, ...powersVMs, ...throughputsVMs],
     } as ICardViewModel;
   });
   let computerHddViewModelsMapped = computerHddViewModels.filter(v => v).map(v => v!);
+
+  //NIC
+  let computerNICs = getObjectFromType(computers, IAPIHardwareType.NIC) as IDeviceComputer[];
+  let computerNicViewModels = computerNICs.map(nicInfo => {
+    if (!nicInfo.nic) {
+      return null;
+    }
+    //Load
+    let loads = getObjectFromType(nicInfo.nic, IAPISensorType.Load) as IDeviceNIC[];
+    let loadsVMs = loads.map(load => {
+      let loadsVM = convertArrayToVM(load.load!);
+      return { id: load.id, values: loadsVM, title: IAPISensorType.Load, sections: null };
+    });
+    //Data
+    let powers = getObjectFromType(nicInfo.nic, IAPISensorType.Power) as IDeviceNIC[];
+    let powersVMs = powers.map(power => {
+      let powerVMs = convertArrayToVM(power.power!);
+      return { id: power.id, values: powerVMs, title: IAPISensorType.Power, sections: null };
+    });
+    //Throughput
+    let throughputs = getObjectFromType(nicInfo.nic, IAPISensorType.Throughput) as IDeviceNIC[];
+    let throughputsVMs = throughputs.map(throughput => {
+      let throughputsVM = convertArrayToVM(throughput.throughput!);
+      return { id: throughput.id, values: throughputsVM, title: IAPISensorType.Throughput, sections: null };
+    });
+    return {
+      id: nicInfo.id,
+      title: `${IAPIHardwareType.NIC} - ${nicInfo.text}`,
+      values: null,
+      sections: [...loadsVMs, ...powersVMs, ...throughputsVMs],
+    } as ICardViewModel;
+  });
+  let computerNicViewModelsMapped = computerNicViewModels.filter(v => v).map(v => v!);
 
   return [
     ...mainboardSectionViewModelsMapped,
@@ -312,6 +352,7 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     ...gpuAtiSectionViewModelsMapped,
     ...gpuNvidiaSectionViewModelsMapped,
     ...computerHddViewModelsMapped,
+    ...computerNicViewModelsMapped,
   ];
 };
 

@@ -38,6 +38,7 @@ export interface IDeviceComputer {
   gpuati?: IDeviceGpuati[];
   gpunvidia?: IDeviceGpunvidia[];
   hdd?: IDeviceHDD[];
+  nic?: IDeviceNIC[];
 }
 
 export interface IDeviceCPU {
@@ -108,6 +109,7 @@ export interface IDeviceHDD {
   load?: IDeviceSensorData[];
   data?: IDeviceSensorData[];
   power?: IDeviceSensorData[];
+  throughput?: IDeviceSensorData[];
 }
 
 export interface IDeviceMainboard {
@@ -145,4 +147,17 @@ export interface IDeviceRAM {
   type: null;
   load?: IDeviceSensorData[];
   power?: IDeviceSensorData[];
+}
+
+export interface IDeviceNIC {
+  id: number;
+  text: string;
+  min: string;
+  value: string;
+  max: string;
+  imageURL: string;
+  type: null;
+  load?: IDeviceSensorData[];
+  power?: IDeviceSensorData[];
+  throughput?: IDeviceSensorData[];
 }

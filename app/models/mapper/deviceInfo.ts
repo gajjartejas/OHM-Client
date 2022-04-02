@@ -21,6 +21,8 @@ const getHardwareFromImageFile = (typeNode: string): IAPIHardwareType | null => 
       return IAPIHardwareType.TBalancer;
     case 'images_icon/ram.png':
       return IAPIHardwareType.RAM;
+    case 'images_icon/nic.png':
+      return IAPIHardwareType.NIC;
     default:
       return null;
   }
@@ -46,6 +48,8 @@ const getSensorTypeFromImageFile = (typeNode: string): IAPISensorType | null => 
       return IAPISensorType.Level;
     case 'images_icon/power.png':
       return IAPISensorType.Power;
+    case 'images_icon/throughput.png':
+      return IAPISensorType.Throughput;
     default:
       return null;
   }

@@ -8,6 +8,7 @@ export enum IAPISensorType {
   Control = 'Control',
   Level = 'Level',
   Power = 'Power',
+  Throughput = 'Throughput',
 }
 
 export enum IAPIHardwareType {
@@ -20,6 +21,7 @@ export enum IAPIHardwareType {
   Chipset = 'Chipset',
   TBalancer = 'TBalancer',
   RAM = 'RAM',
+  NIC = 'NIC',
 }
 
 export enum IAPISystemType {
