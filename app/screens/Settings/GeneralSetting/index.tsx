@@ -35,6 +35,8 @@ const GeneralSetting = ({ navigation }: Props) => {
   const path = useSelector((state: IState) => state.appConfigReducer.path);
   const port = useSelector((state: IState) => state.appConfigReducer.port);
   const refreshInterval = useSelector((state: IState) => state.appConfigReducer.refreshInterval);
+  const username = useSelector((state: IState) => state.appConfigReducer.username);
+  const password = useSelector((state: IState) => state.appConfigReducer.password);
 
   //Constants
   const { t } = useTranslation();
@@ -75,6 +77,20 @@ const GeneralSetting = ({ navigation }: Props) => {
     },
     {
       id: 1,
+      title: t('SETTINGS_GENERAL_AUTH_HEADER'),
+      items: [
+        {
+          id: 0,
+          iconName: 'shield-lock',
+          iconType: 'material-community',
+          title: t('SETTINGS_GENERAL_AUTH_RESTORE_TITLE'),
+          description: t('SETTINGS_GENERAL_AUTH_RESTORE_SUB_TITLE'),
+          route: 'SelectAppearance',
+        },
+      ],
+    },
+    {
+      id: 2,
       title: t('SETTINGS_GENERAL_OTHER_HEADER'),
       items: [
         {
@@ -92,6 +108,7 @@ const GeneralSetting = ({ navigation }: Props) => {
   const [modalVisibleUrlPath, setModalVisiblePath] = useState(false);
   const [modalVisibleUrlPort, setModalVisiblePort] = useState(false);
   const [modalVisibleUrlRefreshInterval, setModalVisiblePathRefreshInterval] = useState(false);
+  const [authModalVisible, setAuthModalVisible] = useState(false);
 
   const [modalPath, setModalPath] = useState(path);
   const [modalPort, setModalPort] = useState(`${port}`);
@@ -133,29 +150,21 @@ const GeneralSetting = ({ navigation }: Props) => {
     switch (true) {
       case index === 0 && subIndex === 0:
         setModalVisiblePath(true);
-        focus(modalVisibleUrlPathRef);
         break;
       case index === 0 && subIndex === 1:
         setModalVisiblePort(true);
-        focus(modalVisibleUrlPortRef);
         break;
       case index === 0 && subIndex === 2:
         setModalVisiblePathRefreshInterval(true);
-        focus(modalVisibleUrlRefreshIntervalRef);
         break;
       case index === 1 && subIndex === 0:
+        setAuthModalVisible(true);
+        break;
+      case index === 2 && subIndex === 0:
         resetSettings();
         break;
       default:
     }
-  };
-
-  const focus = (ref: React.MutableRefObject<TextInput | null>) => {
-    InteractionManager.runAfterInteractions(() => {
-      setTimeout(() => {
-        ref.current?.focus();
-      }, 200);
-    });
   };
 
   const resetSettings = () => {
@@ -237,7 +246,7 @@ const GeneralSetting = ({ navigation }: Props) => {
           value={modalPort}
           onChangeText={text => setModalPort(text)}
           keyboardType={'numeric'}
-          onEndEditing={() => modalVisibleUrlRefreshIntervalRef.current?.focus()}
+          onSubmitEditing={() => modalVisibleUrlRefreshIntervalRef.current?.focus()}
         />
       )}
 
@@ -258,6 +267,23 @@ const GeneralSetting = ({ navigation }: Props) => {
           value={modalRefreshInterval}
           onChangeText={text => setModalRefreshInterval(text)}
           keyboardType={'numeric'}
+        />
+      )}
+
+      {authModalVisible && (
+        <Components.AuthInputModal
+          modalVisible={authModalVisible}
+          header={t('INPUT_DIALOG_AUTH_REQUIRED')}
+          username={username ? username : ''}
+          password={password ? password : ''}
+          showConnectionLoader={false}
+          onPressClose={() => {
+            setAuthModalVisible(false);
+          }}
+          onPressSave={(username_, password_) => {
+            dispatch(appConfigActions.setAppConfigAuth({ username: username_, password: password_ }));
+            setAuthModalVisible(false);
+          }}
         />
       )}
     </View>

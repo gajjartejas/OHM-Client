@@ -13,9 +13,7 @@ const scanDevices = () => {
 
       LanPortScanner.startScan(
         config,
-        (totalHosts: number, hostScanned: number) => {
-          console.log(hostScanned / totalHosts); //Show progress
-        },
+        (_totalHosts: number, _hostScanned: number) => {},
         result => {
           if (result) {
             emitter(result);

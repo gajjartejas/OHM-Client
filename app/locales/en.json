@@ -94,10 +94,12 @@
   "SETTINGS_GENERAL_ENTER_URL_PATH_TITLE": "Enter URL Path",
   "SETTINGS_GENERAL_ENTER_PORT_TITLE": "Enter Port",
   "SETTINGS_GENERAL_ENTER_REFRESH_INTERVAL_TITLE": "Enter Refresh Interval",
+  "SETTINGS_GENERAL_AUTH_HEADER": "Authentication",
+  "SETTINGS_GENERAL_AUTH_RESTORE_TITLE": "Set Authentication",
+  "SETTINGS_GENERAL_AUTH_RESTORE_SUB_TITLE": "Enable HTTP Basic Authentication",
   "SETTINGS_GENERAL_OTHER_HEADER": "Other",
   "SETTINGS_GENERAL_OTHER_RESTORE_TITLE": "Restore Default",
   "SETTINGS_GENERAL_OTHER_RESTORE_SUB_TITLE": "Restore default settings",
-
   "ADS_DETAIL_DESC": "Description",
   "ADS_DETAIL_OPEN": "Open",
   "ADS_DETAIL_SETTINGS": "Settings",
@@ -124,5 +126,12 @@
   "INPUT_DIALOG_RESCAN": "Rescan",
   "INPUT_DIALOG_OR": "OR",
   "INPUT_DIALOG_CONNECTING": "Connecting...",
-  "INPUT_DIALOG_CONNECT_HELP": "Help"
+  "INPUT_DIALOG_CONNECT_HELP": "Help",
+  "INPUT_DIALOG_AUTH_REQUIRED": "Set Authentication",
+  "INPUT_DIALOG_ENTER_USERNAME": "Enter Username",
+  "INPUT_DIALOG_ENTER_PASSWORD": "Enter Password",
+  "INPUT_DIALOG_SET": "Set",
+  "INPUT_DIALOG_PLEASE_ENTER_VALID_USERNAME": "Please enter valid username",
+  "INPUT_DIALOG_PLEASE_ENTER_VALID_PASSWORD": "Please enter valid password",
+  "INPUT_DIALOG_INVALID_AUTH": "Invalid authentication or authentication requested"
 }

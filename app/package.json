@@ -1,3 +1,6 @@
 {
-  "name": "app"
+  "name": "app",
+  "devDependencies": {
+    "@types/react-native-base64": "^0.2.0"
+  }
 }

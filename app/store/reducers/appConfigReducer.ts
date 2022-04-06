@@ -9,6 +9,8 @@ const initialState: IAppConfigState = {
   path: '/data.json',
   port: 8085,
   refreshInterval: 1000,
+  username: null,
+  password: null,
 };
 
 export const appConfigReducer = createReducer(initialState, {
@@ -33,6 +35,16 @@ export const appConfigReducer = createReducer(initialState, {
   [types.SET_APP_CONFIG_RESTORE_DEFAULT](_state: IAppConfigState, _action: { type: string; payload: string }) {
     return {
       ...initialState,
+    };
+  },
+  [types.SET_APP_CONFIG_AUTH](
+    state: IAppConfigState,
+    action: { type: string; payload: { username: string; password: string } },
+  ) {
+    return {
+      ...state,
+      username: action.payload.username,
+      password: action.payload.password,
     };
   },
 });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, TextInput, Modal, StyleSheet, TextInputProps, KeyboardAvoidingView } from 'react-native';
 
 //ThirdParty
@@ -17,6 +17,12 @@ const InputModal = React.forwardRef((props: IInputModalProps, ref: any) => {
   //Consts
   const theme = useTheme();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setTimeout(() => {
+      ref.current.focus();
+    }, 200);
+  }, [ref]);
 
   return (
     <Modal animationType="fade" transparent={true} visible={props.modalVisible}>

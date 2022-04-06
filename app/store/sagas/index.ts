@@ -38,12 +38,12 @@ function* fetchDeviceInfoAsync(action: { type: string; payload: IDevice }): Gene
     let appConfig = yield select(getAppConfig);
     const response = yield call(inspectService, { device: action.payload, appConfig: appConfig });
     yield put(devicesActions.onFetchDeviceInfo({ ipAddress: action.payload.ip, deviceInfo: response }));
-  } catch (error) {
-    yield put(devicesActions.errorOnFetchDeviceInfo(error));
+  } catch (error: any) {
+    yield processError(error);
   }
 }
 
-function* refreshDeviceInfoAsync(action: { type: string; payload: IDevice }): Generator<any, any, any> {
+function* refreshDeviceInfoAsync(_action: { type: string }): Generator<any, any, any> {
   let appConfig: IAppConfigState = yield select(getAppConfig);
   let deviceState: IDeviceState = yield select(getDeviceState);
 
@@ -51,19 +51,37 @@ function* refreshDeviceInfoAsync(action: { type: string; payload: IDevice }): Ge
     return;
   }
 
-  if (!action.payload) {
+  try {
+    const response = yield call(inspectService, { device: deviceState.selectedDevice, appConfig: appConfig });
+    yield put(devicesActions.onRefreshDeviceInfo(response));
+    yield delay(appConfig.refreshInterval);
+    yield put(devicesActions.refreshDeviceInfo());
+  } catch (error: any) {
+    yield processError(error);
+    yield delay(appConfig.refreshInterval);
+    yield put(devicesActions.refreshDeviceInfo());
+  }
+}
+
+function* refreshDeviceInfoOnceAsync(_action: { type: string }): Generator<any, any, any> {
+  let appConfig: IAppConfigState = yield select(getAppConfig);
+  let deviceState: IDeviceState = yield select(getDeviceState);
+  if (!deviceState.selectedDevice) {
     return;
   }
-
   try {
-    const response = yield call(inspectService, { device: action.payload, appConfig: appConfig });
-    yield put(devicesActions.onRefreshDevice(response));
-    yield delay(appConfig.refreshInterval);
-    yield put(devicesActions.refreshDevice(action.payload));
-  } catch (error) {
-    yield put(devicesActions.errorOnFetchDeviceInfo(error));
-    yield delay(appConfig.refreshInterval);
-    yield put(devicesActions.refreshDevice(action.payload));
+    const response = yield call(inspectService, { device: deviceState.selectedDevice, appConfig: appConfig });
+    yield put(devicesActions.onRefreshDeviceInfo(response));
+  } catch (error: any) {
+    yield processError(error);
+  }
+}
+
+function* processError(error: any) {
+  if (error && error.code === 401) {
+    yield put(devicesActions.onInvalidAuthFetchDeviceInfo());
+  } else {
+    yield put(devicesActions.onErrorFetchDeviceInfo(error));
   }
 }
 
@@ -71,6 +89,7 @@ function* actionWatcher() {
   yield takeLatest(types.DEVICE_REQUEST_SCAN, fetchDeviceAsync);
   yield takeLatest(types.DEVICE_REQUEST_SELECT_DEVICE, fetchDeviceInfoAsync);
   yield takeEvery(types.DEVICE_REQUEST_REFRESH_DEVICE_INFO, refreshDeviceInfoAsync);
+  yield takeLatest(types.SET_APP_CONFIG_AUTH, refreshDeviceInfoOnceAsync);
 }
 
 // Our worker Saga that scan the device
