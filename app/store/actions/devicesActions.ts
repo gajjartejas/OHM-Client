@@ -38,14 +38,13 @@ export function removeSelectedDevice() {
   };
 }
 
-export function refreshDevice(response: IDevice) {
+export function refreshDeviceInfo() {
   return {
     type: types.DEVICE_REQUEST_REFRESH_DEVICE_INFO,
-    payload: response,
   };
 }
 
-export function onRefreshDevice(response: IDeviceInfo) {
+export function onRefreshDeviceInfo(response: IDeviceInfo) {
   return {
     type: types.ON_REFRESH_DEVICE_INFO,
     payload: response,
@@ -59,7 +58,7 @@ export function onFetchDeviceInfo(response: { ipAddress: string; deviceInfo: IDe
   };
 }
 
-export function errorOnFetchDeviceInfo(error: any) {
+export function onErrorFetchDeviceInfo(error: any) {
   return {
     type: types.ON_ERROR_FETCH_DEVICE_INFO,
     payload: error,
@@ -75,5 +74,24 @@ export function removeAllDevices() {
 export function configureStartup() {
   return {
     type: types.DEVICE_CONFIGURE_STARTUP,
+  };
+}
+
+export function onInvalidAuthFetchDeviceInfo() {
+  return {
+    type: types.ON_INVALID_AUTH_FETCH_DEVICE_INFO,
+  };
+}
+
+export function resetDeviceInvalidAuthCount() {
+  return {
+    type: types.DEVICE_REQUEST_RESET_INVALID_AUTH_COUNT,
+  };
+}
+
+export function setDeviceInfoLoading(response: boolean) {
+  return {
+    type: types.DEVICE_REQUEST_SET_DEVICE_INFO_LOADING,
+    payload: response,
   };
 }

@@ -8,59 +8,61 @@ import { useSelector } from 'react-redux';
 
 //App modules
 import IState from 'app/models/models/appState';
-import validateIPaddress from 'app/utils/validateIPaddress';
-import validatePort from 'app/utils/validatePort';
 
-interface IScanInputModalProps extends TextInputProps {
+interface IAuthInputModalProps extends TextInputProps {
   modalVisible: boolean;
+  username: string;
+  password: string;
   header: string;
+  showConnectionLoader: boolean;
   onPressClose: () => void;
-  onPressSave: (ipAddresss: string, port: string) => void;
+  onPressSave: (username: string, password: string) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const ScanInputModal = React.forwardRef((props: IScanInputModalProps, ref: any) => {
-  const deviceInfoLoading = useSelector((state: IState) => state.deviceReducer.deviceInfoLoading);
-
-  let ipAddressRef = useRef<TextInput | null>(null);
+const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, ref: any) => {
+  //Refs
+  let usernameRef = useRef<TextInput | null>(null);
   let portRef = useRef<TextInput | null>(null);
 
+  //Const
+  const deviceInfoLoading = useSelector((state: IState) => state.deviceReducer.deviceInfoLoading);
+  const invalidAuthCount = useSelector((state: IState) => state.deviceReducer.invalidAuthCount);
+  const showConnectionLoader = props.showConnectionLoader;
   const theme = useTheme();
   const { t } = useTranslation();
 
-  const [ipAddress, setIPAddress] = useState('');
-  const [port, setPort] = useState('');
+  //State
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isValidUsername, setIsValidUsername] = useState(true);
+  const [isValidPassword, setIsValidPassword] = useState(true);
 
-  const [isValidIPAddress, setIsValidIPAddress] = useState(true);
-  const [isValidPort, setIsValidPort] = useState(true);
+  useEffect(() => {
+    setUsername(props.username);
+  }, [props.username]);
+
+  useEffect(() => {
+    setPassword(props.password);
+  }, [props.password]);
 
   useEffect(() => {
     setTimeout(() => {
-      ipAddressRef.current?.focus();
+      usernameRef.current?.focus();
     }, 200);
   }, []);
 
   useEffect(() => {
-    setIsValidIPAddress(true);
-  }, [ipAddress]);
+    setIsValidUsername(true);
+  }, [username]);
 
   useEffect(() => {
-    setIsValidPort(true);
-  }, [port]);
+    setIsValidPassword(true);
+  }, [password]);
 
   const onPressSave = () => {
     Keyboard.dismiss();
-    if (!validateIPaddress(ipAddress)) {
-      setIsValidIPAddress(false);
-      return;
-    }
-
-    if (!validatePort(port)) {
-      setIsValidPort(false);
-      return;
-    }
-
-    props.onPressSave(ipAddress, port);
+    props.onPressSave(username, password);
   };
 
   return (
@@ -71,24 +73,24 @@ const ScanInputModal = React.forwardRef((props: IScanInputModalProps, ref: any) 
         <View style={[styles.modalView, { backgroundColor: `${theme.colors.background}` }]}>
           <Text style={[styles.textSize, { color: theme.colors.primary }]}>{props.header}</Text>
           <TextInput
-            ref={ipAddressRef}
+            ref={usernameRef}
             autoCapitalize="none"
             style={[
               styles.inputStyle,
               styles.textInputShadow,
               { borderBottomColor: theme.colors.primary, color: theme.colors.onBackground },
             ]}
-            value={ipAddress}
-            onChangeText={setIPAddress}
-            placeholder={t('INPUT_DIALOG_ENTER_IP_ADDRESS')}
+            value={username}
+            onChangeText={setUsername}
+            placeholder={t('INPUT_DIALOG_ENTER_USERNAME')}
             placeholderTextColor={theme.colors.onSurface}
             onSubmitEditing={() => portRef.current?.focus()}
-            keyboardType={'numeric'}
+            keyboardType={'default'}
             returnKeyType={'next'}
           />
-          {!isValidIPAddress && (
+          {!isValidUsername && (
             <Text style={[styles.errorText, { color: theme.colors.error }]}>
-              {t('INPUT_DIALOG_PLEASE_ENTER_VALID_IP_ADDRESS')}
+              {t('INPUT_DIALOG_PLEASE_ENTER_VALID_USERNAME')}
             </Text>
           )}
 
@@ -100,34 +102,38 @@ const ScanInputModal = React.forwardRef((props: IScanInputModalProps, ref: any) 
               styles.textInputShadow,
               { borderBottomColor: theme.colors.primary, color: theme.colors.onBackground },
             ]}
-            value={port}
-            onChangeText={setPort}
-            placeholder={t('SETTINGS_GENERAL_ENTER_PORT_TITLE')}
+            value={password}
+            onChangeText={setPassword}
+            placeholder={t('INPUT_DIALOG_ENTER_PASSWORD')}
             placeholderTextColor={theme.colors.onSurface}
             onSubmitEditing={onPressSave}
-            keyboardType={'numeric'}
+            keyboardType={'default'}
+            secureTextEntry={true}
             returnKeyType={'done'}
           />
-          {!isValidPort && (
+          {!isValidPassword && (
             <Text style={[styles.errorText, { color: theme.colors.error }]}>
-              {t('INPUT_DIALOG_PLEASE_ENTER_VALID_PORT')}
+              {t('INPUT_DIALOG_PLEASE_ENTER_VALID_PASSWORD')}
             </Text>
           )}
-          {!deviceInfoLoading && (
+
+          {invalidAuthCount > 1 && (
+            <Text style={[styles.loadingText, { color: theme.colors.error }]}>{t('INPUT_DIALOG_INVALID_AUTH')}</Text>
+          )}
+          {(!showConnectionLoader || !deviceInfoLoading) && (
             <View style={styles.buttonContainer}>
               <Button style={styles.button} onPress={props.onPressClose}>
                 {t('CLOSE')}
               </Button>
               <Button style={styles.button} onPress={onPressSave}>
-                {t('INPUT_DIALOG_CONNECT')}
+                {t('INPUT_DIALOG_SET')}
               </Button>
             </View>
           )}
 
-          {deviceInfoLoading && (
+          {showConnectionLoader && deviceInfoLoading && (
             <View style={styles.loadingContainer}>
               <ActivityIndicator />
-
               <Text style={[styles.loadingText, { color: theme.colors.primary }]}>{t('INPUT_DIALOG_CONNECTING')}</Text>
             </View>
           )}
@@ -191,4 +197,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScanInputModal;
+export default AuthInputModal;

@@ -36,3 +36,10 @@ export function setAppConfigRestoreDefault() {
     type: types.SET_APP_CONFIG_RESTORE_DEFAULT,
   };
 }
+
+export function setAppConfigAuth(response: { username: string; password: string }) {
+  return {
+    type: types.SET_APP_CONFIG_AUTH,
+    payload: response,
+  };
+}

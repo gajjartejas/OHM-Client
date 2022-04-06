@@ -48,12 +48,10 @@ const DashboardTab = ({}: Props) => {
   }, [selectedDevice]);
 
   useEffect(() => {
-    console.log('connected', connected);
-    console.log('selectedDevice', selectedDevice);
     if (!selectedDevice || connected) {
       return;
     }
-    dispatch(devicesActions.refreshDevice(selectedDevice!));
+    dispatch(devicesActions.refreshDeviceInfo());
   }, [dispatch, selectedDevice, connected]);
 
   const _logout = () => {

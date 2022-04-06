@@ -16,6 +16,8 @@ const initialState: IDeviceState = {
   scanningFinished: null,
   deviceInfoLoading: null,
   connected: false,
+  requestAuth: false,
+  invalidAuthCount: 0,
 };
 
 export const deviceReducer = createReducer(initialState, {
@@ -50,6 +52,12 @@ export const deviceReducer = createReducer(initialState, {
       connected: false,
     };
   },
+  [types.DEVICE_REQUEST_REFRESH_DEVICE_INFO](state: IDeviceState, _action: { type: string; payload: IDevice }) {
+    return {
+      ...state,
+      deviceInfoLoading: true,
+    };
+  },
   [types.DEVICE_REQUEST_REMOVE_SELECTED_DEVICE](state: IDeviceState, _action: { type: string }) {
     return {
       ...state,
@@ -57,6 +65,8 @@ export const deviceReducer = createReducer(initialState, {
       error: null,
       deviceInfoLoading: false,
       connected: false,
+      requestAuth: false,
+      invalidAuthCount: 0,
     };
   },
   [types.ON_REFRESH_DEVICE_INFO](state: IDeviceState, action: { type: string; payload: IDeviceInfo }) {
@@ -64,6 +74,7 @@ export const deviceReducer = createReducer(initialState, {
       ...state,
       selectedDevice: { ...state.selectedDevice, deviceInfo: action.payload },
       connected: true,
+      invalidAuthCount: 0,
     };
   },
   [types.ON_FETCH_DEVICE_INFO](
@@ -99,6 +110,30 @@ export const deviceReducer = createReducer(initialState, {
       ...state,
       error: null,
       connected: false,
+      requestAuth: false,
+      invalidAuthCount: 0,
+    };
+  },
+  [types.ON_INVALID_AUTH_FETCH_DEVICE_INFO](state: IDeviceState, _action: { payload: any }) {
+    return {
+      ...state,
+      error: null,
+      connected: false,
+      requestAuth: true,
+      deviceInfoLoading: false,
+      invalidAuthCount: state.invalidAuthCount + 1,
+    };
+  },
+  [types.DEVICE_REQUEST_RESET_INVALID_AUTH_COUNT](state: IDeviceState, _action: { payload: any }) {
+    return {
+      ...state,
+      invalidAuthCount: 0,
+    };
+  },
+  [types.DEVICE_REQUEST_SET_DEVICE_INFO_LOADING](state: IDeviceState, action: { payload: boolean }) {
+    return {
+      ...state,
+      deviceInfoLoading: action.payload,
     };
   },
 });

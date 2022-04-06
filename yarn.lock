@@ -6565,6 +6565,11 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
+"react-native-base64@^0.2.1":
+  "integrity" "sha512-eHgt/MA8y5ZF0aHfZ1aTPcIkDWxza9AaEk4GcpIX+ZYfZ04RcaNahO+527KR7J44/mD3efYfM23O2C1N44ByWA=="
+  "resolved" "https://registry.npmjs.org/react-native-base64/-/react-native-base64-0.2.1.tgz"
+  "version" "0.2.1"
+
 "react-native-bootsplash@^4.1.3":
   "integrity" "sha512-mnXe/3N4MQsYmadiWrLGjqUOmm9j1FGMa6CyBQhNzjHSwF7+d+dgai+p8lHjTbNt/ua/3eTW92OxqYGps+N9Iw=="
   "resolved" "https://registry.npmjs.org/react-native-bootsplash/-/react-native-bootsplash-4.1.3.tgz"

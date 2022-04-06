@@ -8,6 +8,7 @@ import ScanInputModal from './ScanInputModal';
 import AboutFeedbackDialog from './AboutFeedbackDialog';
 import SelectThemeDialog from './SelectThemeDialog';
 import SelectAccentDialog from './SelectAccentColorDialog';
+import AuthInputModal from './AuthInputModal';
 
 export default {
   AppNoConnection,
@@ -20,4 +21,5 @@ export default {
   AboutFeedbackDialog,
   SelectThemeDialog,
   SelectAccentDialog,
+  AuthInputModal,
 };

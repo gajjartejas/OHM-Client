@@ -14,6 +14,8 @@ import Utils from 'app/utils';
 
 //Redux
 import * as devicesActions from 'app/store/actions/devicesActions';
+import * as appConfigActions from 'app/store/actions/appConfigActions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import IState from 'app/models/models/appState';
 
@@ -42,9 +44,12 @@ const DeviceLists = ({}: Props) => {
   const isScanning = useSelector((state: IState) => state.deviceReducer.isScanning);
   const scanningFinished = useSelector((state: IState) => state.deviceReducer.scanningFinished);
   const error = useSelector((state: IState) => state.deviceReducer.error);
+  const requestAuth = useSelector((state: IState) => state.deviceReducer.requestAuth);
 
   //States
   const [modalVisibleInput, setModalVisibleInput] = useState(false);
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+
   const [menuVisible, setMenuVisible] = useState(false);
 
   const scanStart = useCallback(() => {
@@ -79,6 +84,13 @@ const DeviceLists = ({}: Props) => {
       Alert.alert(error.message);
     }
   }, [dispatch, error]);
+
+  useEffect(() => {
+    if (!requestAuth) {
+      return;
+    }
+    setAuthModalVisible(true);
+  }, [requestAuth]);
 
   useEffect(() => {
     if (selectedDevice && selectedDevice.deviceInfo) {
@@ -186,6 +198,25 @@ const DeviceLists = ({}: Props) => {
             onPressDevice({ ip: ipAddress, port: parseInt(port) }, 0);
           }}
           placeholder={t('SETTINGS_GENERAL_ENTER_URL_PATH_TITLE')}
+        />
+      )}
+
+      {authModalVisible && (
+        <Components.AuthInputModal
+          modalVisible={authModalVisible}
+          header={t('INPUT_DIALOG_AUTH_REQUIRED')}
+          username={''}
+          password={''}
+          showConnectionLoader={true}
+          onPressClose={() => {
+            dispatch(devicesActions.removeSelectedDevice());
+            dispatch(devicesActions.resetDeviceInvalidAuthCount());
+            setAuthModalVisible(false);
+          }}
+          onPressSave={(username, password) => {
+            dispatch(devicesActions.setDeviceInfoLoading(true));
+            dispatch(appConfigActions.setAppConfigAuth({ username, password }));
+          }}
         />
       )}
     </View>

@@ -8,4 +8,6 @@ export interface IDeviceState {
   error: any | null;
   deviceInfoLoading: boolean | null;
   connected: boolean;
+  requestAuth: boolean;
+  invalidAuthCount: number;
 }
