@@ -3,6 +3,10 @@
   "CLOSE": "CLOSE",
   "SAVE": "SAVE",
 
+  "CURRENT_VALUE": "Current",
+  "CURRENT_MIN": "Min",
+  "CURRENT_MAX": "Max",
+
   "MORE_APP_GITHUB": "Github",
   "MORE_APP_PLAY_STORE": "Play Store",
 
