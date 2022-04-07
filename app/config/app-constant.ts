@@ -19,7 +19,7 @@ const Constant = {
 
   CHANGE_LOG: `${GITHUB_PROJECT_LINK}/releases`,
   FAQ: `${GITHUB_PROJECT_LINK}/blob/main/docs/faqs.md`,
-  TRANSLATE_APP: 'https://crowdin.com/project/openhardwaremonitorclient',
+  TRANSLATE_APP: 'https://app.tolgee.io/projects/474',
   PRIVACY_POLICY: `${GITHUB_PROJECT_LINK}/blob/main/docs/privacy.md`,
   TERMS_OF_SERVICE: `${GITHUB_PROJECT_LINK}/blob/main/docs/terms.md`,
 

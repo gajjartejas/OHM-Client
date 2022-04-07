@@ -6,6 +6,7 @@ import { Text, useTheme } from 'react-native-paper';
 
 //App modules
 import { ICardValueViewModel, ICardViewModel } from 'app/models/viewModels/cardValueViewModel';
+import { useTranslation } from 'react-i18next';
 
 function CardValueText(props: { text: string; style: any }) {
   //Consts
@@ -24,12 +25,27 @@ function CardValues(props: { value: ICardValueViewModel }) {
   );
 }
 
+function CardTitle(props: { title: string }) {
+  //Consts
+  const { colors } = useTheme();
+  const { t } = useTranslation();
+
+  return (
+    <View style={styles.cardValuesContainer}>
+      <CardValueText style={[styles.cardValuesTitle, { color: colors.primary }]} text={props.title} />
+      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('CURRENT_VALUE')} />
+      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('CURRENT_MIN')} />
+      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('CURRENT_MAX')} />
+    </View>
+  );
+}
+
 const CardLeftTitle = (props: { value: ICardViewModel }) => {
   //Consts
   const { colors } = useTheme();
   return (
     <View style={[styles.cardLeftTitleContainer, { backgroundColor: colors.surface }]}>
-      <Text style={[styles.cardLeftTitleText, { color: colors.primary }]}>{props.value.title}</Text>
+      <CardTitle title={props.value.title} />
       {props.value.values?.map(v => {
         return <CardValues key={v.id.toString()} value={v} />;
       })}
