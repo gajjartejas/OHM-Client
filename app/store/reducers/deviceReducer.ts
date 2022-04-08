@@ -41,6 +41,7 @@ export const deviceReducer = createReducer(initialState, {
       ...state,
       isScanning: false,
       scanningFinished: true,
+      deviceInfoLoading: false,
     };
   },
   [types.DEVICE_REQUEST_SELECT_DEVICE](state: IDeviceState, action: { type: string; payload: IDevice }) {
@@ -95,6 +96,7 @@ export const deviceReducer = createReducer(initialState, {
       devices: [],
       error: null,
       connected: false,
+      deviceInfoLoading: false
     };
   },
   [types.ON_ERROR_FETCH_DEVICE_INFO](state: IDeviceState, action: { payload: any }) {
@@ -112,6 +114,7 @@ export const deviceReducer = createReducer(initialState, {
       connected: false,
       requestAuth: false,
       invalidAuthCount: 0,
+      deviceInfoLoading: false
     };
   },
   [types.ON_INVALID_AUTH_FETCH_DEVICE_INFO](state: IDeviceState, _action: { payload: any }) {
