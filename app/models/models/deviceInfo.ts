@@ -37,8 +37,10 @@ export interface IDeviceComputer {
   ram?: IDeviceRAM[];
   gpuati?: IDeviceGpuati[];
   gpunvidia?: IDeviceGpunvidia[];
+  gpuintel?: IDeviceGpuintel[];
   hdd?: IDeviceHDD[];
   nic?: IDeviceNIC[];
+  battery?: IDeviceBattery[];
 }
 
 export interface IDeviceCPU {
@@ -49,7 +51,7 @@ export interface IDeviceCPU {
   max: string;
   imageURL: string;
   type: null;
-  vlock?: IDeviceSensorData[];
+  clock?: IDeviceSensorData[];
   temperature?: IDeviceSensorData[];
   load?: IDeviceSensorData[];
   power?: IDeviceSensorData[];
@@ -73,8 +75,12 @@ export interface IDeviceGpuati {
   max: string;
   imageURL: string;
   type: null;
+  clocks?: IDeviceSensorData[];
+  temperatures?: IDeviceSensorData[];
+  data?: IDeviceSensorData[];
+  throughput?: IDeviceSensorData[];
   voltage?: IDeviceSensorData[];
-  vlock?: IDeviceSensorData[];
+  clock?: IDeviceSensorData[];
   temperature?: IDeviceSensorData[];
   load?: IDeviceSensorData[];
   fan?: IDeviceSensorData[];
@@ -92,9 +98,28 @@ export interface IDeviceGpunvidia {
   type: null;
   clocks?: IDeviceSensorData[];
   temperatures?: IDeviceSensorData[];
-  load?: IDeviceSensorData[];
   data?: IDeviceSensorData[];
   throughput?: IDeviceSensorData[];
+  voltage?: IDeviceSensorData[];
+  clock?: IDeviceSensorData[];
+  temperature?: IDeviceSensorData[];
+  load?: IDeviceSensorData[];
+  fan?: IDeviceSensorData[];
+  control?: IDeviceSensorData[];
+  power?: IDeviceSensorData[];
+}
+
+export interface IDeviceGpuintel {
+  id: number;
+  text: string;
+  min: string;
+  value: string;
+  max: string;
+  imageURL: string;
+  type: null;
+  power?: IDeviceSensorData[];
+  load?: IDeviceSensorData[];
+  data?: IDeviceSensorData[];
 }
 
 export interface IDeviceHDD {
@@ -160,4 +185,19 @@ export interface IDeviceNIC {
   load?: IDeviceSensorData[];
   power?: IDeviceSensorData[];
   throughput?: IDeviceSensorData[];
+}
+
+export interface IDeviceBattery {
+  id: number;
+  text: string;
+  min: string;
+  value: string;
+  max: string;
+  imageURL: string;
+  type: null;
+  voltage?: IDeviceSensorData[];
+  current?: IDeviceSensorData[];
+  power?: IDeviceSensorData[];
+  level?: IDeviceSensorData[];
+  capacity?: IDeviceSensorData[];
 }

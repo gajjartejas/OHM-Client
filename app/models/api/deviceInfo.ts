@@ -1,6 +1,6 @@
 export enum IAPISensorType {
   Voltage = 'Voltage',
-  Clock = 'Vlock',
+  Clock = 'Clock',
   Load = 'Load',
   Temperature = 'Temperature',
   Fan = 'Fan',
@@ -9,12 +9,15 @@ export enum IAPISensorType {
   Level = 'Level',
   Power = 'Power',
   Throughput = 'Throughput',
+  Current = 'Current',
+  Capacity = 'Capacity',
 }
 
 export enum IAPIHardwareType {
   CPU = 'CPU',
   GpuNvidia = 'GpuNvidia',
   GpuAti = 'GpuAti',
+  GpuIntel = 'GpuIntel',
   HDD = 'HDD',
   Heatmaster = 'Heatmaster',
   Mainboard = 'Mainboard',
@@ -22,6 +25,7 @@ export enum IAPIHardwareType {
   TBalancer = 'TBalancer',
   RAM = 'RAM',
   NIC = 'NIC',
+  Battery = 'Battery',
 }
 
 export enum IAPISystemType {
