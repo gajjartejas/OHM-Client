@@ -39,25 +39,25 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
       let voltages = getObjectFromType(chipsetInfo.chipset, IAPISensorType.Voltage) as IDeviceChipset[];
       let voltagesVMs = voltages.map(voltageInfo => {
         let voltagesVM = convertArrayToVM(voltageInfo.voltage!);
-        return { id: voltageInfo.id, values: voltagesVM, title: IAPISensorType.Voltage, sections: null };
+        return { id: voltageInfo.id, values: voltagesVM, title: voltageInfo.text, sections: null };
       });
       //Temperatures
       let temperatures = getObjectFromType(chipsetInfo.chipset, IAPISensorType.Temperature) as IDeviceChipset[];
       let temperaturesVMs = temperatures.map(temperatureInfo => {
         let temperaturesVM = convertArrayToVM(temperatureInfo.temperature!);
-        return { id: temperatureInfo.id, values: temperaturesVM, title: IAPISensorType.Temperature, sections: null };
+        return { id: temperatureInfo.id, values: temperaturesVM, title: temperatureInfo.text, sections: null };
       });
       //Fans
       let fans = getObjectFromType(chipsetInfo.chipset, IAPISensorType.Fan) as IDeviceChipset[];
       let fansVMs = fans.map(fanInfo => {
         let fansVM = convertArrayToVM(fanInfo.fan!);
-        return { id: fanInfo.id, values: fansVM, title: IAPISensorType.Fan, sections: null };
+        return { id: fanInfo.id, values: fansVM, title: fanInfo.text, sections: null };
       });
       //Controls
       let controls = getObjectFromType(chipsetInfo.chipset, IAPISensorType.Control) as IDeviceChipset[];
       let controlsVMs = controls.map(controlInfo => {
         let controlsVM = convertArrayToVM(controlInfo.control!);
-        return { id: controlInfo.id, values: controlsVM, title: IAPISensorType.Control, sections: null };
+        return { id: controlInfo.id, values: controlsVM, title: controlInfo.text, sections: null };
       });
       return {
         id: chipsetInfo.id,
@@ -85,31 +85,31 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     let voltages = getObjectFromType(cpuInfo.cpu, IAPISensorType.Voltage) as IDeviceChipset[];
     let voltagesVMs = voltages.map(voltageInfo => {
       let voltagesVM = convertArrayToVM(voltageInfo.voltage!);
-      return { id: voltageInfo.id, values: voltagesVM, title: IAPISensorType.Voltage, sections: null };
+      return { id: voltageInfo.id, values: voltagesVM, title: voltageInfo.text, sections: null };
     });
     //Cocks
     let clocks = getObjectFromType(cpuInfo.cpu, IAPISensorType.Clock) as IDeviceCPU[];
     let clocksVMs = clocks.map(clockInfo => {
       let clocksVM = convertArrayToVM(clockInfo.clock!);
-      return { id: clockInfo.id, values: clocksVM, title: IAPISensorType.Clock, sections: null };
+      return { id: clockInfo.id, values: clocksVM, title: clockInfo.text, sections: null };
     });
     //Temperatures
     let temperatures = getObjectFromType(cpuInfo.cpu, IAPISensorType.Temperature) as IDeviceCPU[];
     let temperaturesVMs = temperatures.map(temperatureInfo => {
       let controlsVMs = convertArrayToVM(temperatureInfo.temperature!);
-      return { id: temperatureInfo.id, values: controlsVMs, title: IAPISensorType.Temperature, sections: null };
+      return { id: temperatureInfo.id, values: controlsVMs, title: temperatureInfo.text, sections: null };
     });
     //Loads
     let loads = getObjectFromType(cpuInfo.cpu, IAPISensorType.Load) as IDeviceCPU[];
     let loadsVMs = loads.map(loadInfo => {
       let controlsVMs = convertArrayToVM(loadInfo.load!);
-      return { id: loadInfo.id, values: controlsVMs, title: IAPISensorType.Load, sections: null };
+      return { id: loadInfo.id, values: controlsVMs, title: loadInfo.text, sections: null };
     });
     //Powers
     let powers = getObjectFromType(cpuInfo.cpu, IAPISensorType.Power) as IDeviceCPU[];
     let powersVMs = powers.map(power => {
       let powerVMs = convertArrayToVM(power.power!);
-      return { id: power.id, values: powerVMs, title: IAPISensorType.Power, sections: null };
+      return { id: power.id, values: powerVMs, title: power.text, sections: null };
     });
     return {
       id: cpuInfo.id,
@@ -130,13 +130,13 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     let loads = getObjectFromType(ramInfo.ram, IAPISensorType.Load) as IDeviceRAM[];
     let loadsVMs = loads.map(load => {
       let loadVMs = convertArrayToVM(load.load!);
-      return { id: load.id, values: loadVMs, title: IAPISensorType.Load, sections: null };
+      return { id: load.id, values: loadVMs, title: load.text, sections: null };
     });
     //Data
     let powers = getObjectFromType(ramInfo.ram, IAPISensorType.Power) as IDeviceRAM[];
     let powersVMs = powers.map(power => {
       let powerVMs = convertArrayToVM(power.power!);
-      return { id: power.id, values: powerVMs, title: IAPISensorType.Power, sections: null };
+      return { id: power.id, values: powerVMs, title: power.text, sections: null };
     });
     return {
       id: ramInfo.id,
@@ -157,43 +157,43 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     let voltages = getObjectFromType(gpuAtiInfo.gpuati, IAPISensorType.Voltage) as IDeviceGpuati[];
     let voltagesVMs = voltages.map(voltage => {
       let controlsVM = convertArrayToVM(voltage.voltage!);
-      return { id: voltage.id, values: controlsVM, title: IAPISensorType.Voltage, sections: null };
+      return { id: voltage.id, values: controlsVM, title: voltage.text, sections: null };
     });
     //Clocks
     let clocks = getObjectFromType(gpuAtiInfo.gpuati, IAPISensorType.Clock) as IDeviceGpuati[];
     let clocksVMs = clocks.map(clock => {
       let controlsVM = convertArrayToVM(clock.clock!);
-      return { id: clock.id, values: controlsVM, title: IAPISensorType.Clock, sections: null };
+      return { id: clock.id, values: controlsVM, title: clock.text, sections: null };
     });
     //Temperatures
     let temperatures = getObjectFromType(gpuAtiInfo.gpuati, IAPISensorType.Temperature) as IDeviceGpuati[];
     let temperaturesVMs = temperatures.map(temperature => {
       let temperaturesVM = convertArrayToVM(temperature.temperature!);
-      return { id: temperature.id, values: temperaturesVM, title: IAPISensorType.Temperature, sections: null };
+      return { id: temperature.id, values: temperaturesVM, title: temperature.text, sections: null };
     });
     //Load
     let loads = getObjectFromType(gpuAtiInfo.gpuati, IAPISensorType.Load) as IDeviceGpuati[];
     let loadsVMs = loads.map(load => {
       let loadsVM = convertArrayToVM(load.load!);
-      return { id: load.id, values: loadsVM, title: IAPISensorType.Load, sections: null };
+      return { id: load.id, values: loadsVM, title: load.text, sections: null };
     });
     //Fan
     let fans = getObjectFromType(gpuAtiInfo.gpuati, IAPISensorType.Fan) as IDeviceGpuati[];
     let fansVMs = fans.map(fan => {
       let fansVM = convertArrayToVM(fan.fan!);
-      return { id: fan.id, values: fansVM, title: IAPISensorType.Fan, sections: null };
+      return { id: fan.id, values: fansVM, title: fan.text, sections: null };
     });
     //Controls
     let controls = getObjectFromType(gpuAtiInfo.gpuati, IAPISensorType.Control) as IDeviceGpuati[];
     let controlsVMs = controls.map(control => {
       let controlsVM = convertArrayToVM(control.control!);
-      return { id: control.id, values: controlsVM, title: IAPISensorType.Control, sections: null };
+      return { id: control.id, values: controlsVM, title: control.text, sections: null };
     });
     //Power
     let powers = getObjectFromType(gpuAtiInfo.gpuati, IAPISensorType.Power) as IDeviceGpuati[];
     let powersVMs = powers.map(power => {
       let powersVM = convertArrayToVM(power.power!);
-      return { id: power.id, values: powersVM, title: IAPISensorType.Power, sections: null };
+      return { id: power.id, values: powersVM, title: power.text, sections: null };
     });
     return {
       id: gpuAtiInfo.id,
@@ -222,43 +222,43 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     let voltages = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Voltage) as IDeviceGpunvidia[];
     let voltagesVMs = voltages.map(voltage => {
       let controlsVM = convertArrayToVM(voltage.voltage!);
-      return { id: voltage.id, values: controlsVM, title: IAPISensorType.Voltage, sections: null };
+      return { id: voltage.id, values: controlsVM, title: voltage.text, sections: null };
     });
     //Clocks
     let clocks = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Clock) as IDeviceGpunvidia[];
     let clocksVMs = clocks.map(clock => {
       let controlsVM = convertArrayToVM(clock.clock!);
-      return { id: clock.id, values: controlsVM, title: IAPISensorType.Clock, sections: null };
+      return { id: clock.id, values: controlsVM, title: clock.text, sections: null };
     });
     //Temperatures
     let temperatures = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Temperature) as IDeviceGpunvidia[];
     let temperaturesVMs = temperatures.map(temperature => {
       let temperaturesVM = convertArrayToVM(temperature.temperature!);
-      return { id: temperature.id, values: temperaturesVM, title: IAPISensorType.Temperature, sections: null };
+      return { id: temperature.id, values: temperaturesVM, title: temperature.text, sections: null };
     });
     //Load
     let loads = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Load) as IDeviceGpunvidia[];
     let loadsVMs = loads.map(load => {
       let loadsVM = convertArrayToVM(load.load!);
-      return { id: load.id, values: loadsVM, title: IAPISensorType.Load, sections: null };
+      return { id: load.id, values: loadsVM, title: load.text, sections: null };
     });
     //Fan
     let fans = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Fan) as IDeviceGpunvidia[];
     let fansVMs = fans.map(fan => {
       let fansVM = convertArrayToVM(fan.fan!);
-      return { id: fan.id, values: fansVM, title: IAPISensorType.Fan, sections: null };
+      return { id: fan.id, values: fansVM, title: fan.text, sections: null };
     });
     //Controls
     let controls = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Control) as IDeviceGpunvidia[];
     let controlsVMs = controls.map(control => {
       let controlsVM = convertArrayToVM(control.control!);
-      return { id: control.id, values: controlsVM, title: IAPISensorType.Control, sections: null };
+      return { id: control.id, values: controlsVM, title: control.text, sections: null };
     });
     //Power
     let powers = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Power) as IDeviceGpunvidia[];
     let powersVMs = powers.map(power => {
       let powersVM = convertArrayToVM(power.power!);
-      return { id: power.id, values: powersVM, title: IAPISensorType.Power, sections: null };
+      return { id: power.id, values: powersVM, title: power.text, sections: null };
     });
     return {
       id: gpuNvidiaInfo.id,
@@ -288,13 +288,13 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     let powers = getObjectFromType(gpuIntelInfo.gpuintel, IAPISensorType.Power) as IDeviceGpuintel[];
     let powersVMs = powers.map(power => {
       let powersVM = convertArrayToVM(power.power!);
-      return { id: power.id, values: powersVM, title: IAPISensorType.Power, sections: null };
+      return { id: power.id, values: powersVM, title: power.text, sections: null };
     });
     //Load
     let loads = getObjectFromType(gpuIntelInfo.gpuintel, IAPISensorType.Load) as IDeviceGpuintel[];
     let loadsVMs = loads.map(load => {
       let loadsVM = convertArrayToVM(load.load!);
-      return { id: load.id, values: loadsVM, title: IAPISensorType.Load, sections: null };
+      return { id: load.id, values: loadsVM, title: load.text, sections: null };
     });
     return {
       id: gpuIntelInfo.id,
@@ -332,13 +332,13 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     let powers = getObjectFromType(hddInfo.hdd, IAPISensorType.Power) as IDeviceHDD[];
     let powersVMs = powers.map(power => {
       let powersVM = convertArrayToVM(power.power!);
-      return { id: power.id, values: powersVM, title: IAPISensorType.Power, sections: null };
+      return { id: power.id, values: powersVM, title: power.text, sections: null };
     });
     //Throughput
     let throughputs = getObjectFromType(hddInfo.hdd, IAPISensorType.Throughput) as IDeviceHDD[];
     let throughputsVMs = throughputs.map(throughput => {
       let throughputsVM = convertArrayToVM(throughput.throughput!);
-      return { id: throughput.id, values: throughputsVM, title: IAPISensorType.Throughput, sections: null };
+      return { id: throughput.id, values: throughputsVM, title: throughput.text, sections: null };
     });
     return {
       id: hddInfo.id,
@@ -359,19 +359,19 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     let loads = getObjectFromType(nicInfo.nic, IAPISensorType.Load) as IDeviceNIC[];
     let loadsVMs = loads.map(load => {
       let loadsVM = convertArrayToVM(load.load!);
-      return { id: load.id, values: loadsVM, title: IAPISensorType.Load, sections: null };
+      return { id: load.id, values: loadsVM, title: load.text, sections: null };
     });
     //Data
     let powers = getObjectFromType(nicInfo.nic, IAPISensorType.Power) as IDeviceNIC[];
     let powersVMs = powers.map(power => {
       let powerVMs = convertArrayToVM(power.power!);
-      return { id: power.id, values: powerVMs, title: IAPISensorType.Power, sections: null };
+      return { id: power.id, values: powerVMs, title: power.text, sections: null };
     });
     //Throughput
     let throughputs = getObjectFromType(nicInfo.nic, IAPISensorType.Throughput) as IDeviceNIC[];
     let throughputsVMs = throughputs.map(throughput => {
       let throughputsVM = convertArrayToVM(throughput.throughput!);
-      return { id: throughput.id, values: throughputsVM, title: IAPISensorType.Throughput, sections: null };
+      return { id: throughput.id, values: throughputsVM, title: throughput.text, sections: null };
     });
     return {
       id: nicInfo.id,
