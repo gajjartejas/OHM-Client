@@ -9,6 +9,8 @@ const getHardwareFromImageFile = (typeNode: string): IAPIHardwareType | null => 
       return IAPIHardwareType.GpuNvidia;
     case 'images_icon/ati.png':
       return IAPIHardwareType.GpuAti;
+    case 'images_icon/intel.png':
+      return IAPIHardwareType.GpuIntel;
     case 'images_icon/hdd.png':
       return IAPIHardwareType.HDD;
     case 'images_icon/bigng.png':
@@ -23,6 +25,8 @@ const getHardwareFromImageFile = (typeNode: string): IAPIHardwareType | null => 
       return IAPIHardwareType.RAM;
     case 'images_icon/nic.png':
       return IAPIHardwareType.NIC;
+    case 'images_icon/battery.png':
+      return IAPIHardwareType.Battery;
     default:
       return null;
   }
@@ -50,6 +54,8 @@ const getSensorTypeFromImageFile = (typeNode: string): IAPISensorType | null => 
       return IAPISensorType.Power;
     case 'images_icon/throughput.png':
       return IAPISensorType.Throughput;
+    case 'images_icon/current.png':
+      return IAPISensorType.Current;
     default:
       return null;
   }

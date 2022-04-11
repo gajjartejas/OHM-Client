@@ -9,6 +9,9 @@ import {
   IDeviceSensorData,
   IDeviceChipset,
   IDeviceNIC,
+  IDeviceGpuintel,
+  IDeviceBattery,
+  IDeviceGpunvidia,
 } from 'app/models/models/deviceInfo';
 import { IAPIHardwareType, IAPISensorType, IAPISystemType } from 'app/models/api/deviceInfo';
 
@@ -78,11 +81,17 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     if (!cpuInfo.cpu) {
       return null;
     }
-    //VLocks
-    let vlocks = getObjectFromType(cpuInfo.cpu, IAPISensorType.Clock) as IDeviceCPU[];
-    let vlocksVMs = vlocks.map(vlockInfo => {
-      let vlocksVM = convertArrayToVM(vlockInfo.vlock!);
-      return { id: vlockInfo.id, values: vlocksVM, title: IAPISensorType.Clock, sections: null };
+    //Voltages
+    let voltages = getObjectFromType(cpuInfo.cpu, IAPISensorType.Voltage) as IDeviceChipset[];
+    let voltagesVMs = voltages.map(voltageInfo => {
+      let voltagesVM = convertArrayToVM(voltageInfo.voltage!);
+      return { id: voltageInfo.id, values: voltagesVM, title: IAPISensorType.Voltage, sections: null };
+    });
+    //Cocks
+    let clocks = getObjectFromType(cpuInfo.cpu, IAPISensorType.Clock) as IDeviceCPU[];
+    let clocksVMs = clocks.map(clockInfo => {
+      let clocksVM = convertArrayToVM(clockInfo.clock!);
+      return { id: clockInfo.id, values: clocksVM, title: IAPISensorType.Clock, sections: null };
     });
     //Temperatures
     let temperatures = getObjectFromType(cpuInfo.cpu, IAPISensorType.Temperature) as IDeviceCPU[];
@@ -105,7 +114,7 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     return {
       id: cpuInfo.id,
       title: `${IAPIHardwareType.CPU} - ${cpuInfo.text}`,
-      sections: [...vlocksVMs, ...powersVMs, ...temperaturesVMs, ...loadsVMs],
+      sections: [...voltagesVMs, ...clocksVMs, ...powersVMs, ...temperaturesVMs, ...loadsVMs],
       values: null,
     } as ICardViewModel;
   });
@@ -153,7 +162,7 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     //Clocks
     let clocks = getObjectFromType(gpuAtiInfo.gpuati, IAPISensorType.Clock) as IDeviceGpuati[];
     let clocksVMs = clocks.map(clock => {
-      let controlsVM = convertArrayToVM(clock.vlock!);
+      let controlsVM = convertArrayToVM(clock.clock!);
       return { id: clock.id, values: controlsVM, title: IAPISensorType.Clock, sections: null };
     });
     //Temperatures
@@ -210,43 +219,43 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
       return null;
     }
     //Voltages
-    let voltages = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Voltage) as IDeviceGpuati[];
+    let voltages = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Voltage) as IDeviceGpunvidia[];
     let voltagesVMs = voltages.map(voltage => {
       let controlsVM = convertArrayToVM(voltage.voltage!);
       return { id: voltage.id, values: controlsVM, title: IAPISensorType.Voltage, sections: null };
     });
     //Clocks
-    let clocks = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Clock) as IDeviceGpuati[];
+    let clocks = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Clock) as IDeviceGpunvidia[];
     let clocksVMs = clocks.map(clock => {
-      let controlsVM = convertArrayToVM(clock.vlock!);
+      let controlsVM = convertArrayToVM(clock.clock!);
       return { id: clock.id, values: controlsVM, title: IAPISensorType.Clock, sections: null };
     });
     //Temperatures
-    let temperatures = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Temperature) as IDeviceGpuati[];
+    let temperatures = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Temperature) as IDeviceGpunvidia[];
     let temperaturesVMs = temperatures.map(temperature => {
       let temperaturesVM = convertArrayToVM(temperature.temperature!);
       return { id: temperature.id, values: temperaturesVM, title: IAPISensorType.Temperature, sections: null };
     });
     //Load
-    let loads = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Load) as IDeviceGpuati[];
+    let loads = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Load) as IDeviceGpunvidia[];
     let loadsVMs = loads.map(load => {
       let loadsVM = convertArrayToVM(load.load!);
       return { id: load.id, values: loadsVM, title: IAPISensorType.Load, sections: null };
     });
     //Fan
-    let fans = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Fan) as IDeviceGpuati[];
+    let fans = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Fan) as IDeviceGpunvidia[];
     let fansVMs = fans.map(fan => {
       let fansVM = convertArrayToVM(fan.fan!);
       return { id: fan.id, values: fansVM, title: IAPISensorType.Fan, sections: null };
     });
     //Controls
-    let controls = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Control) as IDeviceGpuati[];
+    let controls = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Control) as IDeviceGpunvidia[];
     let controlsVMs = controls.map(control => {
       let controlsVM = convertArrayToVM(control.control!);
       return { id: control.id, values: controlsVM, title: IAPISensorType.Control, sections: null };
     });
     //Power
-    let powers = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Power) as IDeviceGpuati[];
+    let powers = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Power) as IDeviceGpunvidia[];
     let powersVMs = powers.map(power => {
       let powersVM = convertArrayToVM(power.power!);
       return { id: power.id, values: powersVM, title: IAPISensorType.Power, sections: null };
@@ -267,6 +276,34 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
     } as ICardViewModel;
   });
   let gpuNvidiaSectionViewModelsMapped = gpuNvidiaSectionViewModels.filter(v => v).map(v => v!);
+
+  //CARD
+  let computerGpusIntel = getObjectFromType(computers, IAPIHardwareType.GpuIntel) as IDeviceComputer[];
+
+  let gpuIntelSectionViewModels = computerGpusIntel.map(gpuIntelInfo => {
+    if (!gpuIntelInfo.gpuintel) {
+      return null;
+    }
+    //Power
+    let powers = getObjectFromType(gpuIntelInfo.gpuintel, IAPISensorType.Power) as IDeviceGpuintel[];
+    let powersVMs = powers.map(power => {
+      let powersVM = convertArrayToVM(power.power!);
+      return { id: power.id, values: powersVM, title: IAPISensorType.Power, sections: null };
+    });
+    //Load
+    let loads = getObjectFromType(gpuIntelInfo.gpuintel, IAPISensorType.Load) as IDeviceGpuintel[];
+    let loadsVMs = loads.map(load => {
+      let loadsVM = convertArrayToVM(load.load!);
+      return { id: load.id, values: loadsVM, title: IAPISensorType.Load, sections: null };
+    });
+    return {
+      id: gpuIntelInfo.id,
+      title: `${IAPIHardwareType.GpuIntel} - ${gpuIntelInfo.text}`,
+      sections: [...loadsVMs, ...powersVMs],
+      values: null,
+    } as ICardViewModel;
+  });
+  let gpuIntelSectionViewModelsMapped = gpuIntelSectionViewModels.filter(v => v).map(v => v!);
 
   //HDD
   let computerHdds = getObjectFromType(computers, IAPIHardwareType.HDD) as IDeviceComputer[];
@@ -345,14 +382,61 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
   });
   let computerNicViewModelsMapped = computerNicViewModels.filter(v => v).map(v => v!);
 
+  //BATTERY
+  let computerBatteries = getObjectFromType(computers, IAPIHardwareType.Battery) as IDeviceComputer[];
+  let batterySectionViewModels = computerBatteries.map(batteryInfo => {
+    if (!batteryInfo.battery) {
+      return null;
+    }
+    //Voltages
+    let voltages = getObjectFromType(batteryInfo.battery, IAPISensorType.Voltage) as IDeviceBattery[];
+    let voltagesVMs = voltages.map(voltage => {
+      let controlsVM = convertArrayToVM(voltage.voltage!);
+      return { id: voltage.id, values: controlsVM, title: voltage.text, sections: null };
+    });
+    //Currents
+    let currents = getObjectFromType(batteryInfo.battery, IAPISensorType.Clock) as IDeviceBattery[];
+    let currentsVMs = currents.map(current => {
+      let controlsVM = convertArrayToVM(current.current!);
+      return { id: current.id, values: controlsVM, title: current.text, sections: null };
+    });
+    //Power
+    let powers = getObjectFromType(batteryInfo.battery, IAPISensorType.Power) as IDeviceBattery[];
+    let powersVMs = powers.map(power => {
+      let powersVM = convertArrayToVM(power.power!);
+      return { id: power.id, values: powersVM, title: power.text, sections: null };
+    });
+    //Level
+    let levels = getObjectFromType(batteryInfo.battery, IAPISensorType.Level) as IDeviceBattery[];
+    let levelsVMs = levels.map(level => {
+      let levelsVM = convertArrayToVM(level.level!);
+      return { id: level.id, values: levelsVM, title: level.text, sections: null };
+    });
+    //Capacities
+    let capacities = getObjectFromType(batteryInfo.battery, IAPISensorType.Capacity) as IDeviceBattery[];
+    let capacitiesVMs = capacities.map(capacity => {
+      let capacitiesVM = convertArrayToVM(capacity.capacity!);
+      return { id: capacity.id, values: capacitiesVM, title: capacity.text, sections: null };
+    });
+    return {
+      id: batteryInfo.id,
+      title: `${IAPIHardwareType.Battery} - ${batteryInfo.text}`,
+      sections: [...voltagesVMs, ...currentsVMs, ...powersVMs, ...levelsVMs, ...capacitiesVMs],
+      values: null,
+    } as ICardViewModel;
+  });
+  let batterySectionViewModelsMapped = batterySectionViewModels.filter(v => v).map(v => v!);
+
   return [
     ...mainboardSectionViewModelsMapped,
     ...computerCpusViewModelsMapped,
     ...ramSectionViewModelsMapped,
+    ...gpuIntelSectionViewModelsMapped,
     ...gpuAtiSectionViewModelsMapped,
     ...gpuNvidiaSectionViewModelsMapped,
     ...computerHddViewModelsMapped,
     ...computerNicViewModelsMapped,
+    ...batterySectionViewModelsMapped,
   ];
 };
 
