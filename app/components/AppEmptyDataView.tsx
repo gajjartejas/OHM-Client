@@ -11,7 +11,7 @@ interface IAppEmptyDataViewProps {
   iconName: string;
   iconType: IconType;
   header: string;
-  subHeader?: string;
+  subHeader: string;
   style: any;
   renderContent?: () => JSX.Element;
 }

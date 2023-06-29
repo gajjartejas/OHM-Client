@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, TextInput, Modal, StyleSheet, TextInputProps, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, StyleSheet, TextInputProps, Keyboard } from 'react-native';
 
 //ThirdParty
+import Modal from 'react-native-modal';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Button, useTheme, Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
@@ -14,13 +15,14 @@ interface IAuthInputModalProps extends TextInputProps {
   username: string;
   password: string;
   header: string;
+  errorMessage: string;
   showConnectionLoader: boolean;
   onPressClose: () => void;
   onPressSave: (username: string, password: string) => void;
+  onBackButtonPress: () => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, ref: any) => {
+const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, _ref: any) => {
   //Refs
   let usernameRef = useRef<TextInput | null>(null);
   let portRef = useRef<TextInput | null>(null);
@@ -31,6 +33,7 @@ const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, ref: any) 
   const showConnectionLoader = props.showConnectionLoader;
   const theme = useTheme();
   const { t } = useTranslation();
+  const errorMessage = props.errorMessage;
 
   //State
   const [username, setUsername] = useState('');
@@ -47,10 +50,17 @@ const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, ref: any) 
   }, [props.password]);
 
   useEffect(() => {
-    setTimeout(() => {
-      usernameRef.current?.focus();
-    }, 200);
-  }, []);
+    if (!props.modalVisible) {
+      return;
+    }
+    const timeOut = setTimeout(() => {
+      usernameRef.current && usernameRef.current.focus();
+    }, 100);
+
+    return () => {
+      clearInterval(timeOut);
+    };
+  }, [props.modalVisible, usernameRef]);
 
   useEffect(() => {
     setIsValidUsername(true);
@@ -66,10 +76,17 @@ const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, ref: any) 
   };
 
   return (
-    <Modal animationType="fade" transparent={true} visible={props.modalVisible}>
-      <KeyboardAvoidingView
-        behavior={'padding'}
-        style={[styles.centeredView, { backgroundColor: `${theme.colors.onBackground}33` }]}>
+    <Modal
+      style={styles.modal}
+      backdropColor={`${theme.colors.onBackground}33`}
+      coverScreen
+      animationInTiming={300}
+      animationIn={'slideInUp'}
+      avoidKeyboard
+      hideModalContentWhileAnimating
+      onBackButtonPress={props.onBackButtonPress}
+      isVisible={props.modalVisible}>
+      <View style={[styles.centeredView]}>
         <View style={[styles.modalView, { backgroundColor: `${theme.colors.background}` }]}>
           <Text style={[styles.textSize, { color: theme.colors.primary }]}>{props.header}</Text>
           <TextInput
@@ -82,7 +99,7 @@ const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, ref: any) 
             ]}
             value={username}
             onChangeText={setUsername}
-            placeholder={t('INPUT_DIALOG_ENTER_USERNAME')}
+            placeholder={t('generalSetting.section2.row1.dialogInputPlaceholder1')!}
             placeholderTextColor={theme.colors.onSurface}
             onSubmitEditing={() => portRef.current?.focus()}
             keyboardType={'default'}
@@ -90,7 +107,7 @@ const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, ref: any) 
           />
           {!isValidUsername && (
             <Text style={[styles.errorText, { color: theme.colors.error }]}>
-              {t('INPUT_DIALOG_PLEASE_ENTER_VALID_USERNAME')}
+              {t('generalSetting.section2.row1.dialogInputValidation1')}
             </Text>
           )}
 
@@ -104,7 +121,7 @@ const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, ref: any) 
             ]}
             value={password}
             onChangeText={setPassword}
-            placeholder={t('INPUT_DIALOG_ENTER_PASSWORD')}
+            placeholder={t('generalSetting.section2.row1.dialogInputPlaceholder2')!}
             placeholderTextColor={theme.colors.onSurface}
             onSubmitEditing={onPressSave}
             keyboardType={'default'}
@@ -113,20 +130,27 @@ const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, ref: any) 
           />
           {!isValidPassword && (
             <Text style={[styles.errorText, { color: theme.colors.error }]}>
-              {t('INPUT_DIALOG_PLEASE_ENTER_VALID_PASSWORD')}
+              {t('generalSetting.section2.row1.dialogInputValidation2')}
+            </Text>
+          )}
+          <Text style={[styles.hintText, { color: theme.colors.onSurface }]}>
+            {t('generalSetting.section2.row1.dialogSubTitle')}
+          </Text>
+          {invalidAuthCount > 1 && (
+            <Text style={[styles.loadingText, { color: theme.colors.error }]}>
+              {t('generalSetting.section2.row1.dialogInputError1')}
             </Text>
           )}
 
-          {invalidAuthCount > 1 && (
-            <Text style={[styles.loadingText, { color: theme.colors.error }]}>{t('INPUT_DIALOG_INVALID_AUTH')}</Text>
-          )}
+          {!!errorMessage && <Text style={[styles.loadingText, { color: theme.colors.error }]}>{errorMessage}</Text>}
           {(!showConnectionLoader || !deviceInfoLoading) && (
             <View style={styles.buttonContainer}>
-              <Button style={styles.button} onPress={props.onPressClose}>
-                {t('CLOSE')}
+              <Button mode={'contained'} style={styles.button} onPress={props.onPressClose}>
+                {t('general.close')}
               </Button>
-              <Button style={styles.button} onPress={onPressSave}>
-                {t('INPUT_DIALOG_SET')}
+              <View style={styles.spacing} />
+              <Button mode={'contained'} style={styles.button} onPress={onPressSave}>
+                {t('general.set')}
               </Button>
             </View>
           )}
@@ -134,16 +158,17 @@ const AuthInputModal = React.forwardRef((props: IAuthInputModalProps, ref: any) 
           {showConnectionLoader && deviceInfoLoading && (
             <View style={styles.loadingContainer}>
               <ActivityIndicator />
-              <Text style={[styles.loadingText, { color: theme.colors.primary }]}>{t('INPUT_DIALOG_CONNECTING')}</Text>
+              <Text style={[styles.loadingText, { color: theme.colors.primary }]}>{t('general.connecting')}</Text>
             </View>
           )}
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </Modal>
   );
 });
 
 const styles = StyleSheet.create({
+  modal: { margin: 8, marginBottom: -4 },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -156,11 +181,11 @@ const styles = StyleSheet.create({
   modalView: {
     justifyContent: 'space-around',
     width: '100%',
-    height: 200,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     paddingTop: 10,
+    paddingBottom: 28,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
@@ -173,10 +198,12 @@ const styles = StyleSheet.create({
   textSize: {
     textAlign: 'center',
     fontSize: 16,
+    marginVertical: 16,
   },
   inputStyle: {
     borderBottomWidth: 1,
     width: '100%',
+    height: 50,
   },
   textInputShadow: {},
   buttonContainer: {
@@ -191,10 +218,17 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 12,
   },
+  hintText: {
+    fontSize: 12,
+    marginVertical: 8,
+    marginBottom: 16,
+  },
   loadingText: {
     fontSize: 16,
     marginLeft: 4,
+    marginBottom: 16,
   },
+  spacing: { width: 8 },
 });
 
 export default AuthInputModal;

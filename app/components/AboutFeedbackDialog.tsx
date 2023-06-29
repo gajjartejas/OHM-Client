@@ -1,6 +1,8 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
+
+//ThirdParty
+import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-easy-icon';
 import { Dialog, Paragraph, TouchableRipple, useTheme, Button } from 'react-native-paper';
 
@@ -19,10 +21,10 @@ function AboutFeedbackDialog(props: IAboutFeedbackDialogProps) {
 
   return (
     <Dialog visible={props.visible} onDismiss={props.onPressHideDialog}>
-      <Dialog.Title style={{ color: colors.onBackground }}>{t('ABOUT_SEND_FEEDBACK')}</Dialog.Title>
+      <Dialog.Title style={{ color: colors.onBackground }}>{t('about.sendFeedback')}</Dialog.Title>
       <Dialog.Content>
         <Paragraph style={[styles.descriptionText, { color: `${colors.onBackground}88` }]}>
-          {t('ABOUT_SEND_FEEDBACK_DETAIL')}
+          {t('about.sendFeedbackDetail')}
         </Paragraph>
       </Dialog.Content>
       <View style={styles.buttonsContainer}>
@@ -41,15 +43,12 @@ function AboutFeedbackDialog(props: IAboutFeedbackDialogProps) {
           <Icon type="ionicon" name="mail" color={`${colors.onBackground}88`} size={24} />
         </TouchableRipple>
       </View>
-
       <Dialog.Actions>
-        <Button onPress={props.onPressHideDialog}>{t('CLOSE')}</Button>
+        <Button onPress={props.onPressHideDialog}>{t('general.close')}</Button>
       </Dialog.Actions>
     </Dialog>
   );
 }
-
-export default AboutFeedbackDialog;
 
 const styles = StyleSheet.create({
   button: {
@@ -65,3 +64,5 @@ const styles = StyleSheet.create({
   buttonsContainer: { flexDirection: 'row', alignSelf: 'center' },
   descriptionText: { fontSize: 16 },
 });
+
+export default AboutFeedbackDialog;

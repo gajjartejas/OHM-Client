@@ -4,19 +4,22 @@ import { Image, ImageBackground, Linking, Platform, ScrollView, View } from 'rea
 //ThirdParty
 import { useTranslation } from 'react-i18next';
 import { Divider, List, Text, useTheme } from 'react-native-paper';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { IconType } from 'react-native-easy-icon/src/Icon';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-easy-icon';
-import { IconType } from 'react-native-easy-icon/src/Icon';
 
-//App modules
+//App Modules
 import Utils from 'app/utils';
 
 //App modules
 import Config from 'app/config';
 import Components from 'app/components';
 import styles from './styles';
+import { AppTheme } from 'app/models/theme';
+import { HomeTabsNavigatorParams, LoggedInTabNavigatorParams } from 'app/navigation/types';
+import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
 
 //Interfaces
 interface IMoreItem {
@@ -27,62 +30,59 @@ interface IMoreItem {
 }
 
 //Params
-type RootStackParamList = {
-  DeviceLists: {};
-  MoreApps: {};
-  Settings: {};
-  About: {};
-};
-type Props = NativeStackScreenProps<RootStackParamList, 'DeviceLists'>;
+type MoreTabNavigationProp = CompositeNavigationProp<
+  MaterialBottomTabNavigationProp<HomeTabsNavigatorParams, 'MoreTab'>,
+  NativeStackNavigationProp<LoggedInTabNavigatorParams>
+>;
 
-const MoreTab = ({ navigation }: Props) => {
+const MoreTab = () => {
   //Refs
 
   //Actions
 
   //Constants
   const { t } = useTranslation();
-  const { colors } = useTheme();
+  const { colors } = useTheme<AppTheme>();
+  const navigation = useNavigation<MoreTabNavigationProp>();
 
   //State
   const [visible, setVisible] = React.useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [aboutItems, setAboutItems] = React.useState<IMoreItem[]>([
+  const [aboutItems] = React.useState<IMoreItem[]>([
     {
       id: 0,
       iconName: 'feedback',
       iconType: 'material',
-      title: t('ABOUT_SEND_FEEDBACK'),
+      title: t('about.sendFeedback'),
     },
     {
       id: 1,
       iconName: 'star',
       iconType: 'font-awesome',
-      title: t('ABOUT_RATE_APP'),
+      title: t('about.rateApp'),
     },
     {
       id: 2,
       iconName: 'apps',
       iconType: 'material-community',
-      title: t('ABOUT_MORE_APPS'),
+      title: t('about.moreApps'),
     },
     {
       id: 3,
       iconName: 'github',
       iconType: 'entypo',
-      title: t('ABOUT_GITHUB'),
+      title: t('about.github'),
     },
     {
       id: 4,
       iconName: 'gear',
       iconType: 'font-awesome',
-      title: t('ABOUT_SETTING'),
+      title: t('about.setting'),
     },
     {
       id: 5,
       iconName: 'info-circle',
       iconType: 'font-awesome',
-      title: t('ABOUT_APP'),
+      title: t('about.app'),
     },
   ]);
 
@@ -113,9 +113,7 @@ const MoreTab = ({ navigation }: Props) => {
   const onPressHideDialog = () => setVisible(false);
 
   const onPressRateApp = () => {
-    Utils.openInAppBrowser(
-      Platform.OS === 'android' ? Config.Constants.PLAY_STORE_URL : Config.Constants.APP_STORE_URL,
-    );
+    Linking.openURL(Platform.OS === 'android' ? Config.Constants.PLAY_STORE_URL : Config.Constants.APP_STORE_URL);
   };
 
   const onPressMoreApps = () => {
@@ -133,29 +131,31 @@ const MoreTab = ({ navigation }: Props) => {
     navigation.push('About', {});
   };
   const onPressTelegram = () => {
-    Utils.openInAppBrowser(Config.Constants.ABOUT_TELEGRAM_LINK);
+    Linking.openURL(Config.Constants.ABOUT_TELEGRAM_LINK);
   };
   const onPressEmail = async () => {
     const email = Config.Constants.ABOUT_SUPPORT_EMAIL;
-    const subject = `${t('APPNAME')} feedback`;
+    const subject = `${t('general.appname')} feedback`;
     const osType = Platform.OS;
     const systemVersion = DeviceInfo.getSystemVersion();
     const brand = DeviceInfo.getBrand();
-    const model = await DeviceInfo.getModel();
+    const model = DeviceInfo.getModel();
     const readableVersion = DeviceInfo.getReadableVersion();
     const body = `OS: ${osType} (${systemVersion})\nBrand: ${brand} (${model})\nApp Version: ${readableVersion}`;
     Linking.openURL(`mailto:${email}?subject=${subject}&body=${body}`);
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <ScrollView style={styles.container}>
-        <View style={styles.container}>
+    <Components.AppBaseView
+      edges={['bottom', 'left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.subView}>
           <ImageBackground source={Config.Images.icons.about_bg} style={styles.imageBackground}>
             <View style={[styles.imageBackgroundCover, { backgroundColor: `${colors.background}88` }]} />
             <Image source={Config.Images.icons.app_icon} resizeMode="contain" style={styles.appIcon} />
-            <Text style={[styles.appNameText, { color: colors.text }]}>{t('APPNAME')}</Text>
-            <Text style={[styles.appVersion, { color: colors.text }]}>v{DeviceInfo.getVersion()}</Text>
+            <Text style={[styles.appNameText, { color: colors.onBackground }]}>{t('general.appname')}</Text>
+            <Text style={[styles.appVersion, { color: colors.onBackground }]}>v{DeviceInfo.getVersion()}</Text>
           </ImageBackground>
 
           <View style={styles.cardContainer}>
@@ -192,7 +192,7 @@ const MoreTab = ({ navigation }: Props) => {
         onPressEmail={onPressEmail}
         onPressHideDialog={onPressHideDialog}
       />
-    </SafeAreaView>
+    </Components.AppBaseView>
   );
 };
 

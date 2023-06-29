@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, InteractionManager, View } from 'react-native';
 
 //ThirdParty
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { Appbar, List, useTheme } from 'react-native-paper';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 //App modules
 import Utils from 'app/utils';
 
 //Modals
 import styles from './styles';
+import Components from 'app/components';
+import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 
 //Interfaces
 export interface ILicense {
@@ -26,11 +28,7 @@ interface IFinalLicense {
   licenseSpecs: ILicense;
 }
 
-//Params
-type RootStackParamList = {
-  DeviceLists: {};
-};
-type Props = NativeStackScreenProps<RootStackParamList, 'DeviceLists'>;
+type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'License'>;
 
 const License = ({ navigation }: Props) => {
   //Constants
@@ -83,17 +81,11 @@ const License = ({ navigation }: Props) => {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Appbar.Header style={{ backgroundColor: colors.background }}>
         <Appbar.BackAction onPress={onGoBack} />
-        <Appbar.Content title={t('LIBRARIES_TITLE')} subtitle="" />
+        <Appbar.Content title={t('librariesScreen.title')} />
       </Appbar.Header>
-      <View style={styles.subView}>
-        <FlatList
-          keyboardShouldPersistTaps={'handled'}
-          data={finalLicense}
-          contentContainerStyle={{}}
-          renderItem={renderItem}
-          keyExtractor={item => item.name}
-        />
-      </View>
+      <Components.AppBaseView edges={['bottom', 'left', 'right']} style={styles.subView}>
+        <FlatList data={finalLicense} renderItem={renderItem} keyExtractor={item => item.name} />
+      </Components.AppBaseView>
     </View>
   );
 };

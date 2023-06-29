@@ -11,10 +11,11 @@ export function setAppearance(value: IAppearanceType) {
   };
 }
 
-export function setPrimaryColor(primaryColor: string) {
+export function setPrimaryColor(primaryColor: string, onPrimaryColor: string) {
   return {
     type: types.SET_PRIMARY_COLOR,
     primaryColor: primaryColor,
+    onPrimary: onPrimaryColor,
   };
 }
 

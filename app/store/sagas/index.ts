@@ -15,7 +15,8 @@ const getAppConfig = (state: IState) => state.appConfigReducer;
 const getDeviceState = (state: IState) => state.deviceReducer;
 
 function* fetchDeviceAsync(_action: { type: string }): Generator<any, any, any> {
-  const chan = yield call(scanDevices);
+  const appConfig = yield select(getAppConfig);
+  const chan = yield call(scanDevices, { appConfig: appConfig });
 
   try {
     while (true) {

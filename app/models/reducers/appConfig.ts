@@ -4,4 +4,6 @@ export interface IAppConfigState {
   refreshInterval: number;
   username: string | null;
   password: string | null;
+  scanTimeoutInMs: number;
+  scanThreads: number;
 }

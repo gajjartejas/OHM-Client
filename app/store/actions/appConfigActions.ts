@@ -43,3 +43,17 @@ export function setAppConfigAuth(response: { username: string; password: string 
     payload: response,
   };
 }
+
+export function setAppConfigScanTimeout(payload: number) {
+  return {
+    type: types.SET_APP_CONFIG_TIMEOUT_IN_MS,
+    payload: payload,
+  };
+}
+
+export function setAppConfigScanThreads(payload: number) {
+  return {
+    type: types.SET_APP_CONFIG_SCAN_THREADS,
+    payload: payload,
+  };
+}

@@ -8,18 +8,18 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
-  scrollView: {},
+  scrollView: { flex: 1 },
   subView: {
-    marginHorizontal: 32,
+    flex: 1,
   },
   imageBackground: {
     height: 200,
-    marginTop: 40,
     borderRadius: 12,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 20,
+    marginTop: 20,
   },
   imageBackgroundCover: {
     position: 'absolute',

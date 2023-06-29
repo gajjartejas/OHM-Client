@@ -28,7 +28,7 @@ function SelectThemeDialog(props: ISelectThemeDialogProps) {
       style={{ backgroundColor: theme.colors.surface }}
       visible={props.visible}
       onDismiss={props.onPressHideDialog}>
-      <Dialog.Title style={{ color: theme.colors.onSurface }}>{t('SETTINGS_THEME_OPTION')}</Dialog.Title>
+      <Dialog.Title style={{ color: theme.colors.onSurface }}>{t('appearanceSettings.themeOption')}</Dialog.Title>
       <View>
         <RadioButton.Group onValueChange={() => {}} value={props.appearance}>
           {props.themeOptions.map((item, index) => {
@@ -50,13 +50,11 @@ function SelectThemeDialog(props: ISelectThemeDialogProps) {
         </RadioButton.Group>
       </View>
       <Dialog.Actions>
-        <Button onPress={props.onPressHideDialog}>{t('CLOSE')}</Button>
+        <Button onPress={props.onPressHideDialog}>{t('general.close')}</Button>
       </Dialog.Actions>
     </Dialog>
   );
 }
-
-export default SelectThemeDialog;
 
 const styles = StyleSheet.create({
   itemText: { flex: 1 },
@@ -75,3 +73,5 @@ const styles = StyleSheet.create({
   buttonsContainer: { flexDirection: 'row', alignSelf: 'center' },
   descriptionText: { fontSize: 16 },
 });
+
+export default SelectThemeDialog;

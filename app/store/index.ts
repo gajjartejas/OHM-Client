@@ -21,6 +21,7 @@ middleware.push(sagaMiddleware);
 const reducers = persistCombineReducers(config, rootReducers);
 const enhancers = [applyMiddleware(...middleware)];
 const persistConfig: any = { enhancers };
+// @ts-ignore
 const store = createStore(reducers, undefined, compose(...enhancers));
 const persistor = persistStore(store, persistConfig, () => {
   console.log('State', store.getState());

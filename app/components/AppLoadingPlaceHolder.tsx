@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import { ActivityIndicator, useTheme } from 'react-native-paper';
 
 const LoadingPlaceHolder = () => {
-  //Consts
+  //Const
   const { colors } = useTheme();
 
   return (

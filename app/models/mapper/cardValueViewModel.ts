@@ -147,7 +147,7 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
   });
   let ramSectionViewModelsMapped = ramSectionViewModels.filter(v => v).map(v => v!);
 
-  //CARD
+  //CARD AMD
   let computerGpus = getObjectFromType(computers, IAPIHardwareType.GpuAti) as IDeviceComputer[];
   let gpuAtiSectionViewModels = computerGpus.map(gpuAtiInfo => {
     if (!gpuAtiInfo.gpuati) {
@@ -195,6 +195,12 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
       let powersVM = convertArrayToVM(power.power!);
       return { id: power.id, values: powersVM, title: power.text, sections: null };
     });
+    //Throughput
+    let throughputs = getObjectFromType(gpuAtiInfo.gpuati, IAPISensorType.Throughput) as IDeviceGpuati[];
+    let throughputsVMs = throughputs.map(throughput => {
+      let throughputsVM = convertArrayToVM(throughput.throughput!);
+      return { id: throughput.id, values: throughputsVM, title: throughput.text, sections: null };
+    });
     return {
       id: gpuAtiInfo.id,
       title: `${IAPIHardwareType.GpuAti} - ${gpuAtiInfo.text}`,
@@ -206,13 +212,14 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
         ...fansVMs,
         ...controlsVMs,
         ...powersVMs,
+        ...throughputsVMs,
       ],
       values: null,
     } as ICardViewModel;
   });
   let gpuAtiSectionViewModelsMapped = gpuAtiSectionViewModels.filter(v => v).map(v => v!);
 
-  //CARD
+  //CARD NVIDIA
   let computerGpusNvidia = getObjectFromType(computers, IAPIHardwareType.GpuNvidia) as IDeviceComputer[];
   let gpuNvidiaSectionViewModels = computerGpusNvidia.map(gpuNvidiaInfo => {
     if (!gpuNvidiaInfo.gpunvidia) {
@@ -260,6 +267,12 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
       let powersVM = convertArrayToVM(power.power!);
       return { id: power.id, values: powersVM, title: power.text, sections: null };
     });
+    //Throughput
+    let throughputs = getObjectFromType(gpuNvidiaInfo.gpunvidia, IAPISensorType.Throughput) as IDeviceGpunvidia[];
+    let throughputsVMs = throughputs.map(throughput => {
+      let throughputsVM = convertArrayToVM(throughput.throughput!);
+      return { id: throughput.id, values: throughputsVM, title: throughput.text, sections: null };
+    });
     return {
       id: gpuNvidiaInfo.id,
       title: `${IAPIHardwareType.GpuNvidia} - ${gpuNvidiaInfo.text}`,
@@ -271,13 +284,14 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
         ...fansVMs,
         ...controlsVMs,
         ...powersVMs,
+        ...throughputsVMs,
       ],
       values: null,
     } as ICardViewModel;
   });
   let gpuNvidiaSectionViewModelsMapped = gpuNvidiaSectionViewModels.filter(v => v).map(v => v!);
 
-  //CARD
+  //CARD INTEL
   let computerGpusIntel = getObjectFromType(computers, IAPIHardwareType.GpuIntel) as IDeviceComputer[];
 
   let gpuIntelSectionViewModels = computerGpusIntel.map(gpuIntelInfo => {
@@ -296,10 +310,16 @@ export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => 
       let loadsVM = convertArrayToVM(load.load!);
       return { id: load.id, values: loadsVM, title: load.text, sections: null };
     });
+    //Throughput
+    let throughputs = getObjectFromType(gpuIntelInfo.gpuintel, IAPISensorType.Throughput) as IDeviceGpuintel[];
+    let throughputsVMs = throughputs.map(throughput => {
+      let throughputsVM = convertArrayToVM(throughput.throughput!);
+      return { id: throughput.id, values: throughputsVM, title: throughput.text, sections: null };
+    });
     return {
       id: gpuIntelInfo.id,
       title: `${IAPIHardwareType.GpuIntel} - ${gpuIntelInfo.text}`,
-      sections: [...loadsVMs, ...powersVMs],
+      sections: [...loadsVMs, ...powersVMs, ...throughputsVMs],
       values: null,
     } as ICardViewModel;
   });

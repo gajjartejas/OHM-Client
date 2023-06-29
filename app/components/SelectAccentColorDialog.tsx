@@ -5,15 +5,16 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Dialog, TouchableRipple, useTheme, Button } from 'react-native-paper';
 
-//App modules
+//App Modules
 import { IAppearanceType } from 'app/models/reducers/theme';
+import { IAppearanceColor } from 'app/screens/Settings/SelectAppearance';
 
 //Interface
 interface ISelectAccentDialogProps {
   visible: boolean;
   appearance: IAppearanceType;
-  accentColorOptions: string[];
-  onSelect: (item: string, index: number) => void;
+  accentColorOptions: IAppearanceColor[];
+  onSelect: (item: IAppearanceColor, index: number) => void;
   onPressHideDialog: () => void;
 }
 
@@ -24,14 +25,14 @@ function SelectAccentDialog(props: ISelectAccentDialogProps) {
 
   return (
     <Dialog visible={props.visible} onDismiss={props.onPressHideDialog}>
-      <Dialog.Title style={{ color: colors.onSurface }}>{t('SETTINGS_THEME_OPTION')}</Dialog.Title>
+      <Dialog.Title style={{ color: colors.onSurface }}>{t('appearanceSettings.themeOption')}</Dialog.Title>
       <Dialog.Content>
         <View style={styles.dialogContainer}>
           {props.accentColorOptions.map((item, index) => {
             return (
               <TouchableRipple
-                key={item.toString()}
-                style={[styles.itemButton, { backgroundColor: item }]}
+                key={item.primary.toString()}
+                style={[styles.itemButton, { backgroundColor: item.primary }]}
                 borderless={true}
                 onPress={() => props.onSelect(item, index)}
                 centered={true}
@@ -42,15 +43,12 @@ function SelectAccentDialog(props: ISelectAccentDialogProps) {
           })}
         </View>
       </Dialog.Content>
-
       <Dialog.Actions>
-        <Button onPress={props.onPressHideDialog}>{t('CLOSE')}</Button>
+        <Button onPress={props.onPressHideDialog}>{t('general.close')}</Button>
       </Dialog.Actions>
     </Dialog>
   );
 }
-
-export default SelectAccentDialog;
 
 const styles = StyleSheet.create({
   itemButton: {
@@ -62,3 +60,5 @@ const styles = StyleSheet.create({
   },
   dialogContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around' },
 });
+
+export default SelectAccentDialog;

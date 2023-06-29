@@ -2,7 +2,6 @@ import React from 'react';
 
 //Third Party
 import { useTheme } from 'react-native-paper';
-import { Theme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-easy-icon';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
@@ -21,7 +20,13 @@ import { useSelector } from 'react-redux';
 import IState from 'app/models/models/appState';
 import DeviceLists from 'app/screens/Home/DeviceLists';
 
-const Tab = createMaterialBottomTabNavigator();
+//App Modules
+import { HomeTabsNavigatorParams, LoggedInTabNavigatorParams } from 'app/navigation/types';
+import Loading from 'app/screens/Auth/Loading';
+import { AppTheme } from 'app/models/theme';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const Tab = createMaterialBottomTabNavigator<HomeTabsNavigatorParams>();
 
 function HomeOrList(props: any) {
   //Constants
@@ -37,48 +42,63 @@ function HomeOrList(props: any) {
 
 function HomeTabs() {
   //Constants
-  const { colors } = useTheme();
+  const { colors } = useTheme<AppTheme>();
+  const insets = useSafeAreaInsets();
 
   return (
-    <Tab.Navigator activeColor={colors.primary} barStyle={{ backgroundColor: colors.background }}>
+    <Tab.Navigator
+      screenOptions={{}}
+      inactiveColor={colors.secondaryContainer}
+      activeColor={colors.secondaryContainer}
+      barStyle={{ backgroundColor: colors.background, height: insets.bottom + 60 }}>
       <Tab.Screen
-        name="HomeOrList"
+        name="DashboardTab"
         component={HomeOrList}
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => <Icon type="material-community" name="view-dashboard" color={color} size={21} />,
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              type="material-community"
+              name="view-dashboard"
+              color={focused ? colors.white : colors.primary}
+              size={21}
+            />
+          ),
         }}
       />
       <Tab.Screen
-        name="More"
+        name="MoreTab"
         component={MoreTab}
         options={{
-          tabBarLabel: 'More',
-          tabBarIcon: ({ color }) => <Icon type="material-community" name="dots-horizontal" color={color} size={21} />,
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              type="material-community"
+              name="dots-horizontal"
+              color={focused ? colors.white : colors.primary}
+              size={21}
+            />
+          ),
         }}
       />
     </Tab.Navigator>
   );
 }
 
-interface IProps {
-  theme: Theme;
-}
+const LoggedInStack = createNativeStackNavigator<LoggedInTabNavigatorParams>();
 
-const LoggedInStack = createNativeStackNavigator();
-const Stack = createNativeStackNavigator();
-
-const LoggedInTabNavigator: React.FC<IProps> = () => {
+const LoggedInTabNavigator = () => {
   return (
     <LoggedInStack.Navigator>
-      <Stack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
-      <Stack.Screen name="MoreApps" component={MoreApps} options={{ headerShown: false }} />
-      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
-      <Stack.Screen name="About" component={About} options={{ headerShown: false }} />
-      <Stack.Screen name="SelectAppearance" component={SelectAppearance} options={{ headerShown: false }} />
-      <Stack.Screen name="License" component={License} options={{ headerShown: false }} />
-      <Stack.Screen name="Translators" component={Translators} options={{ headerShown: false }} />
-      <Stack.Screen name="GeneralSetting" component={GeneralSetting} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="Loading" component={Loading} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="MoreApps" component={MoreApps} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="About" component={About} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="SelectAppearance" component={SelectAppearance} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="License" component={License} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="Translators" component={Translators} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="GeneralSetting" component={GeneralSetting} options={{ headerShown: false }} />
     </LoggedInStack.Navigator>
   );
 };

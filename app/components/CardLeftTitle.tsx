@@ -33,9 +33,18 @@ function CardTitle(props: { title: string }) {
   return (
     <View style={styles.cardValuesContainer}>
       <CardValueText style={[styles.cardValuesTitle, { color: colors.primary }]} text={props.title} />
-      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('CURRENT_VALUE')} />
-      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('CURRENT_MIN')} />
-      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('CURRENT_MAX')} />
+      <CardValueText
+        style={[styles.cardValuesTitleValue, { color: colors.primary }]}
+        text={t('deviceList.card.currentValue')}
+      />
+      <CardValueText
+        style={[styles.cardValuesTitleValue, { color: colors.primary }]}
+        text={t('deviceList.card.currentMin')}
+      />
+      <CardValueText
+        style={[styles.cardValuesTitleValue, { color: colors.primary }]}
+        text={t('deviceList.card.currentMax')}
+      />
     </View>
   );
 }
