@@ -4,6 +4,7 @@ import { StyleSheet, View, ViewStyle, Image } from 'react-native';
 //ThirdParty
 import { Button, Text, useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
+import { AppTheme } from 'app/models/theme';
 
 //Interface
 interface IMoreAppCard {
@@ -19,20 +20,21 @@ interface IMoreAppCard {
 function MoreAppCard(props: IMoreAppCard) {
   //Constants
   const { t } = useTranslation();
-  const { colors } = useTheme();
+  const { colors } = useTheme<AppTheme>();
 
   return (
-    <View style={[styles.container, { backgroundColor: `${colors.surface}` }, props.style]}>
+    <View
+      style={[styles.container, { backgroundColor: `${colors.card}`, shadowColor: `${colors.shadow}` }, props.style]}>
       <Image source={props.icon} style={styles.icon} />
       <Text style={[styles.titleText, { color: colors.onSurface }]}>{props.title}</Text>
       <Text style={[styles.descriptionText, { color: colors.onSurface }]}>{props.description}</Text>
       {props.showLinks && (
         <>
           <Button style={styles.githubButton} onPress={props.onPressGithub}>
-            {t('MORE_APP_GITHUB')}
+            {t('moreApps.appsGithub')}
           </Button>
           <Button style={styles.playstoreButton} onPress={props.onPressPlayStore}>
-            {t('MORE_APP_PLAY_STORE')}
+            {t('moreApps.appsPlayStore')}
           </Button>
         </>
       )}
@@ -44,6 +46,13 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     borderRadius: 8,
+    shadowRadius: 4,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    elevation: 8,
+    shadowOpacity: 0.2,
   },
   icon: { alignSelf: 'center', width: 80, height: 80, borderRadius: 40 },
   titleText: {

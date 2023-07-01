@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollView: {},
-  subView: {},
+  subView: { flex: 1 },
   listItem: { paddingHorizontal: 16 },
 });
 

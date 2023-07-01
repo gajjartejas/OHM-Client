@@ -30,6 +30,7 @@ const DashboardTab = ({}: Props) => {
   //Actions
   const selectedDevice = useSelector((state: IState) => state.deviceReducer.selectedDevice);
   const connected = useSelector((state: IState) => state.deviceReducer.connected);
+  const requestAuth = useSelector((state: IState) => state.deviceReducer.requestAuth);
 
   //Constants
   const dispatch = useDispatch();
@@ -48,11 +49,8 @@ const DashboardTab = ({}: Props) => {
   }, [selectedDevice]);
 
   useEffect(() => {
-    if (!selectedDevice || connected) {
-      return;
-    }
     dispatch(devicesActions.refreshDeviceInfo());
-  }, [dispatch, selectedDevice, connected]);
+  }, [dispatch]);
 
   const _logout = () => {
     dispatch(devicesActions.removeSelectedDevice());
@@ -62,8 +60,10 @@ const DashboardTab = ({}: Props) => {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Appbar.Header style={{ backgroundColor: colors.background }}>
         <Appbar.BackAction onPress={_logout} />
-        <Appbar.Content title={title} subtitle={connected ? t('DASHBOARD_CONNECTED') : t('DASHBOARD_DISCONNECTED')} />
+        <Appbar.Content title={title} />
       </Appbar.Header>
+      {!connected && requestAuth && <Components.AppMiniBanner message={t('deviceList.authRequestedMessage')} />}
+      {!connected && !requestAuth && <Components.AppMiniBanner message={t('deviceList.disconnectedMessage')} />}
 
       <View style={styles.subView}>
         <ScrollView style={styles.scrollView}>

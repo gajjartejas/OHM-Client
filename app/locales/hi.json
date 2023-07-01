@@ -1,141 +1,173 @@
 {
-  "APPNAME": "OpenHardwareMon Client",
-  "CLOSE": "बंदकरना",
-  "SAVE": "सहेजें",
-
-  "CURRENT_VALUE": "वर्तमान",
-  "CURRENT_MIN": "न्यूनतम",
-  "CURRENT_MAX": "अधिकतम",
-
-  "MORE_APP_GITHUB": "गिटहब",
-  "MORE_APP_PLAY_STORE": "प्ले स्टोर",
-
-  "NO_INTERNET": "कोई इंटरनेट कनेक्शन नहीं",
-
-  "ABOUT_CHANGE_LANGUAGE": "भाषा बदलें",
-  "ABOUT_RATE_APP": "एप्प का मूल्यांकन",
-  "ABOUT_MORE_APPS": "और ऐप",
-  "ABOUT_TERMS_SERVICE": "सेवा की शर्तें",
-  "ABOUT_PRIVACY_POLICY": "गोपनीयता नीति",
-  "ABOUT_CREDITS": "क्रेडिट",
-  "ABOUT_COPY_RIGHT_NAME": "गज्जर तेजस",
-  "ABOUT_COPY_RIGHT": "कॉपीराइट २०२२-२०२३",
-  "ABOUT_GITHUB": "गिटहब पर योगदान",
-  "ABOUT_SETTING": "समायोजन",
-  "ABOUT_APP": "OpenHardwareMon के बारे में",
-  "ABOUT_SEND_FEEDBACK": "प्रतिक्रिया भेजें",
-  "ABOUT_SEND_FEEDBACK_DETAIL": "आप टेलीग्राम चैनल पर अपनी मूल्यवान प्रतिक्रिया भेज सकते हैं या सीधे मेल भेज सकते हैं।",
-
-  "DASHBOARD_CONNECTED": "जुड़ा हुआ",
-  "DASHBOARD_DISCONNECTED": "वियोजित",
-
-  "MORE_APPS_TITLE": "और ऐप",
-  "MORE_APPS_1_TITLE": "OpenHardwareMon Client",
-  "MORE_APPS_1_DESC": "OHMClient एंड्रॉइड और आईओएस के लिए एक अनौपचारिक ओपन हार्डवेयर मॉनिटर क्लाइंट ऐप है जो प्रतिक्रिया-मूल में लिखा गया है। इस ऐप का उपयोग करके आप ओपन हार्डवेयर मॉनिटर वेब सर्वर की निगरानी कर सकते हैं।",
-  "MORE_APPS_2_TITLE": "MIUI - Ads Helper",
-  "MORE_APPS_2_DESC": "यह एप्लिकेशन आपको ज़ियामी (MIUI) उपकरणों में विभिन्न ऐप्स के लिए विज्ञापन या सिफारिशों को सक्षम / अक्षम करने की अनुमति देता है।",
-
-  "SETTINGS_TITLE": "समायोजन",
-  "SETTINGS_COMMON_HEADER": "सामान्य सेटिंग",
-  "SETTINGS_APPEARANCE_TITLE": "दिखावट",
-  "SETTINGS_APPEARANCE_SUB_TITLE": "उपस्थिति का अनुकूलन",
-  "SETTINGS_GENERAL_TITLE": "आम",
-  "SETTINGS_GENERAL_SUB_TITLE": "ऐप की कार्यात्मक सेटिंग्स",
-  "SETTINGS_INFO_HEADER": "जानकारी",
-  "SETTINGS_CHANGELOG_TITLE": "बदलाव का",
-  "SETTINGS_CHANGELOG_SUB_TITLE": "सभी अपडेट में किए गए परिवर्तनों की सूची",
-  "SETTINGS_LIBRARIES_TITLE": "पुस्तकालयों",
-  "SETTINGS_LIBRARIES_SUB_TITLE": "इस परियोजना में प्रयुक्त ओपन सोर्स लाइब्रेरीज़ की सूची",
-  "SETTINGS_FAQ_TITLE": "एफएक्यू और सहायता",
-  "SETTINGS_FAQ_SUB_TITLE": "अक्सर पूछे जाने वाले प्रश्नों के उत्तर",
-  "SETTINGS_TRANSLATE_TITLE": "इस ऐप का अनुवाद करें",
-  "SETTINGS_TRANSLATE_SUB_TITLE": "इस ऐप को अपनी भाषा में अनुवाद करें",
-  "SETTINGS_TRANSLATORS_TITLE": "अनुवादकों",
-  "SETTINGS_TRANSLATORS_SUB_TITLE": "जो लोग इस ऐप को स्थानीयकृत करने में मदद करते हैं",
-  "SETTINGS_PRIVACY_TITLE": "गोपनीयता नीति",
-  "SETTINGS_PRIVACY_SUB_TITLE": "सूचना और अनुमतियाँ उपयोग नीति",
-  "SETTINGS_INTERFACE_HEADER": "इंटरफेस",
-  "SETTINGS_THEME_TITLE": "विषय",
-  "SETTINGS_THEME_SUB_TITLE": "ऐप का मुख्य विषय",
-  "SETTINGS_ACCENT_COLOR_TITLE": "स्वरोंका रंग",
-  "SETTINGS_ACCENT_COLOR_SUB_TITLE": "रंग के तत्वों के लिए उपयोग किया जाता है",
-  "SETTINGS_OTHER_HEADER": "अन्य",
-  "SETTINGS_OTHER_TITLE": "डिफ़ॉल्ट थीम को पुनर्स्थापित करें",
-  "SETTINGS_OTHER_SUB_TITLE": "डिफ़ॉल्ट थीम सेटिंग्स को पुनर्स्थापित करें",
-  "SETTINGS_THEME_OPTION": "विषय",
-  "SETTINGS_THEME_OPTION_1": "रोशनी",
-  "SETTINGS_THEME_OPTION_2": "अंधेरा",
-  "SETTINGS_THEME_OPTION_3": "प्रणालीगत चूक",
-  "SETTINGS_ACCENT_COLOR_OPTION": "स्वरोंका रंग",
-
-  "LIBRARIES_TITLE": "पुस्तकालयों",
-
-  "TRANSLATORS_TITLE": "अनुवादकों",
-
-  "ABOUT_INFO_TITLE": "OHMClient के बारे में",
-  "ABOUT_INFO_HEADER": "जानकारी",
-  "ABOUT_INFO_DESC_TITLE": "OHMClient एंड्रॉइड और आईओएस के लिए एक अनौपचारिक ओपन हार्डवेयर मॉनिटर क्लाइंट ऐप है जो प्रतिक्रिया-मूल में लिखा गया है। इस ऐप का उपयोग करके आप ओपन हार्डवेयर मॉनिटर वेब सर्वर की निगरानी कर सकते हैं।",
-  "ABOUT_INFO_AUTHOR_NAME_TITLE": "गज्जर तेजस।",
-  "ABOUT_DEVELOPER_TITLE": "डेवलपर",
-  "ABOUT_PORTFOLIO_TITLE": "विभाग",
-  "ABOUT_PORTFOLIO_SUB_TITLE": "डेवलपर के बारे में सभी जानकारी",
-  "ABOUT_INSTAGRAM_TITLE": "इन्स्टाग्राम",
-  "ABOUT_INSTAGRAM_SUB_TITLE": "मेरा शौक और मेरे गैजेट्स",
-  "ABOUT_TELEGRAM_TITLE": "तार से जुड़ें",
-  "ABOUT_TELEGRAM_SUB_TITLE": "बग, सुधार, फीचर अनुरोध और विकास समाचार के बारे में चर्चा",
-  "ABOUT_GITHUB_TITLE": "गिटहब",
-  "ABOUT_GITHUB_SUB_TITLE": "डेवलपर प्रोफाइल और ओपन सोर्स प्रोजेक्ट्स की सूची",
-  "ABOUT_TWITTER_TITLE": "ट्विटर",
-  "ABOUT_TWITTER_SUB_TITLE": "माइक्रो ब्लॉग स्टाफ",
-
-  "SETTINGS_GENERAL_HEADER": "आम",
-  "SETTINGS_GENERAL_URL_PATH_TITLE": "यूआरएल पथ",
-  "SETTINGS_GENERAL_URL_PATH_SUB_TITLE": "OpenHardware का यूआरएल पथ",
-  "SETTINGS_GENERAL_PORT_TITLE": "पोर्ट",
-  "SETTINGS_GENERAL_PORT_SUB_TITLE": "ओपन हार्डवेयर मॉनीटर क्लाइंट की पोर्ट संख्या",
-  "SETTINGS_GENERAL_REFRESH_INTERVAL_TITLE": "रिफ्रेश अंतराल (मिलीसेकंड में)",
-  "SETTINGS_GENERAL_REFRESH_INTERVAL_SUB_TITLE": "सूचना के अंतराल को ताज़ा करें।",
-  "SETTINGS_GENERAL_ENTER_URL_PATH_TITLE": "यूआरएल पथ दर्ज करें",
-  "SETTINGS_GENERAL_ENTER_PORT_TITLE": "पोर्ट दर्ज करें",
-  "SETTINGS_GENERAL_ENTER_REFRESH_INTERVAL_TITLE": "ताज़ा अंतराल दर्ज करें",
-  "SETTINGS_GENERAL_AUTH_HEADER": "प्रमाणीकरण",
-  "SETTINGS_GENERAL_AUTH_RESTORE_TITLE": "प्रमाणीकरण सेट करें",
-  "SETTINGS_GENERAL_AUTH_RESTORE_SUB_TITLE": "HTTP मूल प्रमाणीकरण सक्षम करें",
-  "SETTINGS_GENERAL_OTHER_HEADER": "अन्य",
-  "SETTINGS_GENERAL_OTHER_RESTORE_TITLE": "पहले जैसा कर देना",
-  "SETTINGS_GENERAL_OTHER_RESTORE_SUB_TITLE": "डिफ़ॉल्ट सेटिंग्स को पुनर्स्थापित करें",
-
-  "ADS_DETAIL_DESC": "विवरण",
-  "ADS_DETAIL_OPEN": "खुला हुआ",
-  "ADS_DETAIL_SETTINGS": "समायोजन",
-  "ADS_DETAIL_STEPS": "कदम",
-
-  "NAVIGATOR_SCREEN_TITLE_HOME": "घर",
-  "NAVIGATOR_SCREEN_TITLE_ABOUT": "के बारे में",
-  "NAVIGATOR_SCREEN_TITLE_DETAIL": "विस्तार",
-  "NAVIGATOR_SCREEN_TITLE_LANGUAGE": "भाषा चुने",
-  "NAVIGATOR_SCREEN_TITLE_THEME": "चुनिंदा विषय",
-  "NAVIGATOR_SCREEN_TITLE_LICENSE": "लाइसेंस",
-
-  "DEVICE_LIST_NO_DEVICE_FOUND_NPLEASE_TRY_ADDING_IT_MANUALLY": "कोई डिवाइस नहीं मिला! \n कृपया इसे मैन्युअल रूप से जोड़ने का प्रयास करें।",
-  "DEVICE_LIST_NO_DEVICE_FOUND": "कोई उपकरण नहीं मिला!",
-  "DEVICE_LIST_SCAN_AGAIN": "फिर से स्कैन करें",
-  "DEVICE_LIST_ADD_MANUALLY": "मैन्युअल रूप से डिवाइस जोड़ें",
-  "DEVICE_LIST_SERVERS": "उपलब्ध सर्वर",
-
-  "INPUT_DIALOG_ENTER_IP_ADDRESS": "आईपी पता दर्ज करें",
-  "INPUT_DIALOG_PLEASE_ENTER_VALID_PORT": "कृपया वैध पोर्ट दर्ज करें",
-  "INPUT_DIALOG_PLEASE_ENTER_VALID_IP_ADDRESS": "कृपया मान्य आईपी पता दर्ज करें",
-  "INPUT_DIALOG_CONNECT": "जुडिये",
-  "INPUT_DIALOG_CONNECT_HOST_MANUALLY": "मैन्युअल रूप से डिवाइस जोड़ें",
-  "INPUT_DIALOG_RESCAN": "पुन: स्कैन",
-  "INPUT_DIALOG_OR": "या",
-  "INPUT_DIALOG_CONNECTING": "जोड़ना ...",
-  "INPUT_DIALOG_AUTH_REQUIRED": "प्रमाणीकरण सेट करें",
-  "INPUT_DIALOG_ENTER_USERNAME": "उपयोगकर्ता नाम दर्ज करें",
-  "INPUT_DIALOG_ENTER_PASSWORD": "पास वर्ड दर्ज करें",
-  "INPUT_DIALOG_SET": "सहेजें",
-  "INPUT_DIALOG_PLEASE_ENTER_VALID_USERNAME": "कृपया मान्य उपयोगकर्ता नाम दर्ज करें",
-  "INPUT_DIALOG_PLEASE_ENTER_VALID_PASSWORD": "कृपया वैध पासवर्ड दर्ज करें",
-  "INPUT_DIALOG_INVALID_AUTH": "अमान्य प्रमाणीकरण या प्रमाणीकरण का अनुरोध किया गया"
+  "about": {
+    "app": "OHMClient के बारे में",
+    "github": "Github पर योगदान करें",
+    "moreApps": "और ऐप",
+    "rateApp": "एप्प का मूल्यांकन",
+    "sendFeedback": "प्रतिक्रिया भेजें",
+    "sendFeedbackDetail": "आप अपना बहुमूल्य फीडबैक टेलीग्राम चैनल पर भेज सकते हैं या सीधे मेल भेज सकते हैं।",
+    "setting": "समायोजन"
+  },
+  "aboutScreen": {
+    "developerTitle": "डेवलपर",
+    "githubSubTitle": "डेवलपर प्रोफ़ाइल और ओपन सोर्स परियोजनाओं की सूची",
+    "githubTitle": "Github",
+    "infoAuthorNameTitle": "तेजस गज्जर",
+    "infoDescTitle": "`ओएचएम-क्लाइंट` एंड्रॉइड और आईओएस के लिए रिएक्ट-नेटिव में लिखा गया एक अनौपचारिक ओपन हार्डवेयर मॉनिटर क्लाइंट ऐप है। \nइस ऐप का उपयोग करके आप ओपन हार्डवेयर मॉनिटर वेब सर्वर की निगरानी कर सकते हैं।",
+    "infoHeader": "जानकारी",
+    "instagramSubTitle": "मेरा शौक और मेरे गैजेट्स",
+    "instagramTitle": "Instagram",
+    "portfolioSubTitle": "डेवलपर के बारे में सारी जानकारी",
+    "portfolioTitle": "विभाग",
+    "telegramSubTitle": "बग, सुधार, सुविधा अनुरोध और विकास समाचार के बारे में चर्चा",
+    "telegramTitle": "टेलीग्राम से जुड़ें",
+    "title": "OHMClient के बारे में",
+    "twitterSubTitle": "व्यक्तिगत माइक्रोब्लॉग",
+    "twitterTitle": "ट्विटर"
+  },
+  "appearanceSettings": {
+    "accentColorSubTitle": "यूआई तत्वों को रंगने के लिए रंग का उपयोग किया जाता है",
+    "accentColorTitle": "स्वरोंका रंग",
+    "interfaceHeader": "इंटरफेस",
+    "otherHeader": "अन्य",
+    "otherSubTitle": "डिफ़ॉल्ट थीम सेटिंग्स पुनर्स्थापित करें",
+    "otherTitle": "डिफ़ॉल्ट थीम पुनर्स्थापित करें",
+    "themeOption": "थीम",
+    "themeOption1": "रोशनी",
+    "themeOption2": "अँधेरा",
+    "themeOption3": "प्रणालीगत चूक",
+    "themeSubTitle": "ऐप का मुख्य विषय",
+    "themeTitle": "थीम",
+    "title": "उपस्थिति"
+  },
+  "deviceList": {
+    "addManually": "डिवाइस को मैन्युअल रूप से जोड़ें",
+    "advanceSetting": "अग्रिम सेटिंग",
+    "authRequestedMessage": "प्राधिकरण का अनुरोध किया गया है, कृपया इसे सेटिंग्स -> सामान्य -> ​​प्रमाणीकरण से सेट करें",
+    "card": {
+      "currentMax": "अधिकतम",
+      "currentMin": "मिन",
+      "currentValue": "मौजूदा"
+    },
+    "connectHelp": "मदद",
+    "connectHostManually": "डिवाइस को मैन्युअल रूप से जोड़ें",
+    "devices": "उपकरण",
+    "disconnectedMessage": "होस्ट से डिस्कनेक्ट हो गया है, पुनः कनेक्ट हो रहा है कृपया प्रतीक्षा करें...",
+    "noDeviceFound": "कोई उपकरण नहीं मिला!",
+    "noDeviceFoundTryAddingItManually": "कोई उपकरण नहीं मिला!\n\nकृपया इसे मैन्युअल रूप से जोड़ने का प्रयास करें.",
+    "or": "या",
+    "rescan": "पुन: स्कैन"
+  },
+  "general": {
+    "appname": "OHMक्लाइंट",
+    "close": "बंद करना",
+    "connect": "जोड़ना",
+    "connecting": "कनेक्ट हो रहा है...",
+    "save": "बचाना",
+    "set": "तय करना"
+  },
+  "generalSetting": {
+    "section1": {
+      "header": "डिफ़ॉल्ट स्कैन कॉन्फ़िगरेशन",
+      "row1": {
+        "dialogSubTitle": "ओपन हार्डवेयर क्लाइंट का यूआरएल पथ",
+        "dialogTitle": "यूआरएल पथ दर्ज करें",
+        "subTitle": "{{path}}",
+        "title": "यूआरएल पथ"
+      },
+      "row2": {
+        "dialogSubTitle": "ओपन हार्डवेयर मॉनिटर क्लाइंट का पोर्ट नंबर",
+        "dialogTitle": "पोर्ट दर्ज करें",
+        "subTitle": "{{port}}",
+        "title": "पत्तन"
+      },
+      "row3": {
+        "dialogSubTitle": "डैशबोर्ड डेटा विशिष्ट अंतराल पर ताज़ा होगा।",
+        "dialogTitle": "ताज़ा अंतराल दर्ज करें (मिलीसेकंड में)",
+        "subTitle": "{{interval}} एमएस",
+        "title": "ताज़ा अंतराल (मिलीसेकंड में)"
+      }
+    },
+    "section2": {
+      "header": "प्रमाणीकरण",
+      "row1": {
+        "dialogInputError1": "अमान्य प्रमाणीकरण या प्रमाणीकरण का अनुरोध किया गया",
+        "dialogInputPlaceholder1": "उपयोगकर्ता नाम दर्ज करें",
+        "dialogInputPlaceholder2": "पास वर्ड दर्ज करें",
+        "dialogInputValidation1": "कृपया मान्य उपयोगकर्ता नाम दर्ज करें",
+        "dialogInputValidation2": "कृपया वैध पासवर्ड दर्ज करें",
+        "dialogSubTitle": "यदि आपने प्रमाणीकरण बदल दिया है, तो कृपया अपना विंडोज़ क्लाइंट ऐप पुनः आरंभ करें।",
+        "dialogTitle": "प्रमाणीकरण सेट करें",
+        "subTitle": "HTTP बेसिक प्रमाणीकरण यानी उपयोगकर्ता नाम और पासवर्ड सक्षम करें।",
+        "title": "प्रमाणीकरण सेट करें"
+      }
+    },
+    "section3": {
+      "header": "विकसित",
+      "row1": {
+        "dialogSubTitle": "प्रति थ्रेड स्कैन टाइमआउट, उदाहरण: 150 थ्रेड प्रति 1500 एमएस, यदि डिवाइस नहीं मिलता है तो टाइमआउट बढ़ाने का प्रयास करें।",
+        "dialogTitle": "स्कैन टाइमआउट दर्ज करें (1 - 10000)",
+        "subTitle": "{{scanTimeoutInMs}} एमएस",
+        "title": "स्कैन टाइमआउट"
+      },
+      "row2": {
+        "dialogSubTitle": "प्रति टाइमआउट पर थ्रेड्स को स्कैन करें, उदाहरण के लिए: 150 थ्रेड्स प्रति 1500 एमएस, यदि डिवाइस नहीं मिलता है तो थ्रेड्स को कम करने का प्रयास करें।",
+        "dialogTitle": "स्कैन थ्रेड दर्ज करें (1 - 999)",
+        "subTitle": "{{scanThreads}}",
+        "title": "थ्रेड्स स्कैन करें"
+      }
+    },
+    "section4": {
+      "header": "अन्य",
+      "row1": {
+        "subTitle": "डिफाल्ट सेटिंग रिस्टोर करो",
+        "title": "डिफ़ॉल्ट बहाल"
+      }
+    },
+    "title": "आम"
+  },
+  "inputIpAddressDialog": {
+    "button1": "अग्रिम सेटिंग",
+    "dialogInputError1": "कृपया वैध आईपी पता दर्ज करें",
+    "dialogInputError2": "कृपया वैध पोर्ट दर्ज करें",
+    "inputPlaceholder1": "आईपी ​​पता दर्ज करें",
+    "inputPlaceholder2": "पोर्ट दर्ज करें",
+    "title": "डिवाइस जोडे"
+  },
+  "librariesScreen": {
+    "title": "पुस्तकालय"
+  },
+  "moreApps": {
+    "apps1Desc": "`ओएचएम-क्लाइंट` एंड्रॉइड और आईओएस के लिए रिएक्ट-नेटिव में लिखा गया एक अनौपचारिक ओपन हार्डवेयर मॉनिटर क्लाइंट ऐप है। \nइस ऐप का उपयोग करके आप ओपन हार्डवेयर मॉनिटर वेब सर्वर की निगरानी कर सकते हैं।",
+    "apps1Title": "ओएचएम-क्लाइंट",
+    "apps2Desc": "यह एप्लिकेशन आपको Xiaomi (MIUI) उपकरणों में विभिन्न ऐप्स के लिए विज्ञापनों या अनुशंसाओं को सक्षम/अक्षम करने की अनुमति देता है।",
+    "apps2Title": "MIUI - विज्ञापन सहायक",
+    "appsGithub": "Github",
+    "appsPlayStore": "खेल स्टोर",
+    "appsTitle": "और ऐप"
+  },
+  "settings": {
+    "appearanceSubTitle": "उपस्थिति का अनुकूलन",
+    "appearanceTitle": "उपस्थिति",
+    "changelogSubTitle": "सभी अद्यतनों में किए गए परिवर्तनों की सूची",
+    "changelogTitle": "बदलाव का",
+    "commonHeader": "सामान्य सेटिंग",
+    "faqSubTitle": "अक्सर पूछे जाने वाले प्रश्नों के उत्तर",
+    "faqTitle": "सामान्य प्रश्न",
+    "generalSubTitle": "ऐप की कार्यात्मक सेटिंग्स",
+    "generalTitle": "आम",
+    "infoHeader": "जानकारी",
+    "librariesSubTitle": "इस परियोजना में प्रयुक्त मुक्त स्रोत पुस्तकालयों की सूची",
+    "librariesTitle": "पुस्तकालय",
+    "privacySubTitle": "सूचना और अनुमतियाँ उपयोग नीति",
+    "privacyTitle": "गोपनीयता नीति",
+    "title": "समायोजन",
+    "translateSubTitle": "इस ऐप का अपनी भाषा में अनुवाद करें",
+    "translateTitle": "इस ऐप का अनुवाद करें",
+    "translatorsSubTitle": "वे लोग जिन्होंने इस ऐप को स्थानीय बनाने में मदद की",
+    "translatorsTitle": "अनुवादकों"
+  },
+  "translatorsScreen": {
+    "title": "अनुवादकों"
+  }
 }

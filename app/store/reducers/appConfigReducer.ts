@@ -11,6 +11,8 @@ const initialState: IAppConfigState = {
   refreshInterval: 1000,
   username: null,
   password: null,
+  scanTimeoutInMs: 1000,
+  scanThreads: 150,
 };
 
 export const appConfigReducer = createReducer(initialState, {
@@ -45,6 +47,18 @@ export const appConfigReducer = createReducer(initialState, {
       ...state,
       username: action.payload.username,
       password: action.payload.password,
+    };
+  },
+  [types.SET_APP_CONFIG_TIMEOUT_IN_MS](state: IAppConfigState, action: { type: string; payload: number }) {
+    return {
+      ...state,
+      scanTimeoutInMs: action.payload,
+    };
+  },
+  [types.SET_APP_CONFIG_SCAN_THREADS](state: IAppConfigState, action: { type: string; payload: number }) {
+    return {
+      ...state,
+      scanThreads: action.payload,
     };
   },
 });

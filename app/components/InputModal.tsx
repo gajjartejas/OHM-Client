@@ -1,34 +1,51 @@
 import React, { useEffect } from 'react';
-import { View, TextInput, Modal, StyleSheet, TextInputProps, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, StyleSheet, TextInputProps } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
 import { Text, Button, useTheme } from 'react-native-paper';
+import Modal from 'react-native-modal';
 
 //Interface
 interface IInputModalProps extends TextInputProps {
   modalVisible: boolean;
   header: string;
+  hint: string;
   onPressClose: () => void;
   onPressSave: () => void;
+  onBackButtonPress: () => void;
 }
 
 const InputModal = React.forwardRef((props: IInputModalProps, ref: any) => {
-  //Consts
+  //Const
   const theme = useTheme();
   const { t } = useTranslation();
 
   useEffect(() => {
-    setTimeout(() => {
-      ref.current.focus();
-    }, 200);
-  }, [ref]);
+    if (!props.modalVisible) {
+      return;
+    }
+    const timeOut = setTimeout(() => {
+      ref.current && ref.current.focus();
+    }, 100);
+
+    return () => {
+      clearInterval(timeOut);
+    };
+  }, [props.modalVisible, ref]);
 
   return (
-    <Modal animationType="fade" transparent={true} visible={props.modalVisible}>
-      <KeyboardAvoidingView
-        behavior={'padding'}
-        style={[styles.centeredView, { backgroundColor: `${theme.colors.onBackground}33` }]}>
+    <Modal
+      style={styles.modal}
+      backdropColor={`${theme.colors.onBackground}33`}
+      coverScreen
+      animationInTiming={300}
+      animationIn={'slideInUp'}
+      avoidKeyboard
+      hideModalContentWhileAnimating
+      onBackButtonPress={props.onBackButtonPress}
+      isVisible={props.modalVisible}>
+      <View style={[styles.centeredView]}>
         <View style={[styles.modalView, { backgroundColor: `${theme.colors.background}` }]}>
           <Text style={[styles.textSize, { color: theme.colors.primary }]}>{props.header}</Text>
           <TextInput
@@ -46,21 +63,27 @@ const InputModal = React.forwardRef((props: IInputModalProps, ref: any) => {
             {...props}
           />
 
+          {!!props.hint && <Text style={[styles.hintText, { color: theme.colors.onSurface }]}>{props.hint}</Text>}
+
           <View style={styles.buttonContainer}>
-            <Button style={styles.button} onPress={props.onPressClose}>
-              {t('CLOSE')}
+            <Button mode={'contained'} style={styles.button} onPress={props.onPressClose}>
+              {t('general.close')}
             </Button>
-            <Button style={styles.button} onPress={props.onPressSave}>
-              {t('SAVE')}
+
+            <View style={styles.spacing} />
+
+            <Button mode={'contained'} style={styles.button} onPress={props.onPressSave}>
+              {t('general.save')}
             </Button>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </Modal>
   );
 });
 
 const styles = StyleSheet.create({
+  modal: { margin: 8, marginBottom: -4 },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -72,13 +95,12 @@ const styles = StyleSheet.create({
   },
   modalView: {
     justifyContent: 'space-around',
-    alignItems: 'center',
     width: '100%',
-    height: 200,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     paddingTop: 10,
+    paddingBottom: 28,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
@@ -91,15 +113,24 @@ const styles = StyleSheet.create({
   textSize: {
     textAlign: 'center',
     fontSize: 16,
+    marginVertical: 16,
   },
   inputStyle: {
     borderBottomWidth: 1,
     width: '100%',
+    height: 50,
+    marginBottom: 16,
   },
   textInputShadow: {},
   buttonContainer: {
     flexDirection: 'row',
   },
   button: { flex: 1 },
+  spacing: { width: 8 },
+  hintText: {
+    fontSize: 12,
+    marginVertical: 8,
+    marginBottom: 16,
+  },
 });
 export default InputModal;

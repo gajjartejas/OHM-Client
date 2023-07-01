@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Image, View } from 'react-native';
 
 //ThirdParty
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { Appbar, List, useTheme } from 'react-native-paper';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 //App modules
 import Config from 'app/config';
 import styles from './styles';
+import Components from 'app/components';
+import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 
 //Interfaces
 interface ITranslator {
@@ -19,10 +21,7 @@ interface ITranslator {
 }
 
 //Params
-type RootStackParamList = {
-  Translators: {};
-};
-type Props = NativeStackScreenProps<RootStackParamList, 'Translators'>;
+type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'Translators'>;
 
 const Translators = ({ navigation }: Props) => {
   //Constants
@@ -43,7 +42,7 @@ const Translators = ({ navigation }: Props) => {
       { id: 7, icon: Config.Images.icons.flag_et, translators: [], language: 'eesti' },
       { id: 8, icon: Config.Images.icons.flag_fa, translators: [], language: 'فارسی' },
       { id: 9, icon: Config.Images.icons.flag_he, translators: [], language: 'עברית' },
-      { id: 10, icon: Config.Images.icons.flag_hi, translators: ['Tejaskumar'], language: 'हिन्दी' },
+      { id: 10, icon: Config.Images.icons.flag_hi, translators: [], language: 'हिन्दी' },
       { id: 11, icon: Config.Images.icons.flag_hu, translators: [], language: 'magyar' },
       { id: 12, icon: Config.Images.icons.flag_id, translators: [], language: 'Bahasa Indonesia' },
       { id: 13, icon: Config.Images.icons.flag_it, translators: [], language: 'Italiano' },
@@ -56,7 +55,12 @@ const Translators = ({ navigation }: Props) => {
       { id: 20, icon: Config.Images.icons.flag_pt_pt, translators: [], language: 'Português' },
       { id: 21, icon: Config.Images.icons.flag_pt_br, translators: [], language: 'Português (Brasil)' },
       { id: 22, icon: Config.Images.icons.flag_ro, translators: [], language: 'Română' },
-      { id: 23, icon: Config.Images.icons.flag_ru, translators: [], language: 'русский' },
+      {
+        id: 23,
+        icon: Config.Images.icons.flag_ru,
+        translators: ['Heathcliff (rtempest805@gmail.com)'],
+        language: 'русский',
+      },
       { id: 24, icon: Config.Images.icons.flag_sk, translators: [], language: 'slovenčina' },
       { id: 25, icon: Config.Images.icons.flag_tr, translators: [], language: 'Türkçe' },
       { id: 26, icon: Config.Images.icons.flag_uk, translators: [], language: 'Українська' },
@@ -93,9 +97,9 @@ const Translators = ({ navigation }: Props) => {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Appbar.Header style={{ backgroundColor: colors.background }}>
         <Appbar.BackAction onPress={onGoBack} />
-        <Appbar.Content title={t('TRANSLATORS_TITLE')} subtitle="" />
+        <Appbar.Content title={t('translatorsScreen.title')} />
       </Appbar.Header>
-      <View style={styles.subView}>
+      <Components.AppBaseView edges={['bottom', 'left', 'right']} style={styles.safeArea}>
         <FlatList
           style={styles.flatlist}
           keyboardShouldPersistTaps={'handled'}
@@ -103,7 +107,7 @@ const Translators = ({ navigation }: Props) => {
           renderItem={renderItem}
           keyExtractor={(item, _index) => item.id.toString()}
         />
-      </View>
+      </Components.AppBaseView>
     </View>
   );
 };

@@ -1,141 +1,173 @@
 {
-  "APPNAME": "OHMClient",
-  "CLOSE": "CLOSE",
-  "SAVE": "SAVE",
-
-  "CURRENT_VALUE": "Current",
-  "CURRENT_MIN": "Min",
-  "CURRENT_MAX": "Max",
-
-  "MORE_APP_GITHUB": "Github",
-  "MORE_APP_PLAY_STORE": "Play Store",
-
-  "NO_INTERNET": "No Internet Connection",
-
-  "ABOUT_CHANGE_LANGUAGE": "Change Language",
-  "ABOUT_RATE_APP": "Rate App",
-  "ABOUT_MORE_APPS": "More Apps",
-  "ABOUT_TERMS_SERVICE": "Terms of service",
-  "ABOUT_PRIVACY_POLICY": "Privacy Policy",
-  "ABOUT_CREDITS": "Credits",
-  "ABOUT_COPY_RIGHT_NAME": "Gajjar Tejas",
-  "ABOUT_COPY_RIGHT": "Copyright 2021-2022",
-  "ABOUT_GITHUB": "Contribute on Github",
-  "ABOUT_SETTING": "Settings",
-  "ABOUT_APP": "About OHMClient",
-  "ABOUT_SEND_FEEDBACK": "Send Feedback",
-  "ABOUT_SEND_FEEDBACK_DETAIL": "You can send your valuable feedback to Telegram channel or send mail directly.",
-
-  "DASHBOARD_CONNECTED": "Connected",
-  "DASHBOARD_DISCONNECTED": "Disconnected",
-
-  "MORE_APPS_TITLE": "More Apps",
-  "MORE_APPS_1_TITLE": "OHMClient Client",
-  "MORE_APPS_1_DESC": "`OHM-Client` is an unofficial open hardware monitor client app for android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
-  "MORE_APPS_2_TITLE": "MIUI - Ads helper",
-  "MORE_APPS_2_DESC": "This application allows you to enable/disable ads or recommendations for various apps in Xiaomi (MIUI) devices.",
-
-  "SETTINGS_TITLE": "Settings",
-  "SETTINGS_COMMON_HEADER": "Common Settings",
-  "SETTINGS_APPEARANCE_TITLE": "Appearance",
-  "SETTINGS_APPEARANCE_SUB_TITLE": "Customization of appearance",
-  "SETTINGS_GENERAL_TITLE": "General",
-  "SETTINGS_GENERAL_SUB_TITLE": "Functional settings of the app",
-  "SETTINGS_INFO_HEADER": "Information",
-  "SETTINGS_CHANGELOG_TITLE": "Changelog",
-  "SETTINGS_CHANGELOG_SUB_TITLE": "List of changes made in the all updates",
-  "SETTINGS_LIBRARIES_TITLE": "Libraries",
-  "SETTINGS_LIBRARIES_SUB_TITLE": "List of open source libraries used in this project",
-  "SETTINGS_FAQ_TITLE": "FAQ & help",
-  "SETTINGS_FAQ_SUB_TITLE": "Answer to frequently asked questions",
-  "SETTINGS_TRANSLATE_TITLE": "Translate this app",
-  "SETTINGS_TRANSLATE_SUB_TITLE": "Translate this app in your language",
-  "SETTINGS_TRANSLATORS_TITLE": "Translators",
-  "SETTINGS_TRANSLATORS_SUB_TITLE": "People who helped localize this app",
-  "SETTINGS_PRIVACY_TITLE": "Privacy policy",
-  "SETTINGS_PRIVACY_SUB_TITLE": "Information and permissions usage policy",
-  "SETTINGS_INTERFACE_HEADER": "Interface",
-  "SETTINGS_THEME_TITLE": "Theme",
-  "SETTINGS_THEME_SUB_TITLE": "Main theme of the app",
-  "SETTINGS_ACCENT_COLOR_TITLE": "Accent color",
-  "SETTINGS_ACCENT_COLOR_SUB_TITLE": "Color used to tint UI elements",
-  "SETTINGS_OTHER_HEADER": "Other",
-  "SETTINGS_OTHER_TITLE": "Restore default theme",
-  "SETTINGS_OTHER_SUB_TITLE": "Restore default theme settings",
-  "SETTINGS_THEME_OPTION": "Theme",
-  "SETTINGS_THEME_OPTION_1": "Light",
-  "SETTINGS_THEME_OPTION_2": "Dark",
-  "SETTINGS_THEME_OPTION_3": "System default",
-  "SETTINGS_ACCENT_COLOR_OPTION": "Accent color",
-
-  "LIBRARIES_TITLE": "Libraries",
-
-  "TRANSLATORS_TITLE": "Translators",
-
-  "ABOUT_INFO_TITLE": "About OHMClient Client",
-  "ABOUT_INFO_HEADER": "Information",
-  "ABOUT_INFO_DESC_TITLE": "OHMClient is an unofficial open hardware monitor client app for android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
-  "ABOUT_INFO_AUTHOR_NAME_TITLE": "Tejas Gajjar",
-  "ABOUT_DEVELOPER_TITLE": "Developer",
-  "ABOUT_PORTFOLIO_TITLE": "Portfolio",
-  "ABOUT_PORTFOLIO_SUB_TITLE": "All information about the developer",
-  "ABOUT_INSTAGRAM_TITLE": "Instagram",
-  "ABOUT_INSTAGRAM_SUB_TITLE": "My hobby and my gadgets",
-  "ABOUT_TELEGRAM_TITLE": "Join Telegram",
-  "ABOUT_TELEGRAM_SUB_TITLE": "Discussion about bugs, improvements, feature request and development news",
-  "ABOUT_GITHUB_TITLE": "Github",
-  "ABOUT_GITHUB_SUB_TITLE": "Developer profile and list of open sourced projects",
-  "ABOUT_TWITTER_TITLE": "Twitter",
-  "ABOUT_TWITTER_SUB_TITLE": "Personal micro-blog",
-
-  "SETTINGS_GENERAL_HEADER": "General",
-  "SETTINGS_GENERAL_URL_PATH_TITLE": "URL Path",
-  "SETTINGS_GENERAL_URL_PATH_SUB_TITLE": "URL Path of the Open Harrdware Client",
-  "SETTINGS_GENERAL_PORT_TITLE": "Port",
-  "SETTINGS_GENERAL_PORT_SUB_TITLE": "Port number of Open Hardware Monitor client",
-  "SETTINGS_GENERAL_REFRESH_INTERVAL_TITLE": "Refresh Interval (in millisecond)",
-  "SETTINGS_GENERAL_REFRESH_INTERVAL_SUB_TITLE": "Refresh interval of information.",
-  "SETTINGS_GENERAL_ENTER_URL_PATH_TITLE": "Enter URL Path",
-  "SETTINGS_GENERAL_ENTER_PORT_TITLE": "Enter Port",
-  "SETTINGS_GENERAL_ENTER_REFRESH_INTERVAL_TITLE": "Enter Refresh Interval",
-  "SETTINGS_GENERAL_AUTH_HEADER": "Authentication",
-  "SETTINGS_GENERAL_AUTH_RESTORE_TITLE": "Set Authentication",
-  "SETTINGS_GENERAL_AUTH_RESTORE_SUB_TITLE": "Enable HTTP Basic Authentication",
-  "SETTINGS_GENERAL_OTHER_HEADER": "Other",
-  "SETTINGS_GENERAL_OTHER_RESTORE_TITLE": "Restore Default",
-  "SETTINGS_GENERAL_OTHER_RESTORE_SUB_TITLE": "Restore default settings",
-  "ADS_DETAIL_DESC": "Description",
-  "ADS_DETAIL_OPEN": "Open",
-  "ADS_DETAIL_SETTINGS": "Settings",
-  "ADS_DETAIL_STEPS": "Steps",
-
-  "NAVIGATOR_SCREEN_TITLE_HOME": "Home",
-  "NAVIGATOR_SCREEN_TITLE_ABOUT": "About",
-  "NAVIGATOR_SCREEN_TITLE_DETAIL": "Detail",
-  "NAVIGATOR_SCREEN_TITLE_LANGUAGE": "Select Language",
-  "NAVIGATOR_SCREEN_TITLE_THEME": "Select Theme",
-  "NAVIGATOR_SCREEN_TITLE_LICENSE": "License",
-
-  "DEVICE_LIST_NO_DEVICE_FOUND_NPLEASE_TRY_ADDING_IT_MANUALLY": "No device found!\nPlease try adding it manually.",
-  "DEVICE_LIST_NO_DEVICE_FOUND": "No device found!",
-  "DEVICE_LIST_SCAN_AGAIN": "Scan Again",
-  "DEVICE_LIST_ADD_MANUALLY": "Add Device Manually",
-  "DEVICE_LIST_SERVERS": "Available Servers",
-
-  "INPUT_DIALOG_ENTER_IP_ADDRESS": "Enter IP Address",
-  "INPUT_DIALOG_PLEASE_ENTER_VALID_PORT": "Please enter valid port",
-  "INPUT_DIALOG_PLEASE_ENTER_VALID_IP_ADDRESS": "Please enter valid IP Address",
-  "INPUT_DIALOG_CONNECT": "CONNECT",
-  "INPUT_DIALOG_CONNECT_HOST_MANUALLY": "Add device manually",
-  "INPUT_DIALOG_RESCAN": "Rescan",
-  "INPUT_DIALOG_OR": "OR",
-  "INPUT_DIALOG_CONNECTING": "Connecting...",
-  "INPUT_DIALOG_CONNECT_HELP": "Help",
-  "INPUT_DIALOG_AUTH_REQUIRED": "Set Authentication",
-  "INPUT_DIALOG_ENTER_USERNAME": "Enter Username",
-  "INPUT_DIALOG_ENTER_PASSWORD": "Enter Password",
-  "INPUT_DIALOG_SET": "Set",
-  "INPUT_DIALOG_PLEASE_ENTER_VALID_USERNAME": "Please enter valid username",
-  "INPUT_DIALOG_PLEASE_ENTER_VALID_PASSWORD": "Please enter valid password",
-  "INPUT_DIALOG_INVALID_AUTH": "Invalid authentication or authentication requested"
+  "general": {
+    "appname": "OHMClient",
+    "close": "CLOSE",
+    "save": "SAVE",
+    "set": "SET",
+    "connecting": "Connecting...",
+    "connect": "CONNECT"
+  },
+  "about": {
+    "sendFeedback": "Send Feedback",
+    "rateApp": "Rate App",
+    "moreApps": "More Apps",
+    "github": "Contribute on Github",
+    "setting": "Settings",
+    "app": "About OHMClient",
+    "sendFeedbackDetail": "You can send your valuable feedback to Telegram channel or send mail directly."
+  },
+  "moreApps": {
+    "apps1Title": "OHM-Client",
+    "apps1Desc": "`OHM-Client` is an unofficial open hardware monitor client app for android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
+    "appsTitle": "More Apps",
+    "apps2Title": "MIUI - Ads helper",
+    "apps2Desc": "This application allows you to enable/disable ads or recommendations for various apps in Xiaomi (MIUI) devices.",
+    "appsGithub": "Github",
+    "appsPlayStore": "Play Store"
+  },
+  "settings": {
+    "title": "Settings",
+    "commonHeader": "Common Settings",
+    "appearanceTitle": "Appearance",
+    "appearanceSubTitle": "Customization of appearance",
+    "generalTitle": "General",
+    "generalSubTitle": "Functional settings of the app",
+    "infoHeader": "Information",
+    "changelogTitle": "Changelog",
+    "changelogSubTitle": "List of changes made in the all updates",
+    "librariesTitle": "Libraries",
+    "librariesSubTitle": "List of open source libraries used in this project",
+    "faqTitle": "FAQ & help",
+    "faqSubTitle": "Answer to frequently asked questions",
+    "translateTitle": "Translate this app",
+    "translateSubTitle": "Translate this app in your language",
+    "translatorsTitle": "Translators",
+    "translatorsSubTitle": "People who helped localize this app",
+    "privacyTitle": "Privacy policy",
+    "privacySubTitle": "Information and permissions usage policy"
+  },
+  "appearanceSettings": {
+    "title": "Appearance",
+    "interfaceHeader": "Interface",
+    "themeTitle": "Theme",
+    "themeSubTitle": "Main theme of the app",
+    "accentColorTitle": "Accent color",
+    "accentColorSubTitle": "Color used to tint UI elements",
+    "otherHeader": "Other",
+    "otherTitle": "Restore default theme",
+    "otherSubTitle": "Restore default theme settings",
+    "themeOption": "Theme",
+    "themeOption1": "Light",
+    "themeOption2": "Dark",
+    "themeOption3": "System default"
+  },
+  "librariesScreen": {
+    "title": "Libraries"
+  },
+  "translatorsScreen": {
+    "title": "Translators"
+  },
+  "aboutScreen": {
+    "title": "About OHMClient",
+    "infoHeader": "Information",
+    "infoDescTitle": "`OHM-Client` is an unofficial open hardware monitor client app for android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
+    "infoAuthorNameTitle": "Tejas Gajjar",
+    "developerTitle": "Developer",
+    "portfolioTitle": "Portfolio",
+    "portfolioSubTitle": "All information about the developer",
+    "instagramTitle": "Instagram",
+    "instagramSubTitle": "My hobby and my gadgets",
+    "telegramTitle": "Join Telegram",
+    "telegramSubTitle": "Discussion about bugs, improvements, feature request and development news",
+    "githubTitle": "Github",
+    "githubSubTitle": "Developer profile and list of open sourced projects",
+    "twitterTitle": "Twitter",
+    "twitterSubTitle": "Personal micro-blog"
+  },
+  "generalSetting": {
+    "title": "General",
+    "section1": {
+      "header": "Default Scan Config",
+      "row1": {
+        "title": "URL Path",
+        "subTitle": "{{path}}",
+        "dialogTitle": "Enter URL Path",
+        "dialogSubTitle": "URL Path of the Open Hardware Client"
+      },
+      "row2": {
+        "title": "Port",
+        "subTitle": "{{port}}",
+        "dialogTitle": "Enter Port",
+        "dialogSubTitle": "Port number of Open Hardware Monitor client"
+      },
+      "row3": {
+        "title": "Refresh Interval (in millisecond)",
+        "subTitle": "{{interval}} ms",
+        "dialogTitle": "Enter Refresh Interval (in millisecond)",
+        "dialogSubTitle": "The dashboard data will refresh at specific interval."
+      }
+    },
+    "section2": {
+      "header": "Authentication",
+      "row1": {
+        "title": "Set Authentication",
+        "subTitle": "Enable HTTP Basic Authentication ie username and password.",
+        "dialogTitle": "Set Authentication",
+        "dialogSubTitle": "If you have changed authentication, please restart your windows client app.",
+        "dialogInputPlaceholder1": "Enter Username",
+        "dialogInputPlaceholder2": "Enter Password",
+        "dialogInputValidation1": "Please enter valid username",
+        "dialogInputValidation2": "Please enter valid password",
+        "dialogInputError1": "Invalid authentication or authentication requested"
+      }
+    },
+    "section3": {
+      "header": "Advanced",
+      "row1": {
+        "title": "Scan Timeout",
+        "subTitle": "{{scanTimeoutInMs}} ms",
+        "dialogTitle": "Enter Scan Timeout (1 - 10000)",
+        "dialogSubTitle": "Scan timeout per threads, ex: 150 threads per 1500 ms, If device not found try to increase timeout."
+      },
+      "row2": {
+        "title": "Scan Threads",
+        "subTitle": "{{scanThreads}}",
+        "dialogTitle": "Enter Scan Threads (1 - 999)",
+        "dialogSubTitle": "Scan threads per timeouts,  ex: 150 threads per 1500 ms, If device not found try to decrease threads."
+      }
+    },
+    "section4": {
+      "header": "Other",
+      "row1": {
+        "title": "Restore Default",
+        "subTitle": "Restore default settings"
+      }
+    }
+  },
+  "deviceList": {
+    "noDeviceFoundTryAddingItManually": "No device found!\nPlease try adding it manually.",
+    "noDeviceFound": "No device found!",
+    "addManually": "Add Device Manually",
+    "connectHostManually": "Add device manually",
+    "rescan": "Rescan",
+    "or": "OR",
+    "connectHelp": "Help",
+    "advanceSetting": "Advance Setting",
+    "devices": "Devices",
+    "card": {
+      "currentValue": "Current",
+      "currentMin": "Min",
+      "currentMax": "Max"
+    },
+    "disconnectedMessage": "Disconnected from host, reconnecting please wait...",
+    "authRequestedMessage": "Authorization is requested, please set it from Settings -> General -> Authentication"
+  },
+  "inputIpAddressDialog": {
+    "title": "Add Device",
+    "inputPlaceholder1": "Enter IP Address",
+    "inputPlaceholder2": "Enter Port",
+    "dialogInputError1": "Please enter valid IP Address",
+    "dialogInputError2": "Please enter valid port",
+    "button1": "Advance Setting"
+  }
 }

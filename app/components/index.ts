@@ -1,4 +1,4 @@
-import AppNoConnection from 'app/components/AppNoConnection';
+import AppMiniBanner from 'app/components/AppMiniBanner';
 import AppLoadingPlaceHolder from 'app/components/AppLoadingPlaceHolder';
 import CardSection from 'app/components/CardLeftTitle';
 import MoreAppCard from 'app/components/MoreAppCard';
@@ -9,9 +9,11 @@ import AboutFeedbackDialog from './AboutFeedbackDialog';
 import SelectThemeDialog from './SelectThemeDialog';
 import SelectAccentDialog from './SelectAccentColorDialog';
 import AuthInputModal from './AuthInputModal';
+import AppBaseView from './AppBaseView';
+import AppLoader from 'app/components/AppLoader';
 
 export default {
-  AppNoConnection,
+  AppMiniBanner,
   AppLoadingPlaceHolder,
   CardSection,
   MoreAppCard,
@@ -22,4 +24,6 @@ export default {
   SelectThemeDialog,
   SelectAccentDialog,
   AuthInputModal,
+  AppBaseView,
+  AppLoader,
 };

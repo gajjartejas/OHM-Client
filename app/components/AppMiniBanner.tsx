@@ -2,30 +2,30 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 //ThirdParty
-import { useTranslation } from 'react-i18next';
 import { useTheme, Text } from 'react-native-paper';
 
-const AppNoInternetConnection = () => {
-  //Consts
-  const { t } = useTranslation();
+const AppMiniBanner = (props: { message: string }) => {
+  //Const
   const { colors } = useTheme();
+  const { message } = props;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.error }]}>
-      <Text style={[styles.titleTextStyle, { color: colors.onPrimary }]}>{t('NO_INTERNET')}</Text>
+      <Text style={[styles.titleTextStyle, { color: colors.onSurface }]}>{message}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 26,
-    alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 16,
   },
   titleTextStyle: {
-    fontSize: 14,
+    fontSize: 13,
+    fontWeight: '500',
   },
 });
 
-export default AppNoInternetConnection;
+export default AppMiniBanner;

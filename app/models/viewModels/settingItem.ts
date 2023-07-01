@@ -7,8 +7,8 @@ export interface ISettingItem {
   iconName: string;
   iconType: IconType;
   title: string;
-  description?: string;
-  route?: any;
+  description: string | null;
+  route: string | null;
 }
 
 export interface ISettingSection {

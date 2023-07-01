@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, View, TextInput, InteractionManager } from 'react-native';
+import { ScrollView, View, TextInput } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
@@ -31,10 +31,15 @@ const GeneralSetting = ({ navigation }: Props) => {
   let modalVisibleUrlPortRef = useRef<TextInput | null>(null);
   let modalVisibleUrlRefreshIntervalRef = useRef<TextInput | null>(null);
 
+  let modalVisibleScanTimeoutRef = useRef<TextInput | null>(null);
+  let modalVisibleScanThreadsRef = useRef<TextInput | null>(null);
+
   //Actions
   const path = useSelector((state: IState) => state.appConfigReducer.path);
   const port = useSelector((state: IState) => state.appConfigReducer.port);
   const refreshInterval = useSelector((state: IState) => state.appConfigReducer.refreshInterval);
+  const scanTimeoutInMs = useSelector((state: IState) => state.appConfigReducer.scanTimeoutInMs);
+  const scanThreads = useSelector((state: IState) => state.appConfigReducer.scanThreads);
   const username = useSelector((state: IState) => state.appConfigReducer.username);
   const password = useSelector((state: IState) => state.appConfigReducer.password);
 
@@ -47,58 +52,80 @@ const GeneralSetting = ({ navigation }: Props) => {
   const [apps, setApps] = useState<ISettingSection[]>([
     {
       id: 0,
-      title: t('SETTINGS_GENERAL_HEADER'),
+      title: t('generalSetting.section1.header'),
       items: [
         {
           id: 0,
           iconName: 'web',
           iconType: 'material-community',
-          title: t('SETTINGS_GENERAL_URL_PATH_TITLE'),
-          description: `${path}`,
-          route: 'SelectAppearance',
+          title: t('generalSetting.section1.row1.title'),
+          description: t('generalSetting.section1.row1.subTitle', { path }),
+          route: '',
         },
         {
           id: 1,
           iconName: 'network',
           iconType: 'material-community',
-          title: t('SETTINGS_GENERAL_PORT_TITLE'),
-          description: `${port}`,
-          route: 'SelectAppearance',
+          title: t('generalSetting.section1.row2.title'),
+          description: t('generalSetting.section1.row2.subTitle', { port }),
+          route: '',
         },
         {
           id: 2,
           iconName: 'timer-sand-full',
           iconType: 'material-community',
-          title: t('SETTINGS_GENERAL_REFRESH_INTERVAL_TITLE'),
-          description: `${refreshInterval} ms`,
+          title: t('generalSetting.section1.row3.title'),
+          description: t('generalSetting.section1.row3.subTitle', { refreshInterval }),
           route: '',
         },
       ],
     },
     {
       id: 1,
-      title: t('SETTINGS_GENERAL_AUTH_HEADER'),
+      title: t('generalSetting.section2.header'),
       items: [
         {
           id: 0,
           iconName: 'shield-lock',
           iconType: 'material-community',
-          title: t('SETTINGS_GENERAL_AUTH_RESTORE_TITLE'),
-          description: t('SETTINGS_GENERAL_AUTH_RESTORE_SUB_TITLE'),
-          route: 'SelectAppearance',
+          title: t('generalSetting.section2.row1.title'),
+          description: t('generalSetting.section2.row1.subTitle'),
+          route: '',
         },
       ],
     },
     {
       id: 2,
-      title: t('SETTINGS_GENERAL_OTHER_HEADER'),
+      title: t('generalSetting.section3.header'),
+      items: [
+        {
+          id: 0,
+          iconName: 'shield-lock',
+          iconType: 'material-community',
+          title: t('generalSetting.section3.row1.title'),
+          description: t('generalSetting.section3.row1.subTitle', { scanTimeoutInMs }),
+          route: '',
+        },
+        {
+          id: 1,
+          iconName: 'shield-lock',
+          iconType: 'material-community',
+          title: t('generalSetting.section3.row2.title'),
+          description: t('generalSetting.section3.row2.subTitle', { scanThreads }),
+          route: '',
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: t('generalSetting.section4.header'),
       items: [
         {
           id: 0,
           iconName: 'backup-restore',
           iconType: 'material-community',
-          title: t('SETTINGS_GENERAL_OTHER_RESTORE_TITLE'),
-          description: t('SETTINGS_GENERAL_OTHER_RESTORE_SUB_TITLE'),
+          title: t('generalSetting.section4.row1.title'),
+          description: t('generalSetting.section4.row1.subTitle'),
           route: 'SelectAppearance',
         },
       ],
@@ -110,36 +137,55 @@ const GeneralSetting = ({ navigation }: Props) => {
   const [modalVisibleUrlRefreshInterval, setModalVisiblePathRefreshInterval] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
 
+  const [modalVisibleScanTimeout, setModalVisibleScanTimeout] = useState(false);
+  const [modalVisibleScanThreads, setModalVisibleScanThreads] = useState(false);
+
   const [modalPath, setModalPath] = useState(path);
   const [modalPort, setModalPort] = useState(`${port}`);
   const [modalRefreshInterval, setModalRefreshInterval] = useState(`${refreshInterval}`);
 
-  useEffect(() => {
-    if (apps && apps.length > 0) {
-      return;
-    }
-    let newApps = [...apps];
-    newApps[0].items[0].description = path;
-    setApps(newApps);
-  }, [apps, path]);
+  const [modalScanTimeout, setModalScanTimeout] = useState(`${scanTimeoutInMs}`);
+  const [modalScanThreads, setModalScanThreads] = useState(`${scanThreads}`);
 
   useEffect(() => {
-    if (apps && apps.length > 0) {
-      return;
-    }
-    let newApps = [...apps];
-    newApps[0].items[1].description = `${port}`;
-    setApps(newApps);
-  }, [apps, port]);
+    setApps(v => {
+      let newApps = [...v];
+      newApps[2].items[0].description = `${scanTimeoutInMs} ms`;
+      return newApps;
+    });
+  }, [scanTimeoutInMs]);
 
   useEffect(() => {
-    if (apps && apps.length > 0) {
-      return;
-    }
-    let newApps = [...apps];
-    newApps[0].items[2].description = `${refreshInterval}`;
-    setApps(newApps);
-  }, [apps, refreshInterval]);
+    setApps(v => {
+      let newApps = [...v];
+      newApps[2].items[1].description = `${scanThreads}`;
+      return newApps;
+    });
+  }, [scanThreads]);
+
+  useEffect(() => {
+    setApps(v => {
+      let newApps = [...v];
+      newApps[0].items[0].description = path;
+      return newApps;
+    });
+  }, [path]);
+
+  useEffect(() => {
+    setApps(v => {
+      let newApps = [...v];
+      newApps[0].items[1].description = `${port}`;
+      return newApps;
+    });
+  }, [port]);
+
+  useEffect(() => {
+    setApps(v => {
+      let newApps = [...v];
+      newApps[0].items[2].description = `${refreshInterval}`;
+      return newApps;
+    });
+  }, [refreshInterval]);
 
   const onGoBack = () => {
     navigation.pop();
@@ -161,6 +207,12 @@ const GeneralSetting = ({ navigation }: Props) => {
         setAuthModalVisible(true);
         break;
       case index === 2 && subIndex === 0:
+        setModalVisibleScanTimeout(true);
+        break;
+      case index === 2 && subIndex === 1:
+        setModalVisibleScanThreads(true);
+        break;
+      case index === 3 && subIndex === 0:
         resetSettings();
         break;
       default:
@@ -175,7 +227,7 @@ const GeneralSetting = ({ navigation }: Props) => {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Appbar.Header style={{ backgroundColor: colors.background }}>
         <Appbar.BackAction onPress={onGoBack} />
-        <Appbar.Content title={t('SETTINGS_GENERAL_TITLE')} subtitle="" />
+        <Appbar.Content title={t('generalSetting.title')} />
       </Appbar.Header>
       <View style={styles.safeArea}>
         <ScrollView>
@@ -211,81 +263,136 @@ const GeneralSetting = ({ navigation }: Props) => {
         </ScrollView>
       </View>
 
-      {modalVisibleUrlPath && (
-        <Components.InputModal
-          ref={modalVisibleUrlPathRef}
-          modalVisible={modalVisibleUrlPath}
-          header={t('SETTINGS_GENERAL_ENTER_URL_PATH_TITLE')}
-          onPressClose={async () => {
-            setModalVisiblePath(false);
-          }}
-          onPressSave={async () => {
-            setModalVisiblePath(false);
-            dispatch(appConfigActions.setAppConfigPath(modalPath));
-          }}
-          placeholder={t('SETTINGS_GENERAL_ENTER_URL_PATH_TITLE')}
-          value={modalPath}
-          onChangeText={text => setModalPath(text)}
-        />
-      )}
+      <Components.InputModal
+        ref={modalVisibleUrlPathRef}
+        modalVisible={modalVisibleUrlPath}
+        header={t('generalSetting.section1.row1.dialogTitle')}
+        hint={t('generalSetting.section1.row1.dialogSubTitle')}
+        onPressClose={() => {
+          setModalVisiblePath(false);
+        }}
+        onPressSave={() => {
+          setModalVisiblePath(false);
+          dispatch(appConfigActions.setAppConfigPath(modalPath));
+        }}
+        placeholder={t('generalSetting.section1.row1.dialogTitle')!}
+        value={modalPath}
+        onChangeText={text => setModalPath(text)}
+        onBackButtonPress={() => {
+          setModalVisiblePath(false);
+        }}
+      />
 
-      {modalVisibleUrlPort && (
-        <Components.InputModal
-          ref={modalVisibleUrlPortRef}
-          modalVisible={modalVisibleUrlPort}
-          header={t('SETTINGS_GENERAL_ENTER_PORT_TITLE')}
-          onPressClose={async () => {
-            setModalVisiblePort(false);
-          }}
-          onPressSave={async () => {
-            setModalVisiblePort(false);
-            // eslint-disable-next-line radix
-            dispatch(appConfigActions.setAppConfigPort(parseInt(modalPort)));
-          }}
-          placeholder={t('SETTINGS_GENERAL_ENTER_PORT_TITLE')}
-          value={modalPort}
-          onChangeText={text => setModalPort(text)}
-          keyboardType={'numeric'}
-          onSubmitEditing={() => modalVisibleUrlRefreshIntervalRef.current?.focus()}
-        />
-      )}
+      <Components.InputModal
+        ref={modalVisibleUrlPortRef}
+        modalVisible={modalVisibleUrlPort}
+        header={t('generalSetting.section1.row2.dialogTitle')}
+        hint={t('generalSetting.section1.row2.dialogSubTitle')}
+        onPressClose={async () => {
+          setModalVisiblePort(false);
+        }}
+        onPressSave={async () => {
+          setModalVisiblePort(false);
+          if (!isNaN(Number(modalPort))) {
+            dispatch(appConfigActions.setAppConfigPort(parseInt(modalPort, 10)));
+          }
+        }}
+        placeholder={t('generalSetting.section1.row2.dialogTitle')!}
+        value={modalPort}
+        onChangeText={text => setModalPort(text)}
+        keyboardType={'numeric'}
+        onBackButtonPress={() => {
+          setModalVisiblePath(false);
+        }}
+      />
 
-      {modalVisibleUrlRefreshInterval && (
-        <Components.InputModal
-          ref={modalVisibleUrlRefreshIntervalRef}
-          modalVisible={modalVisibleUrlRefreshInterval}
-          header={t('SETTINGS_GENERAL_ENTER_REFRESH_INTERVAL_TITLE')}
-          onPressClose={async () => {
-            setModalVisiblePathRefreshInterval(false);
-          }}
-          onPressSave={async () => {
-            setModalVisiblePathRefreshInterval(false);
-            // eslint-disable-next-line radix
-            dispatch(appConfigActions.setAppConfigRefreshInterval(parseInt(modalRefreshInterval)));
-          }}
-          placeholder={t('SETTINGS_GENERAL_ENTER_REFRESH_INTERVAL_TITLE')}
-          value={modalRefreshInterval}
-          onChangeText={text => setModalRefreshInterval(text)}
-          keyboardType={'numeric'}
-        />
-      )}
+      <Components.InputModal
+        ref={modalVisibleUrlRefreshIntervalRef}
+        modalVisible={modalVisibleUrlRefreshInterval}
+        header={t('generalSetting.section1.row3.dialogTitle')}
+        hint={t('generalSetting.section1.row3.dialogSubTitle')}
+        onPressClose={async () => {
+          setModalVisiblePathRefreshInterval(false);
+        }}
+        onPressSave={async () => {
+          setModalVisiblePathRefreshInterval(false);
+          if (!isNaN(Number(modalRefreshInterval))) {
+            dispatch(appConfigActions.setAppConfigRefreshInterval(parseInt(modalRefreshInterval, 10)));
+          }
+        }}
+        placeholder={t('generalSetting.section1.row3.dialogTitle')!}
+        value={modalRefreshInterval}
+        onChangeText={text => setModalRefreshInterval(text)}
+        keyboardType={'numeric'}
+        onBackButtonPress={() => {
+          setModalVisiblePath(false);
+        }}
+      />
 
-      {authModalVisible && (
-        <Components.AuthInputModal
-          modalVisible={authModalVisible}
-          header={t('INPUT_DIALOG_AUTH_REQUIRED')}
-          username={username ? username : ''}
-          password={password ? password : ''}
-          showConnectionLoader={false}
-          onPressClose={() => {
-            setAuthModalVisible(false);
-          }}
-          onPressSave={(username_, password_) => {
-            dispatch(appConfigActions.setAppConfigAuth({ username: username_, password: password_ }));
-            setAuthModalVisible(false);
-          }}
-        />
-      )}
+      <Components.AuthInputModal
+        modalVisible={authModalVisible}
+        header={t('generalSetting.section2.row1.dialogTitle')}
+        username={username ? username : ''}
+        password={password ? password : ''}
+        showConnectionLoader={false}
+        onPressClose={() => {
+          setAuthModalVisible(false);
+        }}
+        onPressSave={(username_, password_) => {
+          dispatch(appConfigActions.setAppConfigAuth({ username: username_, password: password_ }));
+          setAuthModalVisible(false);
+        }}
+        errorMessage={''}
+        onBackButtonPress={() => {
+          setAuthModalVisible(false);
+        }}
+      />
+
+      <Components.InputModal
+        ref={modalVisibleScanTimeoutRef}
+        modalVisible={modalVisibleScanTimeout}
+        header={t('generalSetting.section3.row1.dialogTitle')}
+        hint={t('generalSetting.section3.row1.dialogSubTitle')}
+        onPressClose={async () => {
+          setModalVisibleScanTimeout(false);
+        }}
+        onPressSave={async () => {
+          setModalVisibleScanTimeout(false);
+          if (!isNaN(Number(modalScanTimeout))) {
+            dispatch(appConfigActions.setAppConfigScanTimeout(parseInt(modalScanTimeout, 10)));
+          }
+        }}
+        placeholder={t('generalSetting.section3.row1.dialogTitle')!}
+        value={modalScanTimeout}
+        onChangeText={text => setModalScanTimeout(text)}
+        keyboardType={'numeric'}
+        onBackButtonPress={() => {
+          setModalVisiblePath(false);
+        }}
+      />
+
+      <Components.InputModal
+        ref={modalVisibleScanThreadsRef}
+        modalVisible={modalVisibleScanThreads}
+        header={t('generalSetting.section3.row2.dialogTitle')}
+        hint={t('generalSetting.section3.row2.dialogSubTitle')}
+        onPressClose={async () => {
+          setModalVisibleScanThreads(false);
+        }}
+        onPressSave={async () => {
+          setModalVisibleScanThreads(false);
+          if (!isNaN(Number(modalScanThreads))) {
+            dispatch(appConfigActions.setAppConfigScanThreads(parseInt(modalScanThreads, 10)));
+          }
+        }}
+        placeholder={t('generalSetting.section3.row2.dialogTitle')!}
+        value={modalScanThreads}
+        onChangeText={text => setModalScanThreads(text)}
+        keyboardType={'numeric'}
+        onBackButtonPress={() => {
+          setModalVisiblePath(false);
+        }}
+      />
     </View>
   );
 };

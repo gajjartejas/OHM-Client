@@ -1,21 +1,28 @@
 //Modals
-import IDevice from 'app/models/models/device';
 import convertNodeToModel from 'app/models/mapper/deviceInfo';
-import { IAppConfigState } from 'app/models/reducers/appConfig';
 import DeviceInfo from 'app/models/models/deviceInfo';
+// @ts-ignore
 import base64 from 'react-native-base64';
 
-const inspectService = ({
-  device,
-  appConfig,
-}: {
-  device: IDevice;
-  appConfig: IAppConfigState;
+const inspectService = (config: {
+  ipAddress: string;
+  port: number;
+  path: string;
+  username: string | null;
+  password: string | null;
 }): Promise<DeviceInfo> => {
+  const { ipAddress, port, path, username, password } = config;
   return new Promise((resolve, reject) => {
-    fetch(`http://${device.ip}:${appConfig.port}${appConfig.path}`, {
+    const controller = new AbortController();
+    // 5 second timeout:
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    fetch(`http://${ipAddress}:${port}${path}`, {
       method: 'GET',
-      headers: { Authorization: `Basic ${base64.encode(`${appConfig.username}:${appConfig.password}`)}` },
+      headers:
+        username !== null && password !== null
+          ? { Authorization: `Basic ${base64.encode(`${username}:${password}`)}` }
+          : {},
+      signal: controller.signal,
     })
       .then(response => {
         if (!response.ok) {
@@ -30,6 +37,9 @@ const inspectService = ({
       })
       .catch(error => {
         reject(error);
+      })
+      .finally(() => {
+        clearTimeout(timeoutId);
       });
   });
 };

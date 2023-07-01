@@ -1,6 +1,6 @@
 import { IAPIHardwareType, IAPISensorType, IAPISystemType } from 'app/models/api/deviceInfo';
 
-export default interface IDeviceInfo {
+interface IDeviceInfo {
   id: number;
   text: string;
   min: string;
@@ -10,7 +10,6 @@ export default interface IDeviceInfo {
   type: IAPISensorType | IAPIHardwareType | IAPISystemType | null;
   sensor: IDeviceSensor[];
   ipAddress: string;
-  // eslint-disable-next-line semi
 }
 
 export interface IDeviceSensor {
@@ -120,6 +119,7 @@ export interface IDeviceGpuintel {
   power?: IDeviceSensorData[];
   load?: IDeviceSensorData[];
   data?: IDeviceSensorData[];
+  throughput?: IDeviceSensorData[];
 }
 
 export interface IDeviceHDD {
@@ -201,3 +201,5 @@ export interface IDeviceBattery {
   level?: IDeviceSensorData[];
   capacity?: IDeviceSensorData[];
 }
+
+export default IDeviceInfo;

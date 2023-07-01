@@ -9,7 +9,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 //App modules
 import Components from 'app/components';
 import styles from './styles';
-import Confg from 'app/config';
+import Config from 'app/config';
 import Utils from 'app/utils';
 
 //Redux
@@ -25,10 +25,11 @@ import IDevice from 'app/models/models/device';
 //Params
 type RootStackParamList = {
   DeviceLists: {};
+  GeneralSetting: {};
 };
 type Props = NativeStackScreenProps<RootStackParamList, 'DeviceLists'>;
 
-const DeviceLists = ({}: Props) => {
+const DeviceLists = ({ navigation }: Props) => {
   //Refs
 
   //Actions
@@ -45,6 +46,7 @@ const DeviceLists = ({}: Props) => {
   const scanningFinished = useSelector((state: IState) => state.deviceReducer.scanningFinished);
   const error = useSelector((state: IState) => state.deviceReducer.error);
   const requestAuth = useSelector((state: IState) => state.deviceReducer.requestAuth);
+  const deviceInfoLoading = useSelector((state: IState) => state.deviceReducer.deviceInfoLoading);
 
   //States
   const [modalVisibleInput, setModalVisibleInput] = useState(false);
@@ -77,7 +79,6 @@ const DeviceLists = ({}: Props) => {
     if (!error) {
       return;
     }
-
     if (Platform.OS === 'android') {
       ToastAndroid.show(error.message, ToastAndroid.SHORT);
     } else if (Platform.OS === 'ios') {
@@ -89,6 +90,7 @@ const DeviceLists = ({}: Props) => {
     if (!requestAuth) {
       return;
     }
+    setModalVisibleInput(false);
     setAuthModalVisible(true);
   }, [requestAuth]);
 
@@ -118,18 +120,24 @@ const DeviceLists = ({}: Props) => {
     setMenuVisible(false);
   };
 
+  const onPressAdvanceSetting = () => {
+    setMenuVisible(false);
+    setModalVisibleInput(false);
+    navigation.navigate('GeneralSetting', {});
+  };
+
   const onHelp = async () => {
-    Utils.openInAppBrowser(Confg.Constants.ABOUT_HELP);
+    Utils.openInAppBrowser(Config.Constants.ABOUT_HELP);
   };
 
   const renderNoDataButtons = () => {
     return (
       <View style={styles.noDataButtonsContainer}>
-        <Button onPress={onHelp}>{t('INPUT_DIALOG_CONNECT_HELP')}</Button>
-        <Text style={{ color: colors.onBackground }}>{t('INPUT_DIALOG_OR')}</Text>
-        <Button onPress={onPressConnectManually}>{t('INPUT_DIALOG_CONNECT_HOST_MANUALLY')}</Button>
-        <Text style={{ color: colors.onBackground }}>{t('INPUT_DIALOG_OR')}</Text>
-        <Button onPress={scanStart}>{t('INPUT_DIALOG_RESCAN')}</Button>
+        <Button onPress={onHelp}>{t('deviceList.connectHelp')}</Button>
+        <Text style={{ color: colors.onBackground }}>{t('deviceList.or')}</Text>
+        <Button onPress={onPressConnectManually}>{t('deviceList.addManually')}</Button>
+        <Text style={{ color: colors.onBackground }}>{t('deviceList.or')}</Text>
+        <Button onPress={scanStart}>{t('deviceList.rescan')}</Button>
       </View>
     );
   };
@@ -137,7 +145,7 @@ const DeviceLists = ({}: Props) => {
   return (
     <View style={[styles.container, { backgroundColor: colors.onBackground }]}>
       <Appbar.Header style={{ backgroundColor: colors.background }}>
-        <Appbar.Content title={t('APPNAME')} subtitle="" />
+        <Appbar.Content title={t('general.appname')} />
         <Appbar.Action icon={MORE_ICON} onPress={onPressMore} />
         <Menu
           visible={menuVisible}
@@ -147,8 +155,9 @@ const DeviceLists = ({}: Props) => {
               <Text> </Text>
             </TouchableOpacity>
           }>
-          <Menu.Item onPress={onPressReScan} title={t('INPUT_DIALOG_RESCAN')} />
-          <Menu.Item onPress={onPressConnectManually} title={t('INPUT_DIALOG_CONNECT_HOST_MANUALLY')} />
+          <Menu.Item onPress={onPressReScan} title={t('deviceList.rescan')} />
+          <Menu.Item onPress={onPressConnectManually} title={t('deviceList.connectHostManually')} />
+          <Menu.Item onPress={onPressAdvanceSetting} title={t('deviceList.advanceSetting')} />
         </Menu>
       </Appbar.Header>
       <View style={[styles.safeArea, { backgroundColor: colors.background }]}>
@@ -157,7 +166,7 @@ const DeviceLists = ({}: Props) => {
         {!isScanning && devices.length > 0 && (
           <ScrollView style={styles.scrollView}>
             <List.Section>
-              <List.Subheader>{t('DEVICE_LIST_SERVERS')}</List.Subheader>
+              <List.Subheader>{t('deviceList.devices')}</List.Subheader>
               {devices.map((device, idx) => {
                 return (
                   <List.Item
@@ -179,46 +188,51 @@ const DeviceLists = ({}: Props) => {
             iconType={'font-awesome5'}
             iconName="box-open"
             style={{}}
-            header={t('DEVICE_LIST_NO_DEVICE_FOUND')}
-            subHeader={t('DEVICE_LIST_NO_DEVICE_FOUND_NPLEASE_TRY_ADDING_IT_MANUALLY')}
+            header={t('deviceList.noDeviceFound')}
+            subHeader={t('deviceList.noDeviceFoundTryAddingItManually')}
             renderContent={renderNoDataButtons}
           />
         )}
       </View>
 
-      {modalVisibleInput && (
-        <Components.ScanInputModal
-          modalVisible={modalVisibleInput}
-          header={t('DEVICE_LIST_ADD_MANUALLY')}
-          onPressClose={() => {
-            setModalVisibleInput(false);
-          }}
-          onPressSave={(ipAddress, port) => {
-            // eslint-disable-next-line radix
-            onPressDevice({ ip: ipAddress, port: parseInt(port) }, 0);
-          }}
-          placeholder={t('SETTINGS_GENERAL_ENTER_URL_PATH_TITLE')}
-        />
-      )}
+      <Components.ScanInputModal
+        modalVisible={modalVisibleInput}
+        header={t('inputIpAddressDialog.title')}
+        onPressClose={() => {
+          setModalVisibleInput(false);
+        }}
+        onPressSave={(ipAddress, port) => {
+          onPressDevice({ ip: ipAddress, port: parseInt(port, 10) }, 0);
+        }}
+        onPressAdvanceSetting={onPressAdvanceSetting}
+        errorMessage={error && error.message ? error.message : ''}
+        onBackButtonPress={() => {
+          setModalVisibleInput(false);
+        }}
+      />
 
-      {authModalVisible && (
-        <Components.AuthInputModal
-          modalVisible={authModalVisible}
-          header={t('INPUT_DIALOG_AUTH_REQUIRED')}
-          username={''}
-          password={''}
-          showConnectionLoader={true}
-          onPressClose={() => {
-            dispatch(devicesActions.removeSelectedDevice());
-            dispatch(devicesActions.resetDeviceInvalidAuthCount());
-            setAuthModalVisible(false);
-          }}
-          onPressSave={(username, password) => {
-            dispatch(devicesActions.setDeviceInfoLoading(true));
-            dispatch(appConfigActions.setAppConfigAuth({ username, password }));
-          }}
-        />
-      )}
+      <Components.AuthInputModal
+        modalVisible={authModalVisible}
+        header={t('generalSetting.section2.row1.dialogTitle')}
+        username={''}
+        password={''}
+        showConnectionLoader={true}
+        onPressClose={() => {
+          dispatch(devicesActions.removeSelectedDevice());
+          dispatch(devicesActions.resetDeviceInvalidAuthCount());
+          setAuthModalVisible(false);
+        }}
+        onPressSave={(username, password) => {
+          dispatch(devicesActions.setDeviceInfoLoading(true));
+          dispatch(appConfigActions.setAppConfigAuth({ username, password }));
+        }}
+        errorMessage={error && error.message ? error.message : ''}
+        onBackButtonPress={() => {
+          setAuthModalVisible(false);
+        }}
+      />
+
+      {deviceInfoLoading && <Components.AppLoader message={t('general.connecting')} />}
     </View>
   );
 };

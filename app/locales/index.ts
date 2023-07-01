@@ -7,7 +7,7 @@ const resources = {
   en: {
     translation: require('./en.json'),
   },
-  hi: {
+  ru: {
     translation: require('./hi.json'),
   },
 };
@@ -18,7 +18,7 @@ i18n
     resources,
     lng: RNLocalize.getLocales()[0].languageCode,
     fallbackLng: 'en',
-    keySeparator: false, // we do not use keys in form messages.welcome
+    keySeparator: '.',
     interpolation: {
       escapeValue: false, // react already safes from xss
     },
