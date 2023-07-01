@@ -36,8 +36,14 @@ function* fetchDeviceInfoAsync(action: { type: string; payload: IDevice }): Gene
     return;
   }
   try {
-    let appConfig = yield select(getAppConfig);
-    const response = yield call(inspectService, { device: action.payload, appConfig: appConfig });
+    let appConfig: IAppConfigState = yield select(getAppConfig);
+    const response = yield call(inspectService, {
+      ipAddress: action.payload.ip,
+      port: action.payload.port,
+      path: appConfig.path,
+      username: appConfig.username,
+      password: appConfig.password,
+    });
     yield put(devicesActions.onFetchDeviceInfo({ ipAddress: action.payload.ip, deviceInfo: response }));
   } catch (error: any) {
     yield processError(error);
@@ -53,7 +59,13 @@ function* refreshDeviceInfoAsync(_action: { type: string }): Generator<any, any,
   }
 
   try {
-    const response = yield call(inspectService, { device: deviceState.selectedDevice, appConfig: appConfig });
+    const response = yield call(inspectService, {
+      ipAddress: deviceState.selectedDevice.ip,
+      port: deviceState.selectedDevice.port,
+      path: appConfig.path,
+      username: appConfig.username,
+      password: appConfig.password,
+    });
     yield put(devicesActions.onRefreshDeviceInfo(response));
     yield delay(appConfig.refreshInterval);
     yield put(devicesActions.refreshDeviceInfo());
@@ -71,7 +83,13 @@ function* refreshDeviceInfoOnceAsync(_action: { type: string }): Generator<any, 
     return;
   }
   try {
-    const response = yield call(inspectService, { device: deviceState.selectedDevice, appConfig: appConfig });
+    const response = yield call(inspectService, {
+      ipAddress: deviceState.selectedDevice.ip,
+      port: deviceState.selectedDevice.port,
+      path: appConfig.path,
+      username: appConfig.username,
+      password: appConfig.password,
+    });
     yield put(devicesActions.onRefreshDeviceInfo(response));
   } catch (error: any) {
     yield processError(error);

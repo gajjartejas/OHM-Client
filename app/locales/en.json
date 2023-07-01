@@ -2,7 +2,6 @@
   "general": {
     "appname": "OHMClient",
     "close": "CLOSE",
-    "noInternet": "No Internet Connection",
     "save": "SAVE",
     "set": "SET",
     "connecting": "Connecting...",
@@ -88,7 +87,7 @@
   "generalSetting": {
     "title": "General",
     "section1": {
-      "header": "General",
+      "header": "Default Scan Config",
       "row1": {
         "title": "URL Path",
         "subTitle": "{{path}}",
@@ -148,7 +147,6 @@
   "deviceList": {
     "noDeviceFoundTryAddingItManually": "No device found!\nPlease try adding it manually.",
     "noDeviceFound": "No device found!",
-    "scanAgain": "Scan Again",
     "addManually": "Add Device Manually",
     "connectHostManually": "Add device manually",
     "rescan": "Rescan",
@@ -156,8 +154,6 @@
     "connectHelp": "Help",
     "advanceSetting": "Advance Setting",
     "devices": "Devices",
-    "connected": "Connected",
-    "disconnected": "Disconnected",
     "card": {
       "currentValue": "Current",
       "currentMin": "Min",
