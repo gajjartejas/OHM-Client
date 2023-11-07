@@ -92,3 +92,5 @@ awsconfiguration.json
 
 vendor
 
+# testing
+/coverage
