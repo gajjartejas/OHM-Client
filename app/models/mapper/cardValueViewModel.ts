@@ -1,6 +1,5 @@
 import { ICardValueViewModel, ICardViewModel } from 'app/models/viewModels/cardValueViewModel';
-import IDevice from 'app/models/models/device';
-import {
+import IDeviceInfo, {
   IDeviceComputer,
   IDeviceCPU,
   IDeviceGpuati,
@@ -15,18 +14,17 @@ import {
 } from 'app/models/models/deviceInfo';
 import { IAPIHardwareType, IAPISensorType, IAPISystemType } from 'app/models/api/deviceInfo';
 
-export const convertToViewModel = (device: IDevice | null): ICardViewModel[] => {
+export const convertToViewModel = (deviceInfo: IDeviceInfo | null): ICardViewModel[] => {
   if (
-    !device ||
-    !device.deviceInfo ||
-    !device.deviceInfo.sensor ||
-    device.deviceInfo.sensor.length < 1 ||
-    !device.deviceInfo.sensor[0].computer ||
-    device.deviceInfo.sensor[0].computer.length < 1
+    !deviceInfo ||
+    !deviceInfo.sensor ||
+    deviceInfo.sensor.length < 1 ||
+    !deviceInfo.sensor[0].computer ||
+    deviceInfo.sensor[0].computer.length < 1
   ) {
     return [];
   }
-  let computers = device.deviceInfo.sensor[0].computer;
+  let computers = deviceInfo.sensor[0].computer;
 
   //MAINBOARD
   let computerMainboards = getObjectFromType(computers, IAPIHardwareType.Mainboard) as IDeviceComputer[];

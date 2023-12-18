@@ -12,8 +12,18 @@ const styles = StyleSheet.create({
   subView: {
     marginHorizontal: 32,
   },
-  moreCard: { marginTop: 16, marginHorizontal: 20 },
-  listContainer: { paddingTop: 16, paddingBottom: 8 },
+  moreCard: {
+    marginTop: 16,
+    marginHorizontal: 20,
+  },
+  listContainer: {
+    paddingTop: 16,
+    paddingBottom: 8,
+  },
+  cardTablet: {
+    width: '70%',
+    alignSelf: 'center',
+  },
 });
 
 export default styles;

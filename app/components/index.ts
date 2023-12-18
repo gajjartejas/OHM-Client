@@ -1,29 +1,35 @@
-import AppMiniBanner from 'app/components/AppMiniBanner';
-import AppLoadingPlaceHolder from 'app/components/AppLoadingPlaceHolder';
-import CardSection from 'app/components/CardLeftTitle';
-import MoreAppCard from 'app/components/MoreAppCard';
+import AppMiniBanner from './AppMiniBanner';
+import AppLoadingPlaceHolder from './AppLoadingPlaceHolder';
+import CardSection from './CardLeftTitle';
+import MoreAppCard from './MoreAppCard';
 import InputModal from './InputModal';
 import AppEmptyDataView from './AppEmptyDataView';
-import ScanInputModal from './ScanInputModal';
 import AboutFeedbackDialog from './AboutFeedbackDialog';
 import SelectThemeDialog from './SelectThemeDialog';
 import SelectAccentDialog from './SelectAccentColorDialog';
-import AuthInputModal from './AuthInputModal';
 import AppBaseView from './AppBaseView';
-import AppLoader from 'app/components/AppLoader';
+import AppLoader from './AppLoader';
+import AppHeader from './AppHeader';
+import AppToast from './AppToast';
+import AppTextInput from './AppTextInput';
+import AppActionDialog from './AppActionDialog';
 
-export default {
+const Components = {
   AppMiniBanner,
   AppLoadingPlaceHolder,
   CardSection,
   MoreAppCard,
   InputModal,
   AppEmptyDataView,
-  ScanInputModal,
   AboutFeedbackDialog,
   SelectThemeDialog,
   SelectAccentDialog,
-  AuthInputModal,
   AppBaseView,
   AppLoader,
+  AppHeader,
+  AppToast,
+  AppTextInput,
+  AppActionDialog,
 };
+
+export default Components;

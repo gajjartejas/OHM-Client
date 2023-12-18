@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 //ThirdParty
 import { ActivityIndicator, useTheme } from 'react-native-paper';
 
 const LoadingPlaceHolder = () => {
-  //Const
+  //Constants
   const { colors } = useTheme();
 
   return (
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoadingPlaceHolder;
+export default memo(LoadingPlaceHolder);

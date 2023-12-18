@@ -1,29 +1,60 @@
 {
   "about": {
     "app": "OHMClient के बारे में",
-    "github": "Github पर योगदान करें",
+    "github": "GitHub पर योगदान करें",
     "moreApps": "और ऐप",
     "rateApp": "एप्प का मूल्यांकन",
     "sendFeedback": "प्रतिक्रिया भेजें",
     "sendFeedbackDetail": "आप अपना बहुमूल्य फीडबैक टेलीग्राम चैनल पर भेज सकते हैं या सीधे मेल भेज सकते हैं।",
-    "setting": "समायोजन"
+    "setting": "समायोजन",
+    "version": "संस्करण: {{संस्करण}}"
   },
   "aboutScreen": {
     "developerTitle": "डेवलपर",
-    "githubSubTitle": "डेवलपर प्रोफ़ाइल और ओपन सोर्स परियोजनाओं की सूची",
-    "githubTitle": "Github",
+    "githubSubTitle": "डेवलपर प्रोफ़ाइल और ओपन-सोर्स परियोजनाओं की सूची",
+    "githubTitle": "GitHub",
     "infoAuthorNameTitle": "तेजस गज्जर",
     "infoDescTitle": "`ओएचएम-क्लाइंट` एंड्रॉइड और आईओएस के लिए रिएक्ट-नेटिव में लिखा गया एक अनौपचारिक ओपन हार्डवेयर मॉनिटर क्लाइंट ऐप है। \nइस ऐप का उपयोग करके आप ओपन हार्डवेयर मॉनिटर वेब सर्वर की निगरानी कर सकते हैं।",
     "infoHeader": "जानकारी",
     "instagramSubTitle": "मेरा शौक और मेरे गैजेट्स",
     "instagramTitle": "Instagram",
     "portfolioSubTitle": "डेवलपर के बारे में सारी जानकारी",
-    "portfolioTitle": "विभाग",
+    "portfolioTitle": "पोर्टफोलियो",
     "telegramSubTitle": "बग, सुधार, सुविधा अनुरोध और विकास समाचार के बारे में चर्चा",
     "telegramTitle": "टेलीग्राम से जुड़ें",
     "title": "OHMClient के बारे में",
     "twitterSubTitle": "व्यक्तिगत माइक्रोब्लॉग",
     "twitterTitle": "ट्विटर"
+  },
+  "addDevice": {
+    "addDevice": "डिवाइस जोडे",
+    "authRequired": "अनुमति की आवश्यकता है!",
+    "connectDevice": "जोड़ना",
+    "connectionOk": "कनेक्शन ठीक है",
+    "inputPlaceholder1": "कनेक्शन नाम दर्ज करें (वैकल्पिक)",
+    "inputPlaceholder2": "आईपी ​​पता दर्ज करें",
+    "inputPlaceholder3": "पथ दर्ज करें (उदा: /data.json)",
+    "inputPlaceholder4": "पोर्ट दर्ज करें",
+    "inputPlaceholder5": "ताज़ा दर मिलीसेकंड में दर्ज करें",
+    "invalidIpAddress": "अमान्य आईपी पता",
+    "invalidRefreshRate": "अमान्य ताज़ा दर",
+    "selectIdentity": "पहचान चुनें (वैकल्पिक)",
+    "testConnection": "परीक्षण कनेक्शन",
+    "titleConnect": "जोड़ना",
+    "titleCreate": "बनाएं",
+    "titleUpdate": "अद्यतन",
+    "updateDevice": "डिवाइस अपडेट करें"
+  },
+  "addIdentity": {
+    "inputPlaceholder1": "नाम दर्ज करें (वैकल्पिक)",
+    "inputPlaceholder2": "उपयोगकर्ता नाम दर्ज करें",
+    "inputPlaceholder3": "पास वर्ड दर्ज करें",
+    "passwordRequired": "पासवर्ड की आवश्यकता है!",
+    "saveButton": "बचाना",
+    "titleAddIdentity": "पहचान जोड़ें",
+    "titleUpdate": "पहचान अद्यतन करें",
+    "updateButton": "अद्यतन",
+    "usernameRequired": "उपयोगकर्ता नाम आवश्यक है!"
   },
   "appearanceSettings": {
     "accentColorSubTitle": "यूआई तत्वों को रंगने के लिए रंग का उपयोग किया जाता है",
@@ -32,74 +63,113 @@
     "otherHeader": "अन्य",
     "otherSubTitle": "डिफ़ॉल्ट थीम सेटिंग्स पुनर्स्थापित करें",
     "otherTitle": "डिफ़ॉल्ट थीम पुनर्स्थापित करें",
-    "themeOption": "थीम",
+    "themeOption": "विषय",
     "themeOption1": "रोशनी",
     "themeOption2": "अँधेरा",
     "themeOption3": "प्रणालीगत चूक",
     "themeSubTitle": "ऐप का मुख्य विषय",
-    "themeTitle": "थीम",
+    "themeTitle": "विषय",
     "title": "उपस्थिति"
   },
-  "deviceList": {
+  "connectTodeviceList": {
     "addManually": "डिवाइस को मैन्युअल रूप से जोड़ें",
     "advanceSetting": "अग्रिम सेटिंग",
-    "authRequestedMessage": "प्राधिकरण का अनुरोध किया गया है, कृपया इसे सेटिंग्स -> सामान्य -> ​​प्रमाणीकरण से सेट करें",
-    "card": {
-      "currentMax": "अधिकतम",
-      "currentMin": "मिन",
-      "currentValue": "मौजूदा"
-    },
-    "connectHelp": "मदद",
     "connectHostManually": "डिवाइस को मैन्युअल रूप से जोड़ें",
-    "devices": "उपकरण",
-    "disconnectedMessage": "होस्ट से डिस्कनेक्ट हो गया है, पुनः कनेक्ट हो रहा है कृपया प्रतीक्षा करें...",
-    "noDeviceFound": "कोई उपकरण नहीं मिला!",
     "noDeviceFoundTryAddingItManually": "कोई उपकरण नहीं मिला!\n\nकृपया इसे मैन्युअल रूप से जोड़ने का प्रयास करें.",
-    "or": "या",
-    "rescan": "पुन: स्कैन"
+    "savedConnections": "सहेजे गए उपकरण"
+  },
+  "dashboard": {
+    "card": {
+      "current": "मौजूदा",
+      "max": "अधिकतम",
+      "min": "मिन"
+    },
+    "emptyData": {
+      "item1": {
+        "button": "सेटिंग अपडेट करें",
+        "message": "डिवाइस डिस्कनेक्ट हो गया, कृपया पुनः प्रयास करें!",
+        "title": "संपर्क विच्छेदित!"
+      },
+      "item2": {
+        "button": "सेटिंग अपडेट करें",
+        "message": "डिवाइस को कनेक्ट होने में काफी समय लग रहा है, कृपया पुनः प्रयास करें!",
+        "title": "रिश्तों का समय बाहर"
+      },
+      "item3": {
+        "button": "सेटिंग अपडेट करें",
+        "message": "प्राधिकरण आवश्यक है, कृपया इसे सेटिंग्स से अपडेट करें।",
+        "title": "अनुमति की आवश्यकता है!"
+      },
+      "item4": {
+        "button": "सेटिंग अपडेट करें",
+        "title": "डिस्कनेक्ट किया गया"
+      }
+    }
+  },
+  "devicesList": {
+    "createNewDevice": "नया उपकरण बनाएं",
+    "delete": "मिटाना",
+    "edit": "संपादन करना",
+    "emptyDeviceSubtitle": "कृपया एक नया उपकरण बनाएं.",
+    "emptyDeviceTitle": "कोई उपकरण नहीं मिला!",
+    "emptyName": "कोई नाम नहीं",
+    "subTitle": "उपकरण",
+    "title": "उपकरण"
   },
   "general": {
     "appname": "OHMक्लाइंट",
     "close": "बंद करना",
-    "connect": "जोड़ना",
     "connecting": "कनेक्ट हो रहा है...",
-    "save": "बचाना",
-    "set": "तय करना"
+    "save": "बचाना"
   },
-  "generalSetting": {
+  "identitiesList": {
+    "createNewIdentity": "नई पहचान बनाएं",
+    "delete": "मिटाना",
+    "edit": "संपादन करना",
+    "emptyData": {
+      "message": "कृपया एक नई पहचान बनाएं.",
+      "title": "कोई पहचान नहीं मिली!"
+    },
+    "listTitle": "पहचान",
+    "selectTitle": "पहचान चुनें",
+    "subTitle": "पहचान"
+  },
+  "librariesScreen": {
+    "title": "पुस्तकालय"
+  },
+  "moreApps": {
+    "apps1Desc": "`ओएचएम-क्लाइंट` एंड्रॉइड और आईओएस के लिए रिएक्ट-नेटिव में लिखा गया एक अनौपचारिक ओपन हार्डवेयर मॉनिटर क्लाइंट ऐप है। \nइस ऐप का उपयोग करके आप ओपन हार्डवेयर मॉनिटर वेब सर्वर की निगरानी कर सकते हैं।",
+    "apps1Title": "ओएचएम-क्लाइंट",
+    "apps2Desc": "यह एप्लिकेशन आपको Xiaomi (MIUI) उपकरणों में विभिन्न ऐप्स के लिए विज्ञापनों या अनुशंसाओं को सक्षम/अक्षम करने की अनुमति देता है।",
+    "apps2Title": "MIUI - विज्ञापन सहायक",
+    "apps3Desc": "गुजराती काक्को, बाराखड़ी और संख्याएँ सीखने का एक इंटरैक्टिव तरीका।",
+    "apps3Title": "कानो",
+    "appsTitle": "और ऐप"
+  },
+  "scanDevices": {
+    "emptyData": {
+      "help": "मदद",
+      "or": "या",
+      "rescan": "फिर से स्कैन करें",
+      "title": "आस-पास कोई उपकरण नहीं मिला!"
+    },
+    "subTitle": "निकट के उपकरण",
+    "title": "निकट के उपकरण"
+  },
+  "scanSetting": {
     "section1": {
       "header": "डिफ़ॉल्ट स्कैन कॉन्फ़िगरेशन",
       "row1": {
         "dialogSubTitle": "ओपन हार्डवेयर क्लाइंट का यूआरएल पथ",
         "dialogTitle": "यूआरएल पथ दर्ज करें",
-        "subTitle": "{{path}}",
+        "subTitle": "{{पथ}}",
         "title": "यूआरएल पथ"
       },
       "row2": {
         "dialogSubTitle": "ओपन हार्डवेयर मॉनिटर क्लाइंट का पोर्ट नंबर",
         "dialogTitle": "पोर्ट दर्ज करें",
-        "subTitle": "{{port}}",
+        "subTitle": "{{पत्तन}}",
         "title": "पत्तन"
-      },
-      "row3": {
-        "dialogSubTitle": "डैशबोर्ड डेटा विशिष्ट अंतराल पर ताज़ा होगा।",
-        "dialogTitle": "ताज़ा अंतराल दर्ज करें (मिलीसेकंड में)",
-        "subTitle": "{{interval}} एमएस",
-        "title": "ताज़ा अंतराल (मिलीसेकंड में)"
-      }
-    },
-    "section2": {
-      "header": "प्रमाणीकरण",
-      "row1": {
-        "dialogInputError1": "अमान्य प्रमाणीकरण या प्रमाणीकरण का अनुरोध किया गया",
-        "dialogInputPlaceholder1": "उपयोगकर्ता नाम दर्ज करें",
-        "dialogInputPlaceholder2": "पास वर्ड दर्ज करें",
-        "dialogInputValidation1": "कृपया मान्य उपयोगकर्ता नाम दर्ज करें",
-        "dialogInputValidation2": "कृपया वैध पासवर्ड दर्ज करें",
-        "dialogSubTitle": "यदि आपने प्रमाणीकरण बदल दिया है, तो कृपया अपना विंडोज़ क्लाइंट ऐप पुनः आरंभ करें।",
-        "dialogTitle": "प्रमाणीकरण सेट करें",
-        "subTitle": "HTTP बेसिक प्रमाणीकरण यानी उपयोगकर्ता नाम और पासवर्ड सक्षम करें।",
-        "title": "प्रमाणीकरण सेट करें"
       }
     },
     "section3": {
@@ -113,7 +183,7 @@
       "row2": {
         "dialogSubTitle": "प्रति टाइमआउट पर थ्रेड्स को स्कैन करें, उदाहरण के लिए: 150 थ्रेड्स प्रति 1500 एमएस, यदि डिवाइस नहीं मिलता है तो थ्रेड्स को कम करने का प्रयास करें।",
         "dialogTitle": "स्कैन थ्रेड दर्ज करें (1 - 999)",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{स्कैनथ्रेड्स}}",
         "title": "थ्रेड्स स्कैन करें"
       }
     },
@@ -124,27 +194,7 @@
         "title": "डिफ़ॉल्ट बहाल"
       }
     },
-    "title": "आम"
-  },
-  "inputIpAddressDialog": {
-    "button1": "अग्रिम सेटिंग",
-    "dialogInputError1": "कृपया वैध आईपी पता दर्ज करें",
-    "dialogInputError2": "कृपया वैध पोर्ट दर्ज करें",
-    "inputPlaceholder1": "आईपी ​​पता दर्ज करें",
-    "inputPlaceholder2": "पोर्ट दर्ज करें",
-    "title": "डिवाइस जोडे"
-  },
-  "librariesScreen": {
-    "title": "पुस्तकालय"
-  },
-  "moreApps": {
-    "apps1Desc": "`ओएचएम-क्लाइंट` एंड्रॉइड और आईओएस के लिए रिएक्ट-नेटिव में लिखा गया एक अनौपचारिक ओपन हार्डवेयर मॉनिटर क्लाइंट ऐप है। \nइस ऐप का उपयोग करके आप ओपन हार्डवेयर मॉनिटर वेब सर्वर की निगरानी कर सकते हैं।",
-    "apps1Title": "ओएचएम-क्लाइंट",
-    "apps2Desc": "यह एप्लिकेशन आपको Xiaomi (MIUI) उपकरणों में विभिन्न ऐप्स के लिए विज्ञापनों या अनुशंसाओं को सक्षम/अक्षम करने की अनुमति देता है।",
-    "apps2Title": "MIUI - विज्ञापन सहायक",
-    "appsGithub": "Github",
-    "appsPlayStore": "खेल स्टोर",
-    "appsTitle": "और ऐप"
+    "title": "सेटिंग्स स्कैन करें"
   },
   "settings": {
     "appearanceSubTitle": "उपस्थिति का अनुकूलन",
@@ -154,13 +204,17 @@
     "commonHeader": "सामान्य सेटिंग",
     "faqSubTitle": "अक्सर पूछे जाने वाले प्रश्नों के उत्तर",
     "faqTitle": "सामान्य प्रश्न",
-    "generalSubTitle": "ऐप की कार्यात्मक सेटिंग्स",
-    "generalTitle": "आम",
+    "identitiesSubTitle": "बुनियादी पहुंच प्रमाणीकरण के लिए उपयोगकर्ता नाम और पासवर्ड",
+    "identitiesTitle": "पहचान",
     "infoHeader": "जानकारी",
     "librariesSubTitle": "इस परियोजना में प्रयुक्त मुक्त स्रोत पुस्तकालयों की सूची",
     "librariesTitle": "पुस्तकालय",
     "privacySubTitle": "सूचना और अनुमतियाँ उपयोग नीति",
     "privacyTitle": "गोपनीयता नीति",
+    "recentConnectionsSubTitle": "जोड़े गए डिवाइस प्रबंधित करें",
+    "recentConnectionsTitle": "उपकरण",
+    "scanSubTitle": "ऑटो स्कैन (आस-पास स्कैन) सेटिंग्स",
+    "scanTitle": "सेटिंग्स स्कैन करें",
     "title": "समायोजन",
     "translateSubTitle": "इस ऐप का अपनी भाषा में अनुवाद करें",
     "translateTitle": "इस ऐप का अनुवाद करें",
@@ -168,6 +222,8 @@
     "translatorsTitle": "अनुवादकों"
   },
   "translatorsScreen": {
+    "emptyList": "अग्रणी बनें - अभी तक कोई योगदानकर्ता नहीं मिला!",
+    "emptyListAction": "योगदान देने के लिए यहां क्लिक करें",
     "title": "अनुवादकों"
   }
 }

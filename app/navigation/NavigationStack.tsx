@@ -1,27 +1,21 @@
-import * as React from 'react';
-import { StatusBar } from 'react-native';
+import React, { useEffect } from 'react';
+import { Platform, StatusBar } from 'react-native';
 
 //Third Party
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Provider as PaperProvider } from 'react-native-paper';
-import { useSelector } from 'react-redux';
-import analytics from '@react-native-firebase/analytics';
-import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
-
-const { LightTheme, DarkTheme } = adaptNavigationTheme({
-  reactNavigationLight: NavigationDefaultTheme,
-  reactNavigationDark: NavigationDarkTheme,
-});
+import { Provider as PaperProvider } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
 
 //Screens
 import LoggedInTabNavigator from 'app/navigation/HomeTabNavigator';
 
-//Redux
-import IState from 'app/models/models/appState';
-
 //App Modules
 import { HomeTabNavigatorParams } from 'app/navigation/types';
+import useToastConfig from 'app/hooks/useToastConfig';
+import { PaperThemeDark, PaperThemeDefault } from 'app/config/app-theme-config';
+import useThemeConfigStore from 'app/store/themeConfig';
+import { navigationRef } from 'app/navigation/NavigationService';
 
 const homeOptions: Object = {
   title: 'Home',
@@ -32,88 +26,58 @@ const homeOptions: Object = {
 };
 
 const RootNavigation: React.FC = () => {
-  const primary = useSelector((state: IState) => state.themeReducer.primary);
-  const routeNameRef = React.useRef<string | null>();
-  const navigationRef = React.useRef<any>();
-
-  const isDark = useSelector((state: IState) => state.themeReducer.isDark);
+  const isDark = useThemeConfigStore(state => state.isDark);
+  const primary = useThemeConfigStore(state => state.primary);
+  const onPrimary = useThemeConfigStore(state => state.onPrimary);
+  const secondaryContainer = useThemeConfigStore(state => state.secondaryContainer);
+  const onSecondary = useThemeConfigStore(state => state.onSecondary);
   const Stack = createNativeStackNavigator<HomeTabNavigatorParams>();
+  const toastConfig = useToastConfig();
+  const theme = isDark
+    ? {
+        ...PaperThemeDark,
+        colors: {
+          ...PaperThemeDark.colors,
+          primary: primary,
+          onPrimary: onPrimary,
+          secondaryContainer: secondaryContainer,
+          onSecondary: onSecondary,
+        },
+      }
+    : {
+        ...PaperThemeDefault,
+        colors: {
+          ...PaperThemeDefault.colors,
+          primary: primary,
+          onPrimary: onPrimary,
+          secondaryContainer: secondaryContainer,
+          onSecondary: onSecondary,
+        },
+      };
 
-  const PaperThemeDefault = {
-    ...MD3LightTheme,
-    ...LightTheme,
-    colors: {
-      ...MD3LightTheme.colors,
-      ...LightTheme.colors,
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      return;
+    }
+    let to = setTimeout(() => {
+      StatusBar.setBackgroundColor('#FFFFFF01');
+    }, 500);
 
-      primary: primary,
-      onPrimary: '#FFFFFF',
-
-      secondaryContainer: primary,
-      onSecondary: '#FFFFFF',
-
-      background: '#FFFFFF',
-      onBackground: '#000000',
-
-      surface: '#eeeeee',
-      onSurface: '#000000',
-
-      error: '#FF0000',
-    },
-  };
-
-  const PaperThemeDark = {
-    ...MD3DarkTheme,
-    ...DarkTheme,
-    dark: true,
-    colors: {
-      ...MD3DarkTheme.colors,
-      ...DarkTheme.colors,
-
-      primary: primary,
-      onPrimary: '#000000',
-
-      secondaryContainer: primary,
-      onSecondary: '#000000',
-
-      background: '#000000',
-      onBackground: '#FFFFFF',
-
-      surface: '#222222',
-      onSurface: '#FFFFFF',
-
-      error: '#FF0000',
-    },
-  };
+    return () => clearTimeout(to);
+  }, []);
 
   return (
-    <PaperProvider theme={isDark ? PaperThemeDark : PaperThemeDefault}>
-      <NavigationContainer
-        ref={navigationRef}
-        onReady={() => {
-          routeNameRef.current = navigationRef.current!.getCurrentRoute().name;
-        }}
-        onStateChange={async () => {
-          const previousRouteName = routeNameRef.current;
-          const currentRouteName = navigationRef.current.getCurrentRoute().name;
-
-          if (previousRouteName !== currentRouteName) {
-            await analytics().logScreenView({
-              screen_name: currentRouteName,
-              screen_class: currentRouteName,
-            });
-          }
-          routeNameRef.current = currentRouteName;
-        }}
-        theme={isDark ? PaperThemeDark : PaperThemeDefault}>
+    <PaperProvider theme={theme}>
+      <NavigationContainer ref={navigationRef} theme={theme}>
         <StatusBar
-          backgroundColor={isDark ? '#000000' : '#00000000'}
+          backgroundColor={'#FFFFFF01'}
           barStyle={isDark ? 'light-content' : 'dark-content'}
-          translucent={false}
+          translucent={true}
         />
         <Stack.Navigator>
           <Stack.Screen name="LoggedInTabNavigator" component={LoggedInTabNavigator} options={homeOptions} />
         </Stack.Navigator>
+        <Toast config={toastConfig} />
       </NavigationContainer>
     </PaperProvider>
   );

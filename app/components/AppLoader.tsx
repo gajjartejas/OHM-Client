@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 
 //ThirdParty
 import { useTheme, Text, Portal, ActivityIndicator } from 'react-native-paper';
 
-const AppLoader = (props: { message: string }) => {
+interface IAppLoaderProps {
+  message: string;
+  portal?: boolean;
+}
+
+const AppLoader = (props: IAppLoaderProps) => {
   //Const
   const { colors } = useTheme();
-  const { message } = props;
+  const { message, portal } = props;
 
-  return (
-    <Portal>
-      <View style={styles.container}>
-        <ActivityIndicator animating={true} color={colors.primary} />
-        <Text style={[styles.titleTextStyle, { color: colors.onSurface }]}>{message}</Text>
-      </View>
-    </Portal>
+  const Child = (
+    <View style={[styles.container, { backgroundColor: `${colors.background}cc` }]}>
+      <ActivityIndicator animating={true} color={colors.primary} />
+      <Text style={[styles.titleTextStyle, { color: colors.onSurface }]}>{message}</Text>
+    </View>
   );
+
+  return portal ? <Portal>{Child}</Portal> : Child;
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   titleTextStyle: {
     fontSize: 13,
     fontWeight: '500',
@@ -28,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppLoader;
+export default memo(AppLoader);

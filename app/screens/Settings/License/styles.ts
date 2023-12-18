@@ -9,8 +9,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollView: {},
-  subView: { flex: 1 },
-  listItem: { paddingHorizontal: 16 },
+  subView: {
+    flex: 1,
+  },
+  listItem: {
+    paddingHorizontal: 16,
+  },
+  cardTablet: {
+    width: '70%',
+    alignSelf: 'center',
+  },
 });
 
 export default styles;

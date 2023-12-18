@@ -7,9 +7,10 @@ import { Text, useTheme } from 'react-native-paper';
 //App modules
 import { ICardValueViewModel, ICardViewModel } from 'app/models/viewModels/cardValueViewModel';
 import { useTranslation } from 'react-i18next';
+import { memo } from 'react';
 
 function CardValueText(props: { text: string; style: any }) {
-  //Consts
+  //Const
   const { colors } = useTheme();
   return <Text style={[styles.cardValueText, { color: colors.onSurface }, props.style]}>{props.text}</Text>;
 }
@@ -26,31 +27,25 @@ function CardValues(props: { value: ICardValueViewModel }) {
 }
 
 function CardTitle(props: { title: string }) {
-  //Consts
+  //Const
   const { colors } = useTheme();
   const { t } = useTranslation();
 
   return (
     <View style={styles.cardValuesContainer}>
       <CardValueText style={[styles.cardValuesTitle, { color: colors.primary }]} text={props.title} />
+      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('dashboard.card.min')} />
       <CardValueText
         style={[styles.cardValuesTitleValue, { color: colors.primary }]}
-        text={t('deviceList.card.currentValue')}
+        text={t('dashboard.card.current')}
       />
-      <CardValueText
-        style={[styles.cardValuesTitleValue, { color: colors.primary }]}
-        text={t('deviceList.card.currentMin')}
-      />
-      <CardValueText
-        style={[styles.cardValuesTitleValue, { color: colors.primary }]}
-        text={t('deviceList.card.currentMax')}
-      />
+      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('dashboard.card.max')} />
     </View>
   );
 }
 
 const CardLeftTitle = (props: { value: ICardViewModel }) => {
-  //Consts
+  //Const
   const { colors } = useTheme();
   return (
     <View style={[styles.cardLeftTitleContainer, { backgroundColor: colors.surface }]}>
@@ -114,4 +109,4 @@ const styles = StyleSheet.create({
   cardSectionText: { fontWeight: 'bold' },
 });
 
-export default CardSection;
+export default memo(CardSection);

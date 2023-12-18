@@ -3,38 +3,41 @@
     "appname": "OHMClient",
     "close": "CLOSE",
     "save": "SAVE",
-    "set": "SET",
-    "connecting": "Connecting...",
-    "connect": "CONNECT"
+    "connecting": "Connecting..."
   },
   "about": {
+    "version": "Version: {{version}}",
     "sendFeedback": "Send Feedback",
     "rateApp": "Rate App",
     "moreApps": "More Apps",
-    "github": "Contribute on Github",
+    "github": "Contribute on GitHub",
     "setting": "Settings",
     "app": "About OHMClient",
-    "sendFeedbackDetail": "You can send your valuable feedback to Telegram channel or send mail directly."
+    "sendFeedbackDetail": "You can send your valuable feedback to the Telegram channel or send mail directly."
   },
   "moreApps": {
-    "apps1Title": "OHM-Client",
-    "apps1Desc": "`OHM-Client` is an unofficial open hardware monitor client app for android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
     "appsTitle": "More Apps",
+    "apps1Title": "OHM-Client",
+    "apps1Desc": "`OHM-Client` is an unofficial open hardware monitor client app for Android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
     "apps2Title": "MIUI - Ads helper",
     "apps2Desc": "This application allows you to enable/disable ads or recommendations for various apps in Xiaomi (MIUI) devices.",
-    "appsGithub": "Github",
-    "appsPlayStore": "Play Store"
+    "apps3Title": "Kano",
+    "apps3Desc": " An interactive way to learn Gujarati kakko, barakhadi and numbers."
   },
   "settings": {
     "title": "Settings",
     "commonHeader": "Common Settings",
     "appearanceTitle": "Appearance",
     "appearanceSubTitle": "Customization of appearance",
-    "generalTitle": "General",
-    "generalSubTitle": "Functional settings of the app",
+    "scanTitle": "Scan Settings",
+    "scanSubTitle": "Auto scan(nearby scan) settings",
+    "identitiesTitle": "Identities",
+    "identitiesSubTitle": "Username and passwords for basic access authentication",
+    "recentConnectionsTitle": "Devices",
+    "recentConnectionsSubTitle": "Manage added devices",
     "infoHeader": "Information",
     "changelogTitle": "Changelog",
-    "changelogSubTitle": "List of changes made in the all updates",
+    "changelogSubTitle": "List of changes made in all updates",
     "librariesTitle": "Libraries",
     "librariesSubTitle": "List of open source libraries used in this project",
     "faqTitle": "FAQ & help",
@@ -65,12 +68,14 @@
     "title": "Libraries"
   },
   "translatorsScreen": {
-    "title": "Translators"
+    "title": "Translators",
+    "emptyList": "Be the pioneer - no contributors found yet!",
+    "emptyListAction": "Click here to contribute"
   },
   "aboutScreen": {
     "title": "About OHMClient",
     "infoHeader": "Information",
-    "infoDescTitle": "`OHM-Client` is an unofficial open hardware monitor client app for android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
+    "infoDescTitle": "`OHM-Client` is an unofficial open hardware monitor client app for Android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
     "infoAuthorNameTitle": "Tejas Gajjar",
     "developerTitle": "Developer",
     "portfolioTitle": "Portfolio",
@@ -78,14 +83,14 @@
     "instagramTitle": "Instagram",
     "instagramSubTitle": "My hobby and my gadgets",
     "telegramTitle": "Join Telegram",
-    "telegramSubTitle": "Discussion about bugs, improvements, feature request and development news",
-    "githubTitle": "Github",
-    "githubSubTitle": "Developer profile and list of open sourced projects",
+    "telegramSubTitle": "Discussion about bugs, improvements, feature request, and development news",
+    "githubTitle": "GitHub",
+    "githubSubTitle": "Developer profile and list of open-sourced projects",
     "twitterTitle": "Twitter",
     "twitterSubTitle": "Personal micro-blog"
   },
-  "generalSetting": {
-    "title": "General",
+  "scanSetting": {
+    "title": "Scan Settings",
     "section1": {
       "header": "Default Scan Config",
       "row1": {
@@ -99,35 +104,16 @@
         "subTitle": "{{port}}",
         "dialogTitle": "Enter Port",
         "dialogSubTitle": "Port number of Open Hardware Monitor client"
-      },
-      "row3": {
-        "title": "Refresh Interval (in millisecond)",
-        "subTitle": "{{interval}} ms",
-        "dialogTitle": "Enter Refresh Interval (in millisecond)",
-        "dialogSubTitle": "The dashboard data will refresh at specific interval."
       }
     },
-    "section2": {
-      "header": "Authentication",
-      "row1": {
-        "title": "Set Authentication",
-        "subTitle": "Enable HTTP Basic Authentication ie username and password.",
-        "dialogTitle": "Set Authentication",
-        "dialogSubTitle": "If you have changed authentication, please restart your windows client app.",
-        "dialogInputPlaceholder1": "Enter Username",
-        "dialogInputPlaceholder2": "Enter Password",
-        "dialogInputValidation1": "Please enter valid username",
-        "dialogInputValidation2": "Please enter valid password",
-        "dialogInputError1": "Invalid authentication or authentication requested"
-      }
-    },
+
     "section3": {
       "header": "Advanced",
       "row1": {
         "title": "Scan Timeout",
         "subTitle": "{{scanTimeoutInMs}} ms",
         "dialogTitle": "Enter Scan Timeout (1 - 10000)",
-        "dialogSubTitle": "Scan timeout per threads, ex: 150 threads per 1500 ms, If device not found try to increase timeout."
+        "dialogSubTitle": "Scan timeout per threads, ex: 150 threads per 1500 ms, If device not found try to increase the timeout."
       },
       "row2": {
         "title": "Scan Threads",
@@ -144,30 +130,105 @@
       }
     }
   },
-  "deviceList": {
-    "noDeviceFoundTryAddingItManually": "No device found!\nPlease try adding it manually.",
-    "noDeviceFound": "No device found!",
-    "addManually": "Add Device Manually",
-    "connectHostManually": "Add device manually",
-    "rescan": "Rescan",
-    "or": "OR",
-    "connectHelp": "Help",
-    "advanceSetting": "Advance Setting",
-    "devices": "Devices",
+  "dashboard": {
     "card": {
-      "currentValue": "Current",
-      "currentMin": "Min",
-      "currentMax": "Max"
+      "min": "Min",
+      "current": "Current",
+      "max": "Max"
     },
-    "disconnectedMessage": "Disconnected from host, reconnecting please wait...",
-    "authRequestedMessage": "Authorization is requested, please set it from Settings -> General -> Authentication"
+    "emptyData": {
+      "item1": {
+        "title": "Disconnected!",
+        "message": "Device disconnected, Please try again!",
+        "button": "Update Settings"
+      },
+      "item2": {
+        "title": "Connection Timeout",
+        "message": "Device taking a long time to connect, Please try again!",
+        "button": "Update Settings"
+      },
+      "item3": {
+        "title": "Authorization Required!",
+        "message": "Authorization is required, please update it from settings.",
+        "button": "Update Settings"
+      },
+      "item4": {
+        "title": "Disconnected",
+        "button": "Update Settings"
+      }
+    }
   },
-  "inputIpAddressDialog": {
-    "title": "Add Device",
-    "inputPlaceholder1": "Enter IP Address",
-    "inputPlaceholder2": "Enter Port",
-    "dialogInputError1": "Please enter valid IP Address",
-    "dialogInputError2": "Please enter valid port",
-    "button1": "Advance Setting"
+  "addDevice": {
+    "titleCreate": "CREATE",
+    "titleUpdate": "UPDATE",
+    "titleConnect": "CONNECT",
+    "addDevice": "Add Device",
+    "updateDevice": "Update Device",
+    "connectDevice": "Connect",
+    "invalidIpAddress": "Invalid IP address",
+    "invalidRefreshRate": "Invalid refresh rate",
+    "connectionOk": "Connection ok",
+    "authRequired": "Authorization required!",
+    "inputPlaceholder1": "Enter the connection name (Optional)",
+    "inputPlaceholder2": "Enter IP Address",
+    "inputPlaceholder3": "Enter Path (ex: /data.json)",
+    "inputPlaceholder4": "Enter Port",
+    "inputPlaceholder5": "Enter refresh rate in milliseconds",
+    "selectIdentity": "Select Identity (Optional)",
+    "testConnection": "Test Connection"
+  },
+  "addIdentity": {
+    "usernameRequired": "Username is required!",
+    "passwordRequired": "Password is required!",
+    "titleUpdate": "Update Identity",
+    "titleAddIdentity": "Add Identity",
+    "inputPlaceholder1": "Enter Name (Optional)",
+    "inputPlaceholder2": "Enter Username",
+    "inputPlaceholder3": "Enter Password",
+    "updateButton": "UPDATE",
+    "saveButton": "SAVE"
+  },
+  "devicesList": {
+    "title": "Devices",
+    "createNewDevice": "Create New Device",
+    "subTitle": "Devices",
+    "emptyName": "No Name",
+    "edit": "Edit",
+    "delete": "Delete",
+    "emptyDeviceTitle": "No Device found!",
+    "emptyDeviceSubtitle": "Please create a new device."
+  },
+  "identitiesList": {
+    "selectTitle": "Select Identity",
+    "listTitle": "Identities",
+    "createNewIdentity": "Create New Identity",
+    "subTitle": "Identities",
+    "edit": "Edit",
+    "delete": "Delete",
+    "emptyData": {
+      "title": "No identity found!",
+      "message": "Please create a new identity."
+    }
+  },
+  "scanDevices": {
+    "title": "Nearby Devices",
+    "subTitle": "Nearby Devices",
+    "emptyData": {
+      "title": "No nearby devices found!",
+      "help": "Help",
+      "or": "OR",
+      "rescan": "Scan Again"
+    }
+  },
+  "connectToDeviceList": {
+    "savedConnections": "Saved Devices",
+    "noDeviceFoundTryAddingItManually": "No device found!\nPlease try adding it manually.",
+    "addManually": "Add Device",
+    "devicesSettings": "Manage Devices",
+    "emptyData": {
+      "emptyDeviceTitle": "No Device found!",
+      "emptyDeviceSubtitle": "Please create a new device.",
+      "button": "Add Device"
+    }
   }
 }
