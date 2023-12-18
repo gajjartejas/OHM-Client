@@ -4,12 +4,20 @@ import { Alert, Linking } from 'react-native';
 const openInAppBrowser = async (url: string) => {
   try {
     if (await InAppBrowser.isAvailable()) {
-      InAppBrowser.open(url);
+      await InAppBrowser.open(url);
     } else {
-      Linking.openURL(url);
+      await Linking.openURL(url);
     }
   } catch (e) {
     Alert.alert(JSON.stringify(e));
+  }
+};
+
+export const openBrowser = async (url: string) => {
+  try {
+    await Linking.openURL(url);
+  } catch (e: any) {
+    Alert.alert(e.message);
   }
 };
 

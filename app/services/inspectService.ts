@@ -10,10 +10,11 @@ const inspectService = (config: {
   path: string;
   username: string | null;
   password: string | null;
+  abortController: AbortController | null;
 }): Promise<DeviceInfo> => {
-  const { ipAddress, port, path, username, password } = config;
+  const { ipAddress, port, path, username, password, abortController } = config;
   return new Promise((resolve, reject) => {
-    const controller = new AbortController();
+    const controller = abortController ? abortController : new AbortController();
     // 5 second timeout:
     const timeoutId = setTimeout(() => controller.abort(), 5000);
     fetch(`http://${ipAddress}:${port}${path}`, {

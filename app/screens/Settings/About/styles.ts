@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
   },
   listContainer: { paddingTop: 16, paddingBottom: 8 },
+  cardTablet: {
+    width: '70%',
+    alignSelf: 'center',
+  },
 });
 
 export default styles;

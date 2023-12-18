@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleSheet, View, ViewStyle, Image } from 'react-native';
 
 //ThirdParty
-import { Button, Text, useTheme } from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
+import { IconButton, Text, useTheme } from 'react-native-paper';
+
+//App Modules
 import { AppTheme } from 'app/models/theme';
 
 //Interface
@@ -19,7 +20,6 @@ interface IMoreAppCard {
 
 function MoreAppCard(props: IMoreAppCard) {
   //Constants
-  const { t } = useTranslation();
   const { colors } = useTheme<AppTheme>();
 
   return (
@@ -29,14 +29,10 @@ function MoreAppCard(props: IMoreAppCard) {
       <Text style={[styles.titleText, { color: colors.onSurface }]}>{props.title}</Text>
       <Text style={[styles.descriptionText, { color: colors.onSurface }]}>{props.description}</Text>
       {props.showLinks && (
-        <>
-          <Button style={styles.githubButton} onPress={props.onPressGithub}>
-            {t('moreApps.appsGithub')}
-          </Button>
-          <Button style={styles.playstoreButton} onPress={props.onPressPlayStore}>
-            {t('moreApps.appsPlayStore')}
-          </Button>
-        </>
+        <View style={styles.buttonContainer}>
+          <IconButton icon={'github'} style={styles.githubButton} onPress={props.onPressGithub} />
+          <IconButton icon={'android'} style={styles.playstoreButton} onPress={props.onPressPlayStore} />
+        </View>
       )}
     </View>
   );
@@ -54,7 +50,12 @@ const styles = StyleSheet.create({
     elevation: 8,
     shadowOpacity: 0.2,
   },
-  icon: { alignSelf: 'center', width: 80, height: 80, borderRadius: 40 },
+  icon: {
+    alignSelf: 'center',
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
   titleText: {
     alignSelf: 'center',
     textAlign: 'center',
@@ -70,8 +71,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginHorizontal: 16,
   },
-  githubButton: { alignSelf: 'center', marginTop: 12 },
-  playstoreButton: { alignSelf: 'center' },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginTop: 12,
+  },
+  githubButton: {
+    alignSelf: 'center',
+  },
+  playstoreButton: {
+    alignSelf: 'center',
+  },
 });
 
-export default MoreAppCard;
+export default memo(MoreAppCard);

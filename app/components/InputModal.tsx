@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { View, TextInput, StyleSheet, TextInputProps } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
 import { Text, Button, useTheme } from 'react-native-paper';
 import Modal from 'react-native-modal';
+import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 
 //Interface
 interface IInputModalProps extends TextInputProps {
@@ -20,6 +21,7 @@ const InputModal = React.forwardRef((props: IInputModalProps, ref: any) => {
   //Const
   const theme = useTheme();
   const { t } = useTranslation();
+  const largeScreenMode = useLargeScreenMode();
 
   useEffect(() => {
     if (!props.modalVisible) {
@@ -45,7 +47,7 @@ const InputModal = React.forwardRef((props: IInputModalProps, ref: any) => {
       hideModalContentWhileAnimating
       onBackButtonPress={props.onBackButtonPress}
       isVisible={props.modalVisible}>
-      <View style={[styles.centeredView]}>
+      <View style={[styles.centeredView, largeScreenMode && styles.cardTablet]}>
         <View style={[styles.modalView, { backgroundColor: `${theme.colors.background}` }]}>
           <Text style={[styles.textSize, { color: theme.colors.primary }]}>{props.header}</Text>
           <TextInput
@@ -132,5 +134,11 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginBottom: 16,
   },
+  cardTablet: {
+    width: '70%',
+    alignSelf: 'center',
+  },
 });
-export default InputModal;
+
+InputModal.displayName = 'InputModal';
+export default memo(InputModal);

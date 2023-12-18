@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, InteractionManager, View } from 'react-native';
 
 //ThirdParty
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import { Appbar, List, useTheme } from 'react-native-paper';
+import { List, useTheme } from 'react-native-paper';
 
 //App modules
 import Utils from 'app/utils';
@@ -13,6 +13,8 @@ import Utils from 'app/utils';
 import styles from './styles';
 import Components from 'app/components';
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
+import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import AppHeader from 'app/components/AppHeader';
 
 //Interfaces
 export interface ILicense {
@@ -34,20 +36,21 @@ const License = ({ navigation }: Props) => {
   //Constants
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const largeScreenMode = useLargeScreenMode();
 
   //States
-  let [finalLicense, setFinalLicense] = useState<IFinalLicense[]>([]);
+  const [finalLicense, setFinalLicense] = useState<IFinalLicense[]>([]);
 
-  const onGoBack = () => {
+  const onGoBack = useCallback(() => {
     navigation.pop();
-  };
+  }, [navigation]);
 
-  //npm-license-crawler -onlyDirectDependencies -json licenses.json
+  //npx npm-license-crawler -onlyDirectDependencies -json licenses.json
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
       const licenses: { [id: string]: ILicense } = require('../../../../licenses.json');
       const numberRegex = /\d+(\.\d+)*/;
-      const atRegex = /(?:@)/gi;
+      const atRegex = /@/gi;
       let newLicenses: IFinalLicense[] = [];
       for (const licensesKey in licenses) {
         const license = licenses[licensesKey];
@@ -73,18 +76,25 @@ const License = ({ navigation }: Props) => {
     );
   };
 
-  const onPressItem = (item: IFinalLicense, _index: number) => {
-    Utils.openInAppBrowser(item.licenseSpecs.licenseUrl);
-  };
+  const onPressItem = useCallback(async (item: IFinalLicense, _index: number) => {
+    await Utils.openInAppBrowser(item.licenseSpecs.licenseUrl);
+  }, []);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Appbar.Header style={{ backgroundColor: colors.background }}>
-        <Appbar.BackAction onPress={onGoBack} />
-        <Appbar.Content title={t('librariesScreen.title')} />
-      </Appbar.Header>
+      <AppHeader
+        showBackButton={true}
+        onPressBackButton={onGoBack}
+        title={t('librariesScreen.title')}
+        style={{ backgroundColor: colors.background }}
+      />
       <Components.AppBaseView edges={['bottom', 'left', 'right']} style={styles.subView}>
-        <FlatList data={finalLicense} renderItem={renderItem} keyExtractor={item => item.name} />
+        <FlatList
+          contentContainerStyle={[largeScreenMode && styles.cardTablet]}
+          data={finalLicense}
+          renderItem={renderItem}
+          keyExtractor={item => item.name}
+        />
       </Components.AppBaseView>
     </View>
   );

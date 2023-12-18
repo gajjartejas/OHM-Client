@@ -1,40 +1,38 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 
 //ThirdParty
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-easy-icon';
-import { Appbar, Divider, List, useTheme } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
+import { Divider, List, useTheme } from 'react-native-paper';
 
 //App modules
 import Components from 'app/components';
 import styles from './styles';
 
 //Modals
-import IState from 'app/models/models/appState';
-import { IAppearanceType } from 'app/models/reducers/theme';
 import { ISettingItem, ISettingSection, ISettingThemeOptions } from 'app/models/viewModels/settingItem';
 
 //Redux
-import * as themeActions from 'app/store/actions/themeActions';
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
+import useThemeConfigStore, { IAppearanceType } from 'app/store/themeConfig';
+import { SelectAccentDialogColor } from 'app/components/SelectAccentColorDialog';
+import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import AppHeader from 'app/components/AppHeader';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'SelectAppearance'>;
-
-export interface IAppearanceColor {
-  primary: string;
-  onPrimary: string;
-}
 
 const SelectAppearance = ({ navigation }: Props) => {
   //Constants
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const dispatch = useDispatch();
-  const appearance = useSelector((state: IState) => state.themeReducer.appearance);
+  const resetTheme = useThemeConfigStore(store => store.resetTheme);
+  const setPrimaryColor = useThemeConfigStore(store => store.setPrimaryColor);
+  const setAppearance = useThemeConfigStore(store => store.setAppearance);
+  const appearance = useThemeConfigStore(store => store.appearance);
+  const largeScreenMode = useLargeScreenMode();
 
   //States
   const [apps] = useState<ISettingSection[]>([
@@ -77,7 +75,7 @@ const SelectAppearance = ({ navigation }: Props) => {
   ]);
 
   //
-  const [themeDialogVisible, setThemeDialogVisible] = React.useState(false);
+  const [themeDialogVisible, setThemeDialogVisible] = useState(false);
   const [themeOptions] = React.useState<ISettingThemeOptions[]>([
     {
       id: 0,
@@ -97,123 +95,102 @@ const SelectAppearance = ({ navigation }: Props) => {
   ]);
 
   //
-  const [accentColorDialogVisible, setAccentColorDialogVisible] = React.useState(false);
-  const [accentColorOptions] = React.useState<IAppearanceColor[]>([
-    { primary: '#008b00', onPrimary: '#ffffff' },
-    { primary: '#61d800', onPrimary: '#ffffff' },
-    { primary: '#90ee02', onPrimary: '#000000' },
-    { primary: '#c6f68d', onPrimary: '#000000' },
-    { primary: '#defabb', onPrimary: '#000000' },
+  const [accentColorDialogVisible, setAccentColorDialogVisible] = useState(false);
 
-    { primary: '#880061', onPrimary: '#ffffff' },
-    { primary: '#dd0074', onPrimary: '#ffffff' },
-    { primary: '#ee0290', onPrimary: '#000000' },
-    { primary: '#f186c0', onPrimary: '#000000' },
-    { primary: '#f5b6da', onPrimary: '#000000' },
-
-    { primary: '#e44304', onPrimary: '#ffffff' },
-    { primary: '#ee6002', onPrimary: '#ffffff' },
-    { primary: '#ff9e22', onPrimary: '#000000' },
-    { primary: '#ffc77d', onPrimary: '#000000' },
-    { primary: '#ffddb0', onPrimary: '#000000' },
-
-    { primary: '#0000d6', onPrimary: '#ffffff' },
-    { primary: '#5300e8', onPrimary: '#ffffff' },
-    { primary: '#7e3ff2', onPrimary: '#000000' },
-    { primary: '#9965f4', onPrimary: '#000000' },
-    { primary: '#b794f6', onPrimary: '#000000' },
-
-    { primary: '#5c00d2', onPrimary: '#ffffff' },
-    { primary: '#8b00dc', onPrimary: '#ffffff' },
-    { primary: '#a100e0', onPrimary: '#000000' },
-    { primary: '#ba00e5', onPrimary: '#000000' },
-    { primary: '#cc00e9', onPrimary: '#000000' },
-  ]);
-
-  const onGoBack = () => {
+  const onGoBack = useCallback(() => {
     navigation.pop();
-  };
+  }, [navigation]);
 
-  //
-  const onPressAppearanceOption = (item: ISettingSection, index: number, subItem: ISettingItem, subIndex: number) => {
-    switch (true) {
-      case index === 0 && subIndex === 0:
-        onPressShowThemeDialog();
-        break;
-      case index === 0 && subIndex === 1:
-        onPressShowAccentColorDialog();
-        break;
-      case index === 1 && subIndex === 0:
-        onPressRestoreDefaultTheme();
-        break;
-      default:
-    }
-  };
+  const onPressRestoreDefaultTheme = useCallback(() => {
+    resetTheme();
+  }, [resetTheme]);
 
-  //
-  const onPressShowThemeDialog = () => setThemeDialogVisible(true);
-  const onPressHideThemeDialog = () => setThemeDialogVisible(false);
+  const onPressShowThemeDialog = useCallback(() => setThemeDialogVisible(true), []);
+  const onPressHideThemeDialog = useCallback(() => setThemeDialogVisible(false), []);
 
-  const onSelectTheme = (item: ISettingThemeOptions, _index: number) => {
-    onPressHideThemeDialog();
+  const onPressShowAccentColorDialog = useCallback(() => setAccentColorDialogVisible(true), []);
+  const onPressHideAccentColorDialog = useCallback(() => setAccentColorDialogVisible(false), []);
 
-    setTimeout(() => {
-      dispatch(themeActions.setAppearance(item.value));
-    }, 100);
-  };
+  const onPressPrimaryColor = useCallback(
+    (item: SelectAccentDialogColor) => {
+      onPressHideAccentColorDialog();
+      setTimeout(() => {
+        setPrimaryColor(item.primary, item.onPrimary);
+      }, 100);
+    },
+    [onPressHideAccentColorDialog, setPrimaryColor],
+  );
 
-  //
-  const onPressShowAccentColorDialog = () => setAccentColorDialogVisible(true);
-  const onPressHideAccentColorDialog = () => setAccentColorDialogVisible(false);
+  const onPressAppearanceOption = useCallback(
+    (item: ISettingSection, index: number, subItem: ISettingItem, subIndex: number) => {
+      switch (true) {
+        case index === 0 && subIndex === 0:
+          onPressShowThemeDialog();
+          break;
+        case index === 0 && subIndex === 1:
+          onPressShowAccentColorDialog();
+          break;
+        case index === 1 && subIndex === 0:
+          onPressRestoreDefaultTheme();
+          break;
+        default:
+      }
+    },
+    [onPressRestoreDefaultTheme, onPressShowAccentColorDialog, onPressShowThemeDialog],
+  );
 
-  const onPressPrimaryColor = (item: IAppearanceColor, _index: number) => {
-    onPressHideAccentColorDialog();
-    setTimeout(() => {
-      dispatch(themeActions.setPrimaryColor(item.primary, item.onPrimary));
-    }, 100);
-  };
+  const onSelectTheme = useCallback(
+    (item: ISettingThemeOptions, _index: number) => {
+      setThemeDialogVisible(false);
 
-  //
-  const onPressRestoreDefaultTheme = () => {
-    dispatch(themeActions.resetTheme());
-  };
+      setTimeout(() => {
+        setAppearance(item.value);
+      }, 100);
+    },
+    [setAppearance],
+  );
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Appbar.Header style={{ backgroundColor: colors.background }}>
-        <Appbar.BackAction onPress={onGoBack} />
-        <Appbar.Content title={t('appearanceSettings.title')} />
-      </Appbar.Header>
+      <AppHeader
+        showBackButton={true}
+        onPressBackButton={onGoBack}
+        title={t('appearanceSettings.title')}
+        style={{ backgroundColor: colors.background }}
+      />
+
       <Components.AppBaseView scroll edges={['bottom', 'left', 'right']} style={styles.safeArea}>
-        {apps.map((item, index) => {
-          return (
-            <View key={item.id.toString()}>
-              <List.Subheader style={[styles.listSubHeader, { color: colors.primary }]}>{item.title}</List.Subheader>
-              {item.items.map((subItem, subIndex) => {
-                return (
-                  <List.Item
-                    key={subItem.id.toString()}
-                    titleStyle={{ color: colors.onSurface }}
-                    descriptionStyle={{ color: `${colors.onSurface}88` }}
-                    onPress={() => onPressAppearanceOption(item, index, subItem, subIndex)}
-                    title={subItem.title}
-                    description={subItem.description}
-                    left={() => (
-                      <Icon
-                        style={styles.listItemIcon}
-                        type={subItem.iconType}
-                        name={subItem.iconName}
-                        color={`${colors.onSurface}88`}
-                        size={24}
-                      />
-                    )}
-                  />
-                );
-              })}
-              <Divider />
-            </View>
-          );
-        })}
+        <View style={[styles.listContainer, largeScreenMode && styles.cardTablet]}>
+          {apps.map((item, index) => {
+            return (
+              <View key={item.id.toString()}>
+                <List.Subheader style={[styles.listSubHeader, { color: colors.primary }]}>{item.title}</List.Subheader>
+                {item.items.map((subItem, subIndex) => {
+                  return (
+                    <List.Item
+                      key={subItem.id.toString()}
+                      titleStyle={{ color: colors.onSurface }}
+                      descriptionStyle={{ color: `${colors.onSurface}88` }}
+                      onPress={() => onPressAppearanceOption(item, index, subItem, subIndex)}
+                      title={subItem.title}
+                      description={subItem.description}
+                      left={() => (
+                        <Icon
+                          style={styles.listItemIcon}
+                          type={subItem.iconType}
+                          name={subItem.iconName}
+                          color={`${colors.onSurface}88`}
+                          size={24}
+                        />
+                      )}
+                    />
+                  );
+                })}
+                <Divider />
+              </View>
+            );
+          })}
+        </View>
       </Components.AppBaseView>
 
       <Components.SelectThemeDialog
@@ -226,10 +203,8 @@ const SelectAppearance = ({ navigation }: Props) => {
 
       <Components.SelectAccentDialog
         visible={accentColorDialogVisible}
-        appearance={appearance}
-        accentColorOptions={accentColorOptions}
         onSelect={onPressPrimaryColor}
-        onPressHideDialog={onPressHideAccentColorDialog}
+        onDismiss={onPressHideAccentColorDialog}
       />
     </View>
   );

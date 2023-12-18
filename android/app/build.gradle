@@ -80,8 +80,8 @@ android {
         applicationId "com.tejasgajjar.ohmc"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "1.2"
+        versionCode 9
+        versionName "2.0"
     }
     signingConfigs {
         debug {

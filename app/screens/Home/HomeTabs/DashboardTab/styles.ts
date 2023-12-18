@@ -15,6 +15,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     flex: 1,
   },
+  noDataButtonsContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  emptyView: {
+    marginHorizontal: 20,
+  },
 });
 
 export default styles;

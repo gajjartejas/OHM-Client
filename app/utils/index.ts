@@ -1,11 +1,8 @@
-import normalize from 'app/utils/normalize';
-import openInAppBrowser from './openInAppBrowser';
-import validateIPAddress from './validateIPAddress';
-import validatePort from './validatePort';
+import openInAppBrowser, { openBrowser } from './openInAppBrowser';
+import rateApp from './rateApp';
 
 export default {
-  normalize,
-  validateIPAddress,
-  validatePort,
   openInAppBrowser,
+  rateApp,
+  openBrowser,
 };

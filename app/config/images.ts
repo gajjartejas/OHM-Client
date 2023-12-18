@@ -3,8 +3,8 @@
 const Images = {
   icons: {
     app_icon: require('../assets/images/appicon.png'),
-    about_bg: require('../assets/images/about_bg.jpg'),
     ic_more_app_miuiadshelper: require('../assets/images/ic_more_app_miuiadshelper.png'),
+    ic_more_app_kano: require('../assets/images/ic_more_app_kano.png'),
 
     flag_ar: require('app/assets/images/flags/ar.png'),
     flag_cs: require('app/assets/images/flags/cs.png'),

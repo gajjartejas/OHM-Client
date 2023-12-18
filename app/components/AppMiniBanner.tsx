@@ -1,26 +1,37 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { memo } from 'react';
+import { StyleSheet } from 'react-native';
 
 //ThirdParty
-import { useTheme, Text } from 'react-native-paper';
+import { useTheme, Text, TouchableRipple } from 'react-native-paper';
 
-const AppMiniBanner = (props: { message: string }) => {
+interface IAppMiniBanner {
+  onPress?: () => void;
+  message: string;
+  RightViewComponent?: React.JSX.Element | null;
+}
+
+const AppMiniBanner = (props: IAppMiniBanner) => {
   //Const
   const { colors } = useTheme();
-  const { message } = props;
+  const { message, RightViewComponent, onPress } = props;
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.error }]}>
-      <Text style={[styles.titleTextStyle, { color: colors.onSurface }]}>{message}</Text>
-    </View>
+    <TouchableRipple onPress={onPress} style={[styles.container, { backgroundColor: colors.error }]}>
+      <>
+        <Text style={[styles.titleTextStyle, { color: colors.onSurface }]}>{message}</Text>
+        {RightViewComponent}
+      </>
+    </TouchableRipple>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    paddingVertical: 6,
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 16,
+    flexDirection: 'row',
+    minHeight: 40,
   },
   titleTextStyle: {
     fontSize: 13,
@@ -28,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppMiniBanner;
+export default memo(AppMiniBanner);

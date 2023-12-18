@@ -1,14 +1,15 @@
 //Interfaces
+import { IAppearanceType } from 'app/store/themeConfig';
 import { IconType } from 'react-native-easy-icon/src/Icon';
-import { IAppearanceType } from '../reducers/theme';
 
 export interface ISettingItem {
   id: number;
   iconName: string;
   iconType: IconType;
   title: string;
-  description: string | null;
-  route: string | null;
+  description: string;
+  route?: any;
+  touchable?: boolean;
 }
 
 export interface ISettingSection {
