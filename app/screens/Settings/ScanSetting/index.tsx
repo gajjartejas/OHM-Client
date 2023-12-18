@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { ScrollView, View, TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
