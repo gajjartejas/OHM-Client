@@ -22,12 +22,12 @@ const Constant = {
   MORE_APPS_KANO_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.tejasgajjar.kano',
 
   CHANGE_LOG: `${GITHUB_PROJECT_LINK}/releases`,
-  FAQ: `${GITHUB_PROJECT_LINK}/blob/main/docs/faqs.md`,
+  FAQ: `${GITHUB_PROJECT_LINK}/blob/main/docs/faqs.md#frequently-asked-questions`,
   TRANSLATE_APP: 'https://app.tolgee.io/projects/474',
   PRIVACY_POLICY: `${GITHUB_PROJECT_LINK}/blob/main/docs/privacy.md`,
   TERMS_OF_SERVICE: `${GITHUB_PROJECT_LINK}/blob/main/docs/terms.md`,
 
-  ABOUT_HELP: `${GITHUB_PROJECT_LINK}/blob/main/docs/help.md`,
+  ABOUT_HELP: `${GITHUB_PROJECT_LINK}/blob/main/docs/help.md#help`,
   ABOUT_PORTFOLIO: 'https://www.gajjartejas.me',
   ABOUT_INSTAGRAM: 'https://www.instagram.com/gajjartejas',
   ABOUT_JOIN_TELEGRAM: 'https://t.me/tejasapps',

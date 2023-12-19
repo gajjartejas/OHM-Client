@@ -105,9 +105,9 @@ const ScanDevices = ({ navigation }: Props) => {
     );
   }, [colors.onBackground, onHelp, startScan, t]);
 
-  const onPressRefresh = useCallback(async () => {
-    await startScan();
-  }, [startScan]);
+  const onPressSettings = useCallback(async () => {
+    navigation.navigate('ScanSetting', {});
+  }, [navigation]);
 
   const onGoBack = useCallback(() => {
     navigation.pop();
@@ -120,7 +120,7 @@ const ScanDevices = ({ navigation }: Props) => {
         onPressBackButton={onGoBack}
         title={t('scanDevices.title')}
         RightViewComponent={
-          <IconButton icon="refresh" iconColor={colors.onBackground} size={20} onPress={onPressRefresh} />
+          <IconButton icon="cog" iconColor={colors.onBackground} size={20} onPress={onPressSettings} />
         }
         style={{ backgroundColor: colors.background }}
       />
@@ -147,8 +147,11 @@ const ScanDevices = ({ navigation }: Props) => {
 
         {scanningFinished && scannedDevices.length < 1 && (
           <Components.AppEmptyDataView
+            iconType={'font-awesome5'}
+            iconName="box-open"
             style={{}}
-            subHeader={t('scanDevices.emptyData.title')}
+            header={t('scanDevices.emptyData.title')}
+            subHeader={t('scanDevices.emptyData.subtitle')}
             renderContent={renderNoNearbyDeviceButtons}
           />
         )}
