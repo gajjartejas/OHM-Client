@@ -71,10 +71,14 @@
     "themeTitle": "विषय",
     "title": "उपस्थिति"
   },
-  "connectTodeviceList": {
-    "addManually": "डिवाइस को मैन्युअल रूप से जोड़ें",
-    "advanceSetting": "अग्रिम सेटिंग",
-    "connectHostManually": "डिवाइस को मैन्युअल रूप से जोड़ें",
+  "connectToDeviceList": {
+    "addManually": "डिवाइस जोडे",
+    "devicesSettings": "डिवाइस प्रबंधित करें",
+    "emptyData": {
+      "button": "डिवाइस जोडे",
+      "emptyDeviceSubtitle": "कृपया एक नया उपकरण बनाएं.",
+      "emptyDeviceTitle": "कोई उपकरण नहीं मिला!"
+    },
     "noDeviceFoundTryAddingItManually": "कोई उपकरण नहीं मिला!\n\nकृपया इसे मैन्युअल रूप से जोड़ने का प्रयास करें.",
     "savedConnections": "सहेजे गए उपकरण"
   },
@@ -151,6 +155,7 @@
       "help": "मदद",
       "or": "या",
       "rescan": "फिर से स्कैन करें",
+      "subtitle": "कृपया पुनः स्कैन करने का प्रयास करें",
       "title": "आस-पास कोई उपकरण नहीं मिला!"
     },
     "subTitle": "निकट के उपकरण",

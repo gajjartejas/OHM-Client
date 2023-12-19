@@ -215,6 +215,7 @@
     "subTitle": "Nearby Devices",
     "emptyData": {
       "title": "No nearby devices found!",
+      "subtitle": "Please try scanning again",
       "help": "Help",
       "or": "OR",
       "rescan": "Scan Again"

@@ -54,8 +54,8 @@ const AddIdentity = ({ navigation, route }: Props) => {
 
     let identityAddOrUpdate = {
       id: identity ? identity.id : uuid.v4().toString(),
-      name: name,
-      username: userName,
+      name: name.trim(),
+      username: userName.trim(),
       password: password,
     };
 

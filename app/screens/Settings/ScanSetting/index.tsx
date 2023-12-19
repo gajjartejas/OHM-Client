@@ -205,7 +205,7 @@ const ScanSetting = ({ navigation }: Props) => {
         }}
         onPressSave={() => {
           setModalVisiblePath(false);
-          setPath(modalPath);
+          setPath(modalPath.trim());
         }}
         placeholder={t('scanSetting.section1.row1.dialogTitle')!}
         value={modalPath}

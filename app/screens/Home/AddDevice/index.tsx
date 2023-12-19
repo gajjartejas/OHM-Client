@@ -125,10 +125,10 @@ const AddDevice = ({ navigation, route }: Props) => {
 
     let deviceAddOrUpdate: IDevice = {
       id: device ? device.id : uuid.v4().toString(),
-      name: connectionName,
+      name: connectionName.trim(),
       port: parseInt(port, 10),
-      ip: ipAddress,
-      path: path,
+      ip: ipAddress.trim(),
+      path: path.trim(),
       refreshRateInMs: parseInt(refreshRateInMs, 10),
       identity: identity !== null ? identity : device?.identity,
     };
