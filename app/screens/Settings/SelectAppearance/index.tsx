@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { View } from 'react-native';
 
 //ThirdParty
@@ -35,64 +35,68 @@ const SelectAppearance = ({ navigation }: Props) => {
   const largeScreenMode = useLargeScreenMode();
 
   //States
-  const [apps] = useState<ISettingSection[]>([
-    {
-      id: 0,
-      title: t('appearanceSettings.interfaceHeader'),
-      items: [
-        {
-          id: 0,
-          iconName: 'wb-sunny',
-          iconType: 'material',
-          title: t('appearanceSettings.themeTitle'),
-          description: t('appearanceSettings.themeSubTitle')!,
-          route: 'SelectAppearance',
-        },
-        {
-          id: 1,
-          iconName: 'app-settings-alt',
-          iconType: 'material',
-          title: t('appearanceSettings.accentColorTitle'),
-          description: t('appearanceSettings.accentColorSubTitle')!,
-          route: '',
-        },
-      ],
-    },
-    {
-      id: 1,
-      title: t('appearanceSettings.otherHeader'),
-      items: [
-        {
-          id: 0,
-          iconName: 'backup-restore',
-          iconType: 'material-community',
-          title: t('appearanceSettings.otherTitle'),
-          description: t('appearanceSettings.otherSubTitle')!,
-          route: 'SelectAppearance',
-        },
-      ],
-    },
-  ]);
+  const apps: ISettingSection[] = useMemo(() => {
+    return [
+      {
+        id: 0,
+        title: t('appearanceSettings.interfaceHeader'),
+        items: [
+          {
+            id: 0,
+            iconName: 'wb-sunny',
+            iconType: 'material',
+            title: t('appearanceSettings.themeTitle'),
+            description: t('appearanceSettings.themeSubTitle')!,
+            route: 'SelectAppearance',
+          },
+          {
+            id: 1,
+            iconName: 'app-settings-alt',
+            iconType: 'material',
+            title: t('appearanceSettings.accentColorTitle'),
+            description: t('appearanceSettings.accentColorSubTitle')!,
+            route: '',
+          },
+        ],
+      },
+      {
+        id: 1,
+        title: t('appearanceSettings.otherHeader'),
+        items: [
+          {
+            id: 0,
+            iconName: 'backup-restore',
+            iconType: 'material-community',
+            title: t('appearanceSettings.otherTitle'),
+            description: t('appearanceSettings.otherSubTitle')!,
+            route: 'SelectAppearance',
+          },
+        ],
+      },
+    ];
+  }, [t]);
 
   //
   const [themeDialogVisible, setThemeDialogVisible] = useState(false);
-  const [themeOptions] = React.useState<ISettingThemeOptions[]>([
-    {
-      id: 0,
-      title: t('appearanceSettings.themeOption1'),
-      value: IAppearanceType.Light,
-    },
-    {
-      id: 1,
-      title: t('appearanceSettings.themeOption2'),
-      value: IAppearanceType.Dark,
-    },
-    {
-      id: 2,
-      title: t('appearanceSettings.themeOption3'),
-      value: IAppearanceType.Auto,
-    },
-  ]);
+  const themeOptions: ISettingThemeOptions[] = useMemo(() => {
+    return [
+      {
+        id: 0,
+        title: t('appearanceSettings.themeOption1'),
+        value: IAppearanceType.Light,
+      },
+      {
+        id: 1,
+        title: t('appearanceSettings.themeOption2'),
+        value: IAppearanceType.Dark,
+      },
+      {
+        id: 2,
+        title: t('appearanceSettings.themeOption3'),
+        value: IAppearanceType.Auto,
+      },
+    ];
+  }, [t]);
 
   //
   const [accentColorDialogVisible, setAccentColorDialogVisible] = useState(false);
@@ -151,7 +155,9 @@ const SelectAppearance = ({ navigation }: Props) => {
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -206,7 +212,7 @@ const SelectAppearance = ({ navigation }: Props) => {
         onSelect={onPressPrimaryColor}
         onDismiss={onPressHideAccentColorDialog}
       />
-    </View>
+    </Components.AppBaseView>
   );
 };
 

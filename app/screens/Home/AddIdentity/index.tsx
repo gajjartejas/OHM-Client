@@ -52,7 +52,7 @@ const AddIdentity = ({ navigation, route }: Props) => {
   const onPressSave = useCallback(() => {
     Keyboard.dismiss();
 
-    let identityAddOrUpdate = {
+    const identityAddOrUpdate = {
       id: identity ? identity.id : uuid.v4().toString(),
       name: name.trim(),
       username: userName.trim(),
@@ -86,7 +86,9 @@ const AddIdentity = ({ navigation, route }: Props) => {
   }, [password, userName, validPassword, validUserName]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -155,7 +157,7 @@ const AddIdentity = ({ navigation, route }: Props) => {
           {identity ? t('addIdentity.updateButton') : t('addIdentity.saveButton')}
         </Button>
       </View>
-    </View>
+    </Components.AppBaseView>
   );
 };
 

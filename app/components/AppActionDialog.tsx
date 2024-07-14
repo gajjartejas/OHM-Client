@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { StyleSheet } from 'react-native';
 
 //ThirdParty
-import { Dialog, Text, useTheme, Button } from 'react-native-paper';
+import { Dialog, Text, useTheme, Button, Portal } from 'react-native-paper';
 
 //App Modules
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
@@ -25,16 +25,18 @@ function AppActionDialog(props: IAppActionDialogProps) {
   const largeScreenMode = useLargeScreenMode();
 
   return (
-    <Dialog style={[largeScreenMode && styles.cardTablet]} visible={props.visible} onDismiss={onPressCancel}>
-      <Dialog.Title style={{ color: colors.onBackground }}>{title}</Dialog.Title>
-      <Dialog.Content>
-        <Text style={[styles.descriptionText, { color: `${colors.onBackground}88` }]}>{description}</Text>
-      </Dialog.Content>
-      <Dialog.Actions>
-        <Button onPress={onPressCancel}>{cancelText}</Button>
-        <Button onPress={onPressConfirm}>{confirmText}</Button>
-      </Dialog.Actions>
-    </Dialog>
+    <Portal>
+      <Dialog style={[largeScreenMode && styles.cardTablet]} visible={props.visible} onDismiss={onPressCancel}>
+        <Dialog.Title style={{ color: colors.onBackground }}>{title}</Dialog.Title>
+        <Dialog.Content>
+          <Text style={[styles.descriptionText, { color: `${colors.onBackground}88` }]}>{description}</Text>
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button onPress={onPressCancel}>{cancelText}</Button>
+          <Button onPress={onPressConfirm}>{confirmText}</Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
   );
 }
 

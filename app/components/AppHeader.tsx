@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 
 //ThirdParty
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
 import { useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -14,12 +13,15 @@ interface AppHeaderProps {
   showBackButton?: boolean;
   onPressBackButton?: () => void;
   title?: string | null;
+  subTitle?: string | null;
   leftTitle?: string;
   style?: object;
   textStyle?: object | null;
   tintColor?: string | null;
   showNotificationBell?: boolean | null;
   RightViewComponent?: React.ReactElement | null;
+  LeftViewComponent?: React.ReactElement | null;
+  SubTitleComponent?: React.ReactElement | null;
   statusBarHeight?: number | null;
   backArrowImage?: string;
   largeHeader?: boolean;
@@ -31,15 +33,15 @@ const AppHeader = (props: AppHeaderProps) => {
 
   let tintColor = props.tintColor === undefined ? colors.onBackground : props.tintColor;
   let textStyle = props.textStyle === undefined ? {} : props.textStyle;
-  let RightViewComponent = props.RightViewComponent === undefined ? <></> : props.RightViewComponent;
+  let LeftViewComponent = props.RightViewComponent === undefined ? <></> : props.LeftViewComponent;
   let backArrowImage = props.backArrowImage === undefined ? 'chevron-left' : props.backArrowImage;
+  let RightViewComponent = props.RightViewComponent === undefined ? <></> : props.RightViewComponent;
+  let SubTitleComponent = props.SubTitleComponent === undefined ? <></> : props.SubTitleComponent;
 
   //Const
   const insets = useSafeAreaInsets();
-  const isHasNotch = DeviceInfo.hasNotch();
-  let statusBarHeight = props.statusBarHeight === undefined ? insets.top + (isHasNotch ? 0 : 5) : props.statusBarHeight;
-
   const backButtonPaddingForTitle = !props.showBackButton ? { marginLeft: 0 } : { marginLeft: 60, marginRight: 60 };
+
   return (
     <View
       style={{
@@ -49,17 +51,25 @@ const AppHeader = (props: AppHeaderProps) => {
         backgroundColor: colors.background,
         ...props.style,
       }}>
-      <View style={[styles.statusBar, { height: statusBarHeight }]} />
+      <View style={[styles.statusBar]} />
       <View style={[styles.navigationContainer, props.largeHeader && styles.largeStatusBarHeight]}>
         <View style={[StyleSheet.absoluteFill, styles.titleViewStyle]}>
-          <Text
-            numberOfLines={1}
-            ellipsizeMode={'tail'}
-            style={{ ...styles.titleTextStyle, color: colors.text, ...backButtonPaddingForTitle, ...textStyle }}>
-            {props.title}
-          </Text>
+          {!!props.title && (
+            <Text
+              numberOfLines={1}
+              ellipsizeMode={'tail'}
+              style={{ ...styles.titleTextStyle, color: colors.text, ...backButtonPaddingForTitle, ...textStyle }}>
+              {props.title}
+            </Text>
+          )}
+          {!!props.subTitle && (
+            <Text numberOfLines={1} ellipsizeMode={'tail'} style={{ ...styles.subTitleTextStyle, color: colors.text }}>
+              {props.subTitle}
+            </Text>
+          )}
+          {SubTitleComponent}
         </View>
-
+        {LeftViewComponent}
         {props.showBackButton && (
           <TouchableOpacity activeOpacity={0.8} style={styles.menuButton} onPress={props.onPressBackButton!}>
             <Icon type="entypo" name={backArrowImage} color={tintColor!} size={26} />
@@ -110,11 +120,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  subTitleTextStyle: {
+    fontSize: 12,
+    fontWeight: '400',
+  },
   titleViewStyle: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    marginHorizontal: 44,
+    zIndex: 1,
   },
   leftTitleViewStyle: {
     flex: 1,

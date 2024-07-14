@@ -123,7 +123,7 @@ const AddDevice = ({ navigation, route }: Props) => {
   const onPressSave = useCallback(async () => {
     Keyboard.dismiss();
 
-    let deviceAddOrUpdate: IDevice = {
+    const deviceAddOrUpdate: IDevice = {
       id: device ? device.id : uuid.v4().toString(),
       name: connectionName.trim(),
       port: parseInt(port, 10),
@@ -235,7 +235,9 @@ const AddDevice = ({ navigation, route }: Props) => {
   }, [ipAddress, port, refreshRateInMs, validIPAddress, validPort, validRefreshRate]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -351,7 +353,7 @@ const AddDevice = ({ navigation, route }: Props) => {
       </View>
 
       {connecting && <Components.AppLoader message={t('general.connecting')} />}
-    </View>
+    </Components.AppBaseView>
   );
 };
 

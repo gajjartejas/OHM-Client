@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from "react";
 import { View } from 'react-native';
 
 //ThirdParty
@@ -18,6 +18,7 @@ import { ISettingItem, ISettingSection } from 'app/models/viewModels/settingItem
 import Icon from 'react-native-easy-icon';
 import Components from 'app/components';
 import AppHeader from 'app/components/AppHeader';
+import useAppLangConfigStore from 'app/store/appLangConfig';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'Settings'>;
@@ -27,6 +28,7 @@ const Settings = ({ navigation }: Props) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const largeScreenMode = useLargeScreenMode();
+  const selectedLanguageName = useAppLangConfigStore(store => store.selectedLanguageName);
 
   //States
   const [apps] = useState<ISettingSection[]>([
@@ -36,6 +38,16 @@ const Settings = ({ navigation }: Props) => {
       items: [
         {
           id: 0,
+          iconName: 'language',
+          iconType: 'material',
+          title: t('settings.languageTitle'),
+          description: t('settings.languageSubTitle', {
+            language: selectedLanguageName,
+          })!,
+          route: 'ChangeLanguage',
+        },
+        {
+          id: 1,
           iconName: 'wb-sunny',
           iconType: 'material',
           title: t('settings.appearanceTitle'),
@@ -43,7 +55,7 @@ const Settings = ({ navigation }: Props) => {
           route: 'SelectAppearance',
         },
         {
-          id: 1,
+          id: 2,
           iconName: 'magnify',
           iconType: 'material-community',
           title: t('settings.scanTitle'),
@@ -51,7 +63,7 @@ const Settings = ({ navigation }: Props) => {
           route: 'ScanSetting',
         },
         {
-          id: 2,
+          id: 3,
           iconName: 'key',
           iconType: 'material-community',
           title: t('settings.identitiesTitle'),
@@ -59,7 +71,7 @@ const Settings = ({ navigation }: Props) => {
           route: 'Identities',
         },
         {
-          id: 3,
+          id: 4,
           iconName: 'server-network',
           iconType: 'material-community',
           title: t('settings.recentConnectionsTitle'),
@@ -156,7 +168,9 @@ const Settings = ({ navigation }: Props) => {
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -197,7 +211,7 @@ const Settings = ({ navigation }: Props) => {
           })}
         </View>
       </Components.AppBaseView>
-    </View>
+    </Components.AppBaseView>
   );
 };
 

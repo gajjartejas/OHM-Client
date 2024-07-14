@@ -10,8 +10,8 @@ export const useIsLandscape = () => {
 };
 
 const useLargeScreenMode = () => {
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
   const isLandscape = useIsLandscape();
+  const [isLargeScreen, setIsLargeScreen] = useState(isTablet() || isLandscape);
 
   useEffect(() => {
     const checkScreenSize = () => {

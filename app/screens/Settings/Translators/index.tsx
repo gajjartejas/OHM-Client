@@ -35,7 +35,7 @@ const Translators = ({ navigation }: Props) => {
   let [finalLicense, setFinalLicense] = useState<ITranslator[]>([]);
 
   useEffect(() => {
-    let languages = [
+    const languages = [
       { id: 0, icon: Config.Images.icons.flag_ar, translators: [], language: 'العربية' },
       { id: 1, icon: Config.Images.icons.flag_cs, translators: [], language: 'čeština' },
       { id: 2, icon: Config.Images.icons.flag_da, translators: [], language: 'dansk' },
@@ -105,7 +105,9 @@ const Translators = ({ navigation }: Props) => {
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -113,7 +115,7 @@ const Translators = ({ navigation }: Props) => {
         style={{ backgroundColor: colors.background }}
       />
 
-      <Components.AppBaseView edges={['bottom', 'left', 'right']} style={styles.safeArea}>
+      <View style={styles.safeArea}>
         <FlatList
           contentContainerStyle={styles.cardTablet}
           style={styles.flatlist}
@@ -123,8 +125,8 @@ const Translators = ({ navigation }: Props) => {
           keyExtractor={(item, _index) => item.id.toString()}
           ListEmptyComponent={EmptyListComponent}
         />
-      </Components.AppBaseView>
-    </View>
+      </View>
+    </Components.AppBaseView>
   );
 };
 
