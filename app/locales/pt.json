@@ -1,1 +1,241 @@
-{}
+{
+  "about": {
+    "app": "Sobre OHMClient",
+    "github": "Contribua no GitHub",
+    "moreApps": "Mais aplicativos",
+    "rateApp": "Avaliar aplicativo",
+    "sendFeedback": "Enviar comentários",
+    "sendFeedbackDetail": "Você pode enviar seus comentários valiosos para o problema do GitHub.",
+    "setting": "Configurações",
+    "version": "Versão: {{version}}"
+  },
+  "aboutScreen": {
+    "developerTitle": "Desenvolvedor",
+    "githubSubTitle": "Perfil do desenvolvedor e lista de projetos de código aberto",
+    "githubTitle": "GitHub",
+    "infoAuthorNameTitle": "Tejas Gajjar",
+    "infoDescTitle": "`OHM-Client` é um aplicativo cliente de monitor de hardware aberto não oficial para Android e iOS escrito em react-native. \nUsando este aplicativo você pode monitorar o servidor web do monitor de hardware aberto.",
+    "infoHeader": "Informação",
+    "instagramSubTitle": "Meu hobby e meus gadgets",
+    "instagramTitle": "Instagram",
+    "portfolioSubTitle": "Todas as informações sobre o desenvolvedor",
+    "portfolioTitle": "Portfólio",
+    "telegramSubTitle": "Discussão sobre bugs, melhorias, solicitações de recursos e novidades de desenvolvimento",
+    "telegramTitle": "Junte-se ao telegrama",
+    "title": "Sobre OHMClient",
+    "twitterSubTitle": "Microblog pessoal",
+    "twitterTitle": "Twitter"
+  },
+  "addDevice": {
+    "addDevice": "Adicionar Dispositivo",
+    "authRequired": "Autorização necessária!",
+    "connectDevice": "Conectar",
+    "connectionOk": "Conexão ok",
+    "inputPlaceholder1": "Digite o nome da conexão (opcional)",
+    "inputPlaceholder2": "Digite o endereço IP",
+    "inputPlaceholder3": "Insira o caminho (ex: /data.json)",
+    "inputPlaceholder4": "Entrar na porta",
+    "inputPlaceholder5": "Insira a taxa de atualização em milissegundos",
+    "invalidIpAddress": "Endereço IP inválido",
+    "invalidRefreshRate": "Taxa de atualização inválida",
+    "selectIdentity": "Selecione Identidade (opcional)",
+    "testConnection": "Conexão de teste",
+    "titleConnect": "CONECTAR",
+    "titleCreate": "CRIAR",
+    "titleUpdate": "ATUALIZAR",
+    "updateDevice": "Atualizar dispositivo"
+  },
+  "addIdentity": {
+    "inputPlaceholder1": "Digite o nome (opcional)",
+    "inputPlaceholder2": "Insira nome de usuário",
+    "inputPlaceholder3": "Digite a senha",
+    "passwordRequired": "Senha requerida!",
+    "saveButton": "SALVAR",
+    "titleAddIdentity": "Adicionar identidade",
+    "titleUpdate": "Atualizar identidade",
+    "updateButton": "ATUALIZAR",
+    "usernameRequired": "Nome de usuário é requerido!"
+  },
+  "appearanceSettings": {
+    "accentColorSubTitle": "Cor usada para tingir os elementos da UI",
+    "accentColorTitle": "Cor de destaque",
+    "interfaceHeader": "Interface",
+    "otherHeader": "Outro",
+    "otherSubTitle": "Restaurar configurações de tema padrão",
+    "otherTitle": "Restaurar tema padrão",
+    "themeOption": "Tema",
+    "themeOption1": "Luz",
+    "themeOption2": "Escuro",
+    "themeOption3": "Sistema padrão",
+    "themeSubTitle": "Tema principal do aplicativo",
+    "themeTitle": "Tema",
+    "title": "Aparência"
+  },
+  "changeLanguageScreen": {
+    "title": "Mudar idioma"
+  },
+  "connectToDeviceList": {
+    "addManually": "Adicionar Dispositivo",
+    "devicesSettings": "Gerenciar dispositivos",
+    "emptyData": {
+      "button": "Adicionar Dispositivo",
+      "emptyDeviceSubtitle": "Crie um novo dispositivo.",
+      "emptyDeviceTitle": "Nenhum dispositivo encontrado!"
+    },
+    "noDeviceFoundTryAddingItManually": "Nenhum dispositivo encontrado!\n\nPor favor, tente adicioná-lo manualmente.",
+    "savedConnections": "Dispositivos salvos"
+  },
+  "dashboard": {
+    "card": {
+      "current": "Atual",
+      "max": "Máx.",
+      "min": "Mínimo"
+    },
+    "emptyData": {
+      "item1": {
+        "button": "Atualizar configurações",
+        "message": "Dispositivo desconectado. Tente novamente!",
+        "title": "Desconectado!"
+      },
+      "item2": {
+        "button": "Atualizar configurações",
+        "message": "Dispositivo demorando muito para conectar. Tente novamente!",
+        "title": "Tempo limite de conexão"
+      },
+      "item3": {
+        "button": "Atualizar configurações",
+        "message": "É necessária autorização. Atualize-a nas configurações.",
+        "title": "Autorização necessária!"
+      },
+      "item4": {
+        "button": "Atualizar configurações",
+        "title": "Desconectado"
+      }
+    }
+  },
+  "devicesList": {
+    "createNewDevice": "Criar novo dispositivo",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "emptyDeviceSubtitle": "Crie um novo dispositivo.",
+    "emptyDeviceTitle": "Nenhum dispositivo encontrado!",
+    "emptyName": "Sem nome",
+    "subTitle": "Dispositivos",
+    "title": "Dispositivos"
+  },
+  "general": {
+    "appname": "Cliente OHM",
+    "close": "FECHAR",
+    "connecting": "Conectando...",
+    "save": "SALVAR"
+  },
+  "identitiesList": {
+    "createNewIdentity": "Criar nova identidade",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "emptyData": {
+      "message": "Por favor, crie uma nova identidade.",
+      "title": "Nenhuma identidade encontrada!"
+    },
+    "listTitle": "Identidades",
+    "selectTitle": "Selecione Identidade",
+    "subTitle": "Identidades"
+  },
+  "librariesScreen": {
+    "title": "Bibliotecas"
+  },
+  "moreApps": {
+    "apps1Desc": "Este aplicativo permite ativar/desativar anúncios ou recomendações para vários aplicativos em dispositivos Xiaomi (MIUI).",
+    "apps1Title": "MIUI – Ajudante de anúncios",
+    "apps2Desc": "Uma maneira interativa de aprender Gujarati kakko, barakhadi e números.",
+    "apps2Title": "Kano",
+    "apps3Desc": "PiGo - o companheiro móvel gratuito e de código aberto para entusiastas do Raspberry Pi. \nExplore e gerencie facilmente vários servidores Pi em qualquer lugar.",
+    "apps3Title": "PiGo - Explore seus servidores Pi em qualquer lugar",
+    "apps4Desc": "`OHM-Client` é um aplicativo cliente de monitor de hardware aberto não oficial para Android e iOS escrito em react-native. \nUsando este aplicativo você pode monitorar o servidor web do monitor de hardware aberto.",
+    "apps4Title": "Cliente OHM",
+    "appsTitle": "Mais aplicativos"
+  },
+  "scanDevices": {
+    "emptyData": {
+      "help": "Ajuda",
+      "or": "OU",
+      "rescan": "Digitalizar novamente",
+      "subtitle": "Tente digitalizar novamente",
+      "title": "Nenhum dispositivo próximo encontrado!"
+    },
+    "subTitle": "Dispositivos próximos",
+    "title": "Dispositivos próximos"
+  },
+  "scanSetting": {
+    "section1": {
+      "header": "Configuração de verificação padrão",
+      "row1": {
+        "dialogSubTitle": "Caminho URL do cliente de hardware aberto",
+        "dialogTitle": "Insira o caminho do URL",
+        "subTitle": "{{path}}",
+        "title": "Caminho do URL"
+      },
+      "row2": {
+        "dialogSubTitle": "Número da porta do cliente Open Hardware Monitor",
+        "dialogTitle": "Entrar na porta",
+        "subTitle": "{{port}}",
+        "title": "Porta"
+      }
+    },
+    "section3": {
+      "header": "Avançado",
+      "row1": {
+        "dialogSubTitle": "Tempo limite de varredura por thread, ex: 150 threads por 1500 ms. Se o dispositivo não for encontrado, tente aumentar o tempo limite.",
+        "dialogTitle": "Insira o tempo limite de verificação (1 - 10.000)",
+        "subTitle": "{{scanTimeoutInMs}} ms",
+        "title": "Tempo limite de verificação"
+      },
+      "row2": {
+        "dialogSubTitle": "Varre os threads por tempo limite, ex: 150 threads por 1500 ms. Se o dispositivo não for encontrado, tente diminuir os threads.",
+        "dialogTitle": "Insira os tópicos de verificação (1 - 999)",
+        "subTitle": "{{scanThreads}}",
+        "title": "Digitalizar tópicos"
+      }
+    },
+    "section4": {
+      "header": "Outro",
+      "row1": {
+        "subTitle": "Restaurar a configuração original",
+        "title": "Restaurar padrão"
+      }
+    },
+    "title": "Configurações de digitalização"
+  },
+  "settings": {
+    "appearanceSubTitle": "Personalização da aparência",
+    "appearanceTitle": "Aparência",
+    "changelogSubTitle": "Lista de alterações feitas em todas as atualizações",
+    "changelogTitle": "Registro de alterações",
+    "commonHeader": "Configurações padrão",
+    "faqSubTitle": "Resposta às perguntas frequentes",
+    "faqTitle": "Perguntas frequentes",
+    "identitiesSubTitle": "Nome de usuário e senhas para autenticação de acesso básico",
+    "identitiesTitle": "Identidades",
+    "infoHeader": "Informação",
+    "languageSubTitle": "{{language}}",
+    "languageTitle": "Idioma do aplicativo",
+    "librariesSubTitle": "Lista de bibliotecas de código aberto usadas neste projeto",
+    "librariesTitle": "Bibliotecas",
+    "privacySubTitle": "Política de uso de informações e permissões",
+    "privacyTitle": "Política de Privacidade",
+    "recentConnectionsSubTitle": "Gerenciar dispositivos adicionados",
+    "recentConnectionsTitle": "Dispositivos",
+    "scanSubTitle": "Configurações de verificação automática (digitalização próxima)",
+    "scanTitle": "Configurações de digitalização",
+    "title": "Configurações",
+    "translateSubTitle": "Traduza este aplicativo para o seu idioma",
+    "translateTitle": "Traduzir este aplicativo",
+    "translatorsSubTitle": "Pessoas que ajudaram a localizar este app",
+    "translatorsTitle": "Tradutores"
+  },
+  "translatorsScreen": {
+    "emptyList": "Seja o pioneiro - nenhum colaborador encontrado ainda!",
+    "emptyListAction": "Clique aqui para contribuir",
+    "title": "Tradutores"
+  }
+}
