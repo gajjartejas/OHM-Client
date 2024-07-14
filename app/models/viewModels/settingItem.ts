@@ -10,6 +10,8 @@ export interface ISettingItem {
   description: string;
   route?: any;
   touchable?: boolean;
+  value?: any;
+  inputType?: 'input' | 'switch';
 }
 
 export interface ISettingSection {

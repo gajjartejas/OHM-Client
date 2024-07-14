@@ -5,6 +5,8 @@ import { Appearance, View } from 'react-native';
 import styles from './styles';
 import AppearancePreferences = Appearance.AppearancePreferences;
 import useThemeConfigStore, { IAppearanceType } from 'app/store/themeConfig';
+import i18n from 'app/locales';
+import useAppLangConfigStore from 'app/store/appLangConfig';
 
 //Interface
 export type Props = {
@@ -14,6 +16,11 @@ export type Props = {
 const AppManager = ({ children }: Props) => {
   const setIsDarkMode = useThemeConfigStore(store => store.setIsDarkMode);
   const appearance = useThemeConfigStore(store => store.appearance);
+  const selectedLanguageCode = useAppLangConfigStore(store => store.selectedLanguageCode);
+
+  useEffect(() => {
+    i18n.changeLanguage(selectedLanguageCode).then(() => {});
+  }, [selectedLanguageCode]);
 
   useEffect(() => {
     const onThemeChange = (preferences: AppearancePreferences) => {

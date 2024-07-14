@@ -13,81 +13,7 @@
     "github": "Contribute on GitHub",
     "setting": "Settings",
     "app": "About OHMClient",
-    "sendFeedbackDetail": "You can send your valuable feedback to the Telegram channel or send mail directly."
-  },
-  "moreApps": {
-    "appsTitle": "More Apps",
-    "apps1Title": "OHM-Client",
-    "apps1Desc": "`OHM-Client` is an unofficial open hardware monitor client app for Android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
-    "apps2Title": "MIUI - Ads helper",
-    "apps2Desc": "This application allows you to enable/disable ads or recommendations for various apps in Xiaomi (MIUI) devices.",
-    "apps3Title": "Kano",
-    "apps3Desc": " An interactive way to learn Gujarati kakko, barakhadi and numbers."
-  },
-  "settings": {
-    "title": "Settings",
-    "commonHeader": "Common Settings",
-    "appearanceTitle": "Appearance",
-    "appearanceSubTitle": "Customization of appearance",
-    "scanTitle": "Scan Settings",
-    "scanSubTitle": "Auto scan(nearby scan) settings",
-    "identitiesTitle": "Identities",
-    "identitiesSubTitle": "Username and passwords for basic access authentication",
-    "recentConnectionsTitle": "Devices",
-    "recentConnectionsSubTitle": "Manage added devices",
-    "infoHeader": "Information",
-    "changelogTitle": "Changelog",
-    "changelogSubTitle": "List of changes made in all updates",
-    "librariesTitle": "Libraries",
-    "librariesSubTitle": "List of open source libraries used in this project",
-    "faqTitle": "FAQ & help",
-    "faqSubTitle": "Answer to frequently asked questions",
-    "translateTitle": "Translate this app",
-    "translateSubTitle": "Translate this app in your language",
-    "translatorsTitle": "Translators",
-    "translatorsSubTitle": "People who helped localize this app",
-    "privacyTitle": "Privacy policy",
-    "privacySubTitle": "Information and permissions usage policy"
-  },
-  "appearanceSettings": {
-    "title": "Appearance",
-    "interfaceHeader": "Interface",
-    "themeTitle": "Theme",
-    "themeSubTitle": "Main theme of the app",
-    "accentColorTitle": "Accent color",
-    "accentColorSubTitle": "Color used to tint UI elements",
-    "otherHeader": "Other",
-    "otherTitle": "Restore default theme",
-    "otherSubTitle": "Restore default theme settings",
-    "themeOption": "Theme",
-    "themeOption1": "Light",
-    "themeOption2": "Dark",
-    "themeOption3": "System default"
-  },
-  "librariesScreen": {
-    "title": "Libraries"
-  },
-  "translatorsScreen": {
-    "title": "Translators",
-    "emptyList": "Be the pioneer - no contributors found yet!",
-    "emptyListAction": "Click here to contribute"
-  },
-  "aboutScreen": {
-    "title": "About OHMClient",
-    "infoHeader": "Information",
-    "infoDescTitle": "`OHM-Client` is an unofficial open hardware monitor client app for Android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
-    "infoAuthorNameTitle": "Tejas Gajjar",
-    "developerTitle": "Developer",
-    "portfolioTitle": "Portfolio",
-    "portfolioSubTitle": "All information about the developer",
-    "instagramTitle": "Instagram",
-    "instagramSubTitle": "My hobby and my gadgets",
-    "telegramTitle": "Join Telegram",
-    "telegramSubTitle": "Discussion about bugs, improvements, feature request, and development news",
-    "githubTitle": "GitHub",
-    "githubSubTitle": "Developer profile and list of open-sourced projects",
-    "twitterTitle": "Twitter",
-    "twitterSubTitle": "Personal micro-blog"
+    "sendFeedbackDetail": "You can send your valuable feedback to the GitHub issue."
   },
   "scanSetting": {
     "title": "Scan Settings",
@@ -231,5 +157,86 @@
       "emptyDeviceSubtitle": "Please create a new device.",
       "button": "Add Device"
     }
+  },
+  "settings": {
+    "title": "Settings",
+    "commonHeader": "Common Settings",
+    "appearanceTitle": "Appearance",
+    "appearanceSubTitle": "Customization of appearance",
+    "languageTitle": "App Language",
+    "languageSubTitle": "{{language}}",
+    "scanTitle": "Scan Settings",
+    "scanSubTitle": "Auto scan(nearby scan) settings",
+    "identitiesTitle": "Identities",
+    "identitiesSubTitle": "Username and passwords for basic access authentication",
+    "recentConnectionsTitle": "Devices",
+    "recentConnectionsSubTitle": "Manage added devices",
+    "infoHeader": "Information",
+    "changelogTitle": "Changelog",
+    "changelogSubTitle": "List of changes made in all updates",
+    "librariesTitle": "Libraries",
+    "librariesSubTitle": "List of open source libraries used in this project",
+    "faqTitle": "FAQ & help",
+    "faqSubTitle": "Answer to frequently asked questions",
+    "translateTitle": "Translate this app",
+    "translateSubTitle": "Translate this app in your language",
+    "translatorsTitle": "Translators",
+    "translatorsSubTitle": "People who helped localize this app",
+    "privacyTitle": "Privacy policy",
+    "privacySubTitle": "Information and permissions usage policy"
+  },
+  "moreApps": {
+    "appsTitle": "More Apps",
+    "apps1Title": "MIUI - Ads helper",
+    "apps1Desc": "This application allows you to enable/disable ads or recommendations for various apps in Xiaomi (MIUI) devices.",
+    "apps2Title": "Kano",
+    "apps2Desc": " An interactive way to learn Gujarati kakko, barakhadi and numbers.",
+    "apps3Title": "PiGo - Explore Your Pi Servers On the Go",
+    "apps3Desc": "PiGo - the open-source, free mobile companion for Raspberry Pi enthusiasts. Effortlessly explore and manage multiple Pi servers on the go.",
+    "apps4Title": "OHM-Client",
+    "apps4Desc": "`OHM-Client` is an unofficial open hardware monitor client app for Android and iOS written in react-native. Using this app you can monitor open hardware monitor web server."
+  },
+  "appearanceSettings": {
+    "title": "Appearance",
+    "interfaceHeader": "Interface",
+    "themeTitle": "Theme",
+    "themeSubTitle": "Main theme of the app",
+    "accentColorTitle": "Accent color",
+    "accentColorSubTitle": "Color used to tint UI elements",
+    "otherHeader": "Other",
+    "otherTitle": "Restore default theme",
+    "otherSubTitle": "Restore default theme settings",
+    "themeOption": "Theme",
+    "themeOption1": "Light",
+    "themeOption2": "Dark",
+    "themeOption3": "System default"
+  },
+  "librariesScreen": {
+    "title": "Libraries"
+  },
+  "translatorsScreen": {
+    "title": "Translators",
+    "emptyList": "Be the pioneer - no contributors found yet!",
+    "emptyListAction": "Click here to contribute"
+  },
+  "changeLanguageScreen": {
+    "title": "Change Language"
+  },
+  "aboutScreen": {
+    "title": "About OHMClient",
+    "infoHeader": "Information",
+    "infoDescTitle": "`OHM-Client` is an unofficial open hardware monitor client app for Android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
+    "infoAuthorNameTitle": "Tejas Gajjar",
+    "developerTitle": "Developer",
+    "portfolioTitle": "Portfolio",
+    "portfolioSubTitle": "All information about the developer",
+    "instagramTitle": "Instagram",
+    "instagramSubTitle": "My hobby and my gadgets",
+    "telegramTitle": "Join Telegram",
+    "telegramSubTitle": "Discussion about bugs, improvements, feature request, and development news",
+    "githubTitle": "GitHub",
+    "githubSubTitle": "Developer profile and list of open-sourced projects",
+    "twitterTitle": "Twitter",
+    "twitterSubTitle": "Personal micro-blog"
   }
 }

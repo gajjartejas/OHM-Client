@@ -153,7 +153,9 @@ const ScanSetting = ({ navigation }: Props) => {
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -161,7 +163,7 @@ const ScanSetting = ({ navigation }: Props) => {
         style={{ backgroundColor: colors.background }}
       />
 
-      <Components.AppBaseView scroll edges={['bottom', 'left', 'right']} style={styles.safeArea}>
+      <Components.AppBaseView scroll edges={[]} style={styles.safeArea}>
         <View style={[styles.listContainer, largeScreenMode && styles.cardTablet]}>
           {apps.map((item, index) => {
             return (
@@ -283,7 +285,7 @@ const ScanSetting = ({ navigation }: Props) => {
           setModalVisiblePath(false);
         }}
       />
-    </View>
+    </Components.AppBaseView>
   );
 };
 

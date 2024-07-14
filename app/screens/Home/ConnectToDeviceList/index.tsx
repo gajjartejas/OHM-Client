@@ -77,7 +77,9 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
   }, [onPressAddDevice, t]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={false}
         title={t('general.appname')}
@@ -133,7 +135,7 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
         )}
       </View>
       <FAB icon="plus" style={[styles.fab, { bottom: insets.bottom }]} onPress={onPressAddDevice} />
-    </View>
+    </Components.AppBaseView>
   );
 };
 

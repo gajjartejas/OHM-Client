@@ -7,7 +7,7 @@ import Icon from 'react-native-easy-icon';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 //Screens
-import MoreTab from 'app/screens/Home/HomeTabs/MoreTab';
+import MoreTab from 'app/screens/Home/MoreTab';
 import MoreApps from 'app/screens/Settings/MoreApps';
 import Settings from 'app/screens/Settings/Settings';
 import About from 'app/screens/Settings/About';
@@ -18,7 +18,7 @@ import ConnectToDeviceList from 'app/screens/Home/ConnectToDeviceList';
 
 //App Modules
 import { HomeTabsNavigatorParams, LoggedInTabNavigatorParams } from 'app/navigation/types';
-import Loading from 'app/screens/Auth/Loading';
+import Loading from 'app/screens/Loading';
 import { AppTheme } from 'app/models/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScanSetting from 'app/screens/Settings/ScanSetting';
@@ -27,8 +27,9 @@ import Identities from 'app/screens/Home/Identities';
 import AddIdentity from 'app/screens/Home/AddIdentity';
 import Devices from 'app/screens/Home/Devices';
 import useAppConfigStore from 'app/store/appConfig';
-import DashboardTab from 'app/screens/Home/HomeTabs/DashboardTab';
+import DashboardTab from 'app/screens/Home/DashboardTab';
 import ScanDevices from 'app/screens/Home/ScanDevices';
+import ChangeLanguage from 'app/screens/Settings/ChangeLanguage';
 
 const Tab = createMaterialBottomTabNavigator<HomeTabsNavigatorParams>();
 
@@ -106,6 +107,7 @@ const LoggedInTabNavigator = () => {
       <LoggedInStack.Screen name="AddIdentity" component={AddIdentity} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="Devices" component={Devices} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ScanDevices" component={ScanDevices} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="ChangeLanguage" component={ChangeLanguage} options={{ headerShown: false }} />
     </LoggedInStack.Navigator>
   );
 };

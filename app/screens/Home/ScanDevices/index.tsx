@@ -114,7 +114,9 @@ const ScanDevices = ({ navigation }: Props) => {
   }, [navigation]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -157,7 +159,7 @@ const ScanDevices = ({ navigation }: Props) => {
         )}
         {!scanningFinished && <Components.AppLoadingPlaceHolder />}
       </View>
-    </View>
+    </Components.AppBaseView>
   );
 };
 

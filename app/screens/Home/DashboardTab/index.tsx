@@ -140,7 +140,9 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   }, [buttonTitle, onPressSetting]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onLogout}
@@ -183,7 +185,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       )}
 
       {connecting && (!selectedDevice || !selectedDevice.deviceInfo) && <Components.AppLoader message={'Loading...'} />}
-    </View>
+    </Components.AppBaseView>
   );
 };
 

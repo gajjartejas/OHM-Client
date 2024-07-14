@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
-import { Dialog, TouchableRipple, useTheme, Button } from 'react-native-paper';
+import { Dialog, TouchableRipple, useTheme, Button, Portal } from 'react-native-paper';
 
 //App Modules
 import { AppTheme } from 'app/models/theme';
@@ -68,29 +68,31 @@ function SelectAccentDialog(props: ISelectAccentDialogProps) {
   };
 
   return (
-    <Dialog style={[largeScreenMode && styles.cardTablet]} visible={props.visible} onDismiss={onDismiss}>
-      <Dialog.Title style={{ color: colors.onSurface }}>{t('appearanceSettings.themeOption')}</Dialog.Title>
-      <Dialog.Content>
-        <View style={styles.dialogContainer}>
-          {accentColorOptions.map(item => {
-            return (
-              <TouchableRipple
-                key={item.primary.toString()}
-                style={[styles.itemButton, { backgroundColor: item.primary }]}
-                borderless={true}
-                onPress={() => onSelect(item)}
-                centered={true}
-                rippleColor="rgba(0, 0, 0, .32)">
-                <View />
-              </TouchableRipple>
-            );
-          })}
-        </View>
-      </Dialog.Content>
-      <Dialog.Actions>
-        <Button onPress={onDismiss}>{t('general.close')}</Button>
-      </Dialog.Actions>
-    </Dialog>
+    <Portal>
+      <Dialog style={[largeScreenMode && styles.cardTablet]} visible={props.visible} onDismiss={onDismiss}>
+        <Dialog.Title style={{ color: colors.onSurface }}>{t('appearanceSettings.themeOption')}</Dialog.Title>
+        <Dialog.Content>
+          <View style={styles.dialogContainer}>
+            {accentColorOptions.map(item => {
+              return (
+                <TouchableRipple
+                  key={item.primary.toString()}
+                  style={[styles.itemButton, { backgroundColor: item.primary }]}
+                  borderless={true}
+                  onPress={() => onSelect(item)}
+                  centered={true}
+                  rippleColor="rgba(0, 0, 0, .32)">
+                  <View />
+                </TouchableRipple>
+              );
+            })}
+          </View>
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button onPress={onDismiss}>{t('general.close')}</Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
   );
 }
 

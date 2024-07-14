@@ -36,6 +36,7 @@ export interface AddIdentityParams {
   identity?: IConnectionIdentity;
 }
 export interface ScanDevicesParams {}
+export interface ChangeLanguageParams {}
 
 export type LoggedInTabNavigatorParams = {
   Loading: LoadingParams;
@@ -53,6 +54,7 @@ export type LoggedInTabNavigatorParams = {
   Devices: DevicesParams;
   AddIdentity: AddIdentityParams;
   ScanDevices: ScanDevicesParams;
+  ChangeLanguage: ChangeLanguageParams;
 };
 
 export type HomeTabsNavigatorParams = {
