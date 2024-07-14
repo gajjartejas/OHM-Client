@@ -1,1 +1,241 @@
-{}
+{
+  "about": {
+    "app": "О OHMClient",
+    "github": "Внесите свой вклад на GitHub",
+    "moreApps": "Больше приложений",
+    "rateApp": "Оцените приложение",
+    "sendFeedback": "Отправить отзыв",
+    "sendFeedbackDetail": "Вы можете отправить свой ценный отзыв в выпуск GitHub.",
+    "setting": "Настройки",
+    "version": "Версия: {{version}}"
+  },
+  "aboutScreen": {
+    "developerTitle": "Разработчик",
+    "githubSubTitle": "Профиль разработчика и список проектов с открытым исходным кодом",
+    "githubTitle": "GitHub",
+    "infoAuthorNameTitle": "Теджас Гаджар",
+    "infoDescTitle": "«OHM-Client» — это неофициальное открытое клиентское приложение для аппаратного мониторинга для Android и iOS, написанное на языке React-native. \nС помощью этого приложения вы можете контролировать открытый веб-сервер аппаратного монитора.",
+    "infoHeader": "Информация",
+    "instagramSubTitle": "Моё хобби и мои гаджеты",
+    "instagramTitle": "Инстаграм",
+    "portfolioSubTitle": "Вся информация о застройщике",
+    "portfolioTitle": "портфолио",
+    "telegramSubTitle": "Обсуждение ошибок, улучшений, запросов на добавление функций и новостей разработки.",
+    "telegramTitle": "Присоединяйтесь к Телеграмме",
+    "title": "О OHMClient",
+    "twitterSubTitle": "Личный микроблог",
+    "twitterTitle": "Твиттер"
+  },
+  "addDevice": {
+    "addDevice": "Добавить устройство",
+    "authRequired": "Требуется Авторизация!",
+    "connectDevice": "Соединять",
+    "connectionOk": "Соединение в порядке",
+    "inputPlaceholder1": "Введите имя подключения (необязательно)",
+    "inputPlaceholder2": "Введите IP-адрес",
+    "inputPlaceholder3": "Введите путь (например: /data.json)",
+    "inputPlaceholder4": "Введите порт",
+    "inputPlaceholder5": "Введите частоту обновления в миллисекундах",
+    "invalidIpAddress": "Неверный IP-адрес",
+    "invalidRefreshRate": "Неверная частота обновления",
+    "selectIdentity": "Выберите личность (необязательно)",
+    "testConnection": "Тестовое соединение",
+    "titleConnect": "СОЕДИНЯТЬ",
+    "titleCreate": "СОЗДАВАТЬ",
+    "titleUpdate": "ОБНОВЛЯТЬ",
+    "updateDevice": "Обновить устройство"
+  },
+  "addIdentity": {
+    "inputPlaceholder1": "Введите имя (необязательно)",
+    "inputPlaceholder2": "Введите имя пользователя",
+    "inputPlaceholder3": "Введите пароль",
+    "passwordRequired": "Необходим пароль!",
+    "saveButton": "СОХРАНЯТЬ",
+    "titleAddIdentity": "Добавить личность",
+    "titleUpdate": "Обновить личность",
+    "updateButton": "ОБНОВЛЯТЬ",
+    "usernameRequired": "Имя пользователя требуется!"
+  },
+  "appearanceSettings": {
+    "accentColorSubTitle": "Цвет, используемый для оттенка элементов пользовательского интерфейса.",
+    "accentColorTitle": "Акцентный цвет",
+    "interfaceHeader": "Интерфейс",
+    "otherHeader": "Другой",
+    "otherSubTitle": "Восстановить настройки темы по умолчанию",
+    "otherTitle": "Восстановить тему по умолчанию",
+    "themeOption": "Тема",
+    "themeOption1": "Свет",
+    "themeOption2": "Темный",
+    "themeOption3": "Системные установки по умолчанию",
+    "themeSubTitle": "Основная тема приложения",
+    "themeTitle": "Тема",
+    "title": "Появление"
+  },
+  "changeLanguageScreen": {
+    "title": "Изменение языка"
+  },
+  "connectToDeviceList": {
+    "addManually": "Добавить устройство",
+    "devicesSettings": "Управление устройствами",
+    "emptyData": {
+      "button": "Добавить устройство",
+      "emptyDeviceSubtitle": "Пожалуйста, создайте новое устройство.",
+      "emptyDeviceTitle": "Устройство не найдено!"
+    },
+    "noDeviceFoundTryAddingItManually": "Устройство не найдено!\n\nПожалуйста, попробуйте добавить его вручную.",
+    "savedConnections": "Сохраненные устройства"
+  },
+  "dashboard": {
+    "card": {
+      "current": "Текущий",
+      "max": "Макс",
+      "min": "Мин"
+    },
+    "emptyData": {
+      "item1": {
+        "button": "Обновить настройки",
+        "message": "Устройство отключено. Повторите попытку.",
+        "title": "Отключено!"
+      },
+      "item2": {
+        "button": "Обновить настройки",
+        "message": "Устройство долго подключается. Повторите попытку.",
+        "title": "Время соединения вышло"
+      },
+      "item3": {
+        "button": "Обновить настройки",
+        "message": "Требуется авторизация, обновите ее в настройках.",
+        "title": "Требуется Авторизация!"
+      },
+      "item4": {
+        "button": "Обновить настройки",
+        "title": "Отключено"
+      }
+    }
+  },
+  "devicesList": {
+    "createNewDevice": "Создать новое устройство",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "emptyDeviceSubtitle": "Пожалуйста, создайте новое устройство.",
+    "emptyDeviceTitle": "Устройство не найдено!",
+    "emptyName": "Без имени",
+    "subTitle": "Устройства",
+    "title": "Устройства"
+  },
+  "general": {
+    "appname": "OHMClient",
+    "close": "ЗАКРЫВАТЬ",
+    "connecting": "Подключение...",
+    "save": "СОХРАНЯТЬ"
+  },
+  "identitiesList": {
+    "createNewIdentity": "Создать новую личность",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "emptyData": {
+      "message": "Пожалуйста, создайте новую личность.",
+      "title": "Личность не найдена!"
+    },
+    "listTitle": "Личности",
+    "selectTitle": "Выберите личность",
+    "subTitle": "Личности"
+  },
+  "librariesScreen": {
+    "title": "Библиотеки"
+  },
+  "moreApps": {
+    "apps1Desc": "Это приложение позволяет включать/отключать рекламу или рекомендации для различных приложений на устройствах Xiaomi (MIUI).",
+    "apps1Title": "MIUI - Помощник по рекламе",
+    "apps2Desc": "Интерактивный способ выучить какко, барахади и цифры на гуджаратском языке.",
+    "apps2Title": "Кано",
+    "apps3Desc": "PiGo — бесплатный мобильный компаньон с открытым исходным кодом для энтузиастов Raspberry Pi. \nЛегко исследуйте и управляйте несколькими серверами Pi на ходу.",
+    "apps3Title": "PiGo — изучайте свои серверы Pi на ходу",
+    "apps4Desc": "«OHM-Client» — это неофициальное открытое клиентское приложение для аппаратного мониторинга для Android и iOS, написанное на языке React-native. \nС помощью этого приложения вы можете контролировать открытый веб-сервер аппаратного монитора.",
+    "apps4Title": "ОМ-Клиент",
+    "appsTitle": "Больше приложений"
+  },
+  "scanDevices": {
+    "emptyData": {
+      "help": "Помощь",
+      "or": "ИЛИ",
+      "rescan": "Отсканируйте еще раз",
+      "subtitle": "Пожалуйста, попробуйте выполнить сканирование еще раз",
+      "title": "Устройства поблизости не найдены!"
+    },
+    "subTitle": "Устройства поблизости",
+    "title": "Устройства поблизости"
+  },
+  "scanSetting": {
+    "section1": {
+      "header": "Конфигурация сканирования по умолчанию",
+      "row1": {
+        "dialogSubTitle": "URL-адрес открытого аппаратного клиента",
+        "dialogTitle": "Введите URL-путь",
+        "subTitle": "{{path}}",
+        "title": "URL-путь"
+      },
+      "row2": {
+        "dialogSubTitle": "Номер порта клиента Open Hardware Monitor",
+        "dialogTitle": "Введите порт",
+        "subTitle": "{{port}}",
+        "title": "Порт"
+      }
+    },
+    "section3": {
+      "header": "Передовой",
+      "row1": {
+        "dialogSubTitle": "Тайм-аут сканирования для каждого потока, например: 150 потоков за 1500 мс. Если устройство не найдено, попробуйте увеличить тайм-аут.",
+        "dialogTitle": "Введите таймаут сканирования (1–10000)",
+        "subTitle": "{{scanTimeoutInMs}} мс",
+        "title": "Тайм-аут сканирования"
+      },
+      "row2": {
+        "dialogSubTitle": "Сканировать потоки по таймаутам, например: 150 потоков за 1500 мс. Если устройство не найдено, попробуйте уменьшить количество потоков.",
+        "dialogTitle": "Введите потоки сканирования (1–999)",
+        "subTitle": "{{scanThreads}}",
+        "title": "Сканировать темы"
+      }
+    },
+    "section4": {
+      "header": "Другой",
+      "row1": {
+        "subTitle": "Восстановить настройки по умолчанию",
+        "title": "Сброс настроек"
+      }
+    },
+    "title": "Настройки сканирования"
+  },
+  "settings": {
+    "appearanceSubTitle": "Кастомизация внешнего вида",
+    "appearanceTitle": "Появление",
+    "changelogSubTitle": "Список изменений, внесенных во все обновления",
+    "changelogTitle": "Журнал изменений",
+    "commonHeader": "Общие настройки",
+    "faqSubTitle": "Ответ на часто задаваемые вопросы",
+    "faqTitle": "Часто задаваемые вопросы",
+    "identitiesSubTitle": "Имя пользователя и пароли для базовой аутентификации доступа",
+    "identitiesTitle": "Личности",
+    "infoHeader": "Информация",
+    "languageSubTitle": "{{language}}",
+    "languageTitle": "Язык приложения",
+    "librariesSubTitle": "Список библиотек с открытым исходным кодом, использованных в этом проекте",
+    "librariesTitle": "Библиотеки",
+    "privacySubTitle": "Политика использования информации и разрешений",
+    "privacyTitle": "Политика конфиденциальности",
+    "recentConnectionsSubTitle": "Управление добавленными устройствами",
+    "recentConnectionsTitle": "Устройства",
+    "scanSubTitle": "Настройки автоматического сканирования (сканирования поблизости)",
+    "scanTitle": "Настройки сканирования",
+    "title": "Настройки",
+    "translateSubTitle": "Переведите это приложение на свой язык",
+    "translateTitle": "Перевести это приложение",
+    "translatorsSubTitle": "Люди, которые помогли локализовать это приложение",
+    "translatorsTitle": "Переводчики"
+  },
+  "translatorsScreen": {
+    "emptyList": "Будьте пионером — участников пока не найдено!",
+    "emptyListAction": "Нажмите здесь, чтобы внести свой вклад",
+    "title": "Переводчики"
+  }
+}
