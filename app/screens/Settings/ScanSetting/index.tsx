@@ -55,7 +55,7 @@ const ScanSetting = ({ navigation }: Props) => {
           iconName: 'web',
           iconType: 'material-community',
           title: t('scanSetting.section1.row1.title'),
-          description: t('scanSetting.section1.row1.subTitle', { path }),
+          description: t('scanSetting.section1.row1.subTitle', { id2001: path }),
           route: '',
         },
         {
@@ -63,7 +63,7 @@ const ScanSetting = ({ navigation }: Props) => {
           iconName: 'network',
           iconType: 'material-community',
           title: t('scanSetting.section1.row2.title'),
-          description: t('scanSetting.section1.row2.subTitle', { port }),
+          description: t('scanSetting.section1.row2.subTitle', { id2002: port }),
           route: '',
         },
       ],
@@ -77,7 +77,7 @@ const ScanSetting = ({ navigation }: Props) => {
           iconName: 'timer-sand-full',
           iconType: 'material-community',
           title: t('scanSetting.section3.row1.title'),
-          description: t('scanSetting.section3.row1.subTitle', { scanTimeoutInMs }),
+          description: t('scanSetting.section3.row1.subTitle', { id2003: scanTimeoutInMs }),
           route: '',
         },
         {
@@ -85,7 +85,7 @@ const ScanSetting = ({ navigation }: Props) => {
           iconName: 'speedometer',
           iconType: 'material-community',
           title: t('scanSetting.section3.row2.title'),
-          description: t('scanSetting.section3.row2.subTitle', { scanThreads }),
+          description: t('scanSetting.section3.row2.subTitle', { id2004: scanThreads }),
           route: '',
         },
       ],
@@ -154,7 +154,7 @@ const ScanSetting = ({ navigation }: Props) => {
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}

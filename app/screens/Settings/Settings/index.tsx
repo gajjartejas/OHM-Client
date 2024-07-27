@@ -31,8 +31,8 @@ const Settings = ({ navigation }: Props) => {
   const selectedLanguageName = useAppLangConfigStore(store => store.selectedLanguageName);
 
   //States
-  const apps: ISettingSection[] = useMemo(
-    () => [
+  const apps: ISettingSection[] = useMemo(() => {
+    return [
       {
         id: 0,
         title: t('settings.commonHeader'),
@@ -43,7 +43,7 @@ const Settings = ({ navigation }: Props) => {
             iconType: 'material',
             title: t('settings.languageTitle'),
             description: t('settings.languageSubTitle', {
-              language: selectedLanguageName,
+              id10001: selectedLanguageName,
             })!,
             route: 'ChangeLanguage',
           },
@@ -135,9 +135,8 @@ const Settings = ({ navigation }: Props) => {
           },
         ],
       },
-    ],
-    [selectedLanguageName, t],
-  );
+    ];
+  }, [selectedLanguageName, t]);
 
   const onGoBack = useCallback(() => {
     navigation.pop();
@@ -172,7 +171,7 @@ const Settings = ({ navigation }: Props) => {
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
@@ -181,7 +180,7 @@ const Settings = ({ navigation }: Props) => {
         style={{ backgroundColor: colors.background }}
       />
 
-      <Components.AppBaseView scroll edges={['bottom', 'left', 'right']} style={styles.safeArea}>
+      <Components.AppBaseView scroll edges={[]} style={styles.safeArea}>
         <View style={[styles.listContainer, largeScreenMode && styles.cardTablet]}>
           {apps.map(item => {
             return (

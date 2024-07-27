@@ -7,7 +7,7 @@
     "sendFeedback": "प्रतिक्रिया भेजें",
     "sendFeedbackDetail": "आप अपना बहुमूल्य फीडबैक टेलीग्राम चैनल पर भेज सकते हैं या सीधे मेल भेज सकते हैं।",
     "setting": "समायोजन",
-    "version": "संस्करण: {{version}}"
+    "version": "संस्करण: {{id0001}}"
   },
   "aboutScreen": {
     "developerTitle": "डेवलपर",
@@ -169,13 +169,13 @@
       "row1": {
         "dialogSubTitle": "ओपन हार्डवेयर क्लाइंट का यूआरएल पथ",
         "dialogTitle": "यूआरएल पथ दर्ज करें",
-        "subTitle": "{{path}}",
+        "subTitle": "{{id2001}}",
         "title": "यूआरएल पथ"
       },
       "row2": {
         "dialogSubTitle": "ओपन हार्डवेयर मॉनिटर क्लाइंट का पोर्ट नंबर",
         "dialogTitle": "पोर्ट दर्ज करें",
-        "subTitle": "{{port}}",
+        "subTitle": "{{id2002}}",
         "title": "पत्तन"
       }
     },
@@ -184,13 +184,13 @@
       "row1": {
         "dialogSubTitle": "प्रति थ्रेड स्कैन टाइमआउट, उदाहरण: 150 थ्रेड प्रति 1500 एमएस, यदि डिवाइस नहीं मिलता है तो टाइमआउट बढ़ाने का प्रयास करें।",
         "dialogTitle": "स्कैन टाइमआउट दर्ज करें (1 - 10000)",
-        "subTitle": "{{scanTimeoutInMs}} एमएस",
+        "subTitle": "{{id2003}} एमएस",
         "title": "स्कैन टाइमआउट"
       },
       "row2": {
         "dialogSubTitle": "प्रति टाइमआउट पर थ्रेड्स को स्कैन करें, उदाहरण के लिए: 150 थ्रेड्स प्रति 1500 एमएस, यदि डिवाइस नहीं मिलता है तो थ्रेड्स को कम करने का प्रयास करें।",
         "dialogTitle": "स्कैन थ्रेड दर्ज करें (1 - 999)",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{id2004}}",
         "title": "थ्रेड्स स्कैन करें"
       }
     },
@@ -227,7 +227,7 @@
     "translateTitle": "इस ऐप का अनुवाद करें",
     "translatorsSubTitle": "वे लोग जिन्होंने इस ऐप को स्थानीय बनाने में मदद की",
     "translatorsTitle": "अनुवादकों",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "languageTitle": "ऐप भाषा"
   },
   "translatorsScreen": {

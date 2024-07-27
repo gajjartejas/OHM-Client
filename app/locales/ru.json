@@ -7,7 +7,7 @@
     "sendFeedback": "Отправить отзыв",
     "sendFeedbackDetail": "Вы можете отправить свой ценный отзыв в выпуск GitHub.",
     "setting": "Настройки",
-    "version": "Версия: {{version}}"
+    "version": "Версия: {{id0001}}"
   },
   "aboutScreen": {
     "developerTitle": "Разработчик",
@@ -172,13 +172,13 @@
       "row1": {
         "dialogSubTitle": "URL-адрес открытого аппаратного клиента",
         "dialogTitle": "Введите URL-путь",
-        "subTitle": "{{path}}",
+        "subTitle": "{{id2001}}",
         "title": "URL-путь"
       },
       "row2": {
         "dialogSubTitle": "Номер порта клиента Open Hardware Monitor",
         "dialogTitle": "Введите порт",
-        "subTitle": "{{port}}",
+        "subTitle": "{{id2002}}",
         "title": "Порт"
       }
     },
@@ -187,13 +187,13 @@
       "row1": {
         "dialogSubTitle": "Тайм-аут сканирования для каждого потока, например: 150 потоков за 1500 мс. Если устройство не найдено, попробуйте увеличить тайм-аут.",
         "dialogTitle": "Введите таймаут сканирования (1–10000)",
-        "subTitle": "{{scanTimeoutInMs}} мс",
+        "subTitle": "{{id2003}} мс",
         "title": "Тайм-аут сканирования"
       },
       "row2": {
         "dialogSubTitle": "Сканировать потоки по таймаутам, например: 150 потоков за 1500 мс. Если устройство не найдено, попробуйте уменьшить количество потоков.",
         "dialogTitle": "Введите потоки сканирования (1–999)",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{id2004}}",
         "title": "Сканировать темы"
       }
     },
@@ -217,7 +217,7 @@
     "identitiesSubTitle": "Имя пользователя и пароли для базовой аутентификации доступа",
     "identitiesTitle": "Личности",
     "infoHeader": "Информация",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "languageTitle": "Язык приложения",
     "librariesSubTitle": "Список библиотек с открытым исходным кодом, использованных в этом проекте",
     "librariesTitle": "Библиотеки",

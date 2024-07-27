@@ -31,16 +31,16 @@ const AppHeader = (props: AppHeaderProps) => {
   //Ref
   const { colors } = useTheme<AppTheme>();
 
-  let tintColor = props.tintColor === undefined ? colors.onBackground : props.tintColor;
-  let textStyle = props.textStyle === undefined ? {} : props.textStyle;
-  let LeftViewComponent = props.RightViewComponent === undefined ? <></> : props.LeftViewComponent;
-  let backArrowImage = props.backArrowImage === undefined ? 'chevron-left' : props.backArrowImage;
-  let RightViewComponent = props.RightViewComponent === undefined ? <></> : props.RightViewComponent;
-  let SubTitleComponent = props.SubTitleComponent === undefined ? <></> : props.SubTitleComponent;
-
   //Const
   const insets = useSafeAreaInsets();
-  const backButtonPaddingForTitle = !props.showBackButton ? { marginLeft: 0 } : { marginLeft: 60, marginRight: 60 };
+  const statusBarHeight = props.statusBarHeight === undefined ? insets.top : props.statusBarHeight;
+  const backButtonPaddingForTitle = !props.showBackButton ? { marginLeft: 0 } : { marginLeft: 0, marginRight: 0 };
+  const tintColor = props.tintColor === undefined ? colors.onBackground : props.tintColor;
+  const textStyle = props.textStyle === undefined ? {} : props.textStyle;
+  const LeftViewComponent = props.RightViewComponent === undefined ? <></> : props.LeftViewComponent;
+  const backArrowImage = props.backArrowImage === undefined ? 'chevron-left' : props.backArrowImage;
+  const RightViewComponent = props.RightViewComponent === undefined ? <></> : props.RightViewComponent;
+  const SubTitleComponent = props.SubTitleComponent === undefined ? <></> : props.SubTitleComponent;
 
   return (
     <View
@@ -51,7 +51,7 @@ const AppHeader = (props: AppHeaderProps) => {
         backgroundColor: colors.background,
         ...props.style,
       }}>
-      <View style={[styles.statusBar]} />
+      <View style={[styles.statusBar, { height: statusBarHeight }]} />
       <View style={[styles.navigationContainer, props.largeHeader && styles.largeStatusBarHeight]}>
         <View style={[StyleSheet.absoluteFill, styles.titleViewStyle]}>
           {!!props.title && (

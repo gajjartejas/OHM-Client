@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FlatList, Image, Text, View } from 'react-native';
 
 //ThirdParty
@@ -32,10 +32,10 @@ const Translators = ({ navigation }: Props) => {
   const { colors } = useTheme<AppTheme>();
 
   //States
-  let [finalLicense, setFinalLicense] = useState<ITranslator[]>([]);
+  const [finalLicense, setFinalLicense] = useState<ITranslator[]>([]);
 
-  useEffect(() => {
-    const languages = [
+  const languages = useMemo(() => {
+    return [
       { id: 0, icon: Config.Images.icons.flag_ar, translators: [], language: 'العربية' },
       { id: 1, icon: Config.Images.icons.flag_cs, translators: [], language: 'čeština' },
       { id: 2, icon: Config.Images.icons.flag_da, translators: [], language: 'dansk' },
@@ -64,10 +64,12 @@ const Translators = ({ navigation }: Props) => {
       { id: 26, icon: Config.Images.icons.flag_uk, translators: [], language: 'Українська' },
       { id: 27, icon: Config.Images.icons.flag_vi, translators: [], language: 'Tiếng Việt' },
       { id: 28, icon: Config.Images.icons.flag_zh_cn, translators: [], language: '中文' },
-    ].filter(v => v.translators.length > 0);
-
-    setFinalLicense(languages);
+    ];
   }, []);
+
+  useEffect(() => {
+    setFinalLicense(languages.filter(v => v.translators.length > 0));
+  }, [languages]);
 
   const onGoBack = useCallback(() => {
     navigation.pop();
@@ -87,26 +89,28 @@ const Translators = ({ navigation }: Props) => {
     );
   };
 
-  const onPressItem = (_item: ITranslator, _index: number) => {};
+  const onPressItem = useCallback((_item: ITranslator, _index: number) => {}, []);
 
-  const onPressContribute = async () => {
+  const onPressContribute = useCallback(async () => {
     await Utils.openInAppBrowser(Config.Constants.TRANSLATE_APP);
-  };
+  }, []);
 
-  const EmptyListComponent = (
-    <View style={styles.emptyListContainer}>
-      <Text style={[styles.titleTextStyle, { color: `${colors.onBackground}${colors.opacity}` }]}>
-        {t('translatorsScreen.emptyList')}
-      </Text>
-      <Button icon="web" mode="text" onPress={onPressContribute}>
-        {t('translatorsScreen.emptyListAction')}
-      </Button>
-    </View>
-  );
+  const EmptyListComponent = useMemo(() => {
+    return (
+      <View style={styles.emptyListContainer}>
+        <Text style={[styles.titleTextStyle, { color: `${colors.onBackground}${colors.opacity}` }]}>
+          {t('translatorsScreen.emptyList')}
+        </Text>
+        <Button icon="web" mode="text" onPress={onPressContribute}>
+          {t('translatorsScreen.emptyListAction')}
+        </Button>
+      </View>
+    );
+  }, [colors.onBackground, colors.opacity, onPressContribute, t]);
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}

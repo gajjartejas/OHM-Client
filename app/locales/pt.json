@@ -7,7 +7,7 @@
     "sendFeedback": "Enviar comentários",
     "sendFeedbackDetail": "Você pode enviar seus comentários valiosos para o problema do GitHub.",
     "setting": "Configurações",
-    "version": "Versão: {{version}}"
+    "version": "Versão: {{id0001}}"
   },
   "aboutScreen": {
     "developerTitle": "Desenvolvedor",
@@ -172,13 +172,13 @@
       "row1": {
         "dialogSubTitle": "Caminho URL do cliente de hardware aberto",
         "dialogTitle": "Insira o caminho do URL",
-        "subTitle": "{{path}}",
+        "subTitle": "{{id2001}}",
         "title": "Caminho do URL"
       },
       "row2": {
         "dialogSubTitle": "Número da porta do cliente Open Hardware Monitor",
         "dialogTitle": "Entrar na porta",
-        "subTitle": "{{port}}",
+        "subTitle": "{{id2002}}",
         "title": "Porta"
       }
     },
@@ -187,13 +187,13 @@
       "row1": {
         "dialogSubTitle": "Tempo limite de varredura por thread, ex: 150 threads por 1500 ms. Se o dispositivo não for encontrado, tente aumentar o tempo limite.",
         "dialogTitle": "Insira o tempo limite de verificação (1 - 10.000)",
-        "subTitle": "{{scanTimeoutInMs}} ms",
+        "subTitle": "{{id2003}} ms",
         "title": "Tempo limite de verificação"
       },
       "row2": {
         "dialogSubTitle": "Varre os threads por tempo limite, ex: 150 threads por 1500 ms. Se o dispositivo não for encontrado, tente diminuir os threads.",
         "dialogTitle": "Insira os tópicos de verificação (1 - 999)",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{id2004}}",
         "title": "Digitalizar tópicos"
       }
     },
@@ -217,7 +217,7 @@
     "identitiesSubTitle": "Nome de usuário e senhas para autenticação de acesso básico",
     "identitiesTitle": "Identidades",
     "infoHeader": "Informação",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "languageTitle": "Idioma do aplicativo",
     "librariesSubTitle": "Lista de bibliotecas de código aberto usadas neste projeto",
     "librariesTitle": "Bibliotecas",

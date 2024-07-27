@@ -15,7 +15,6 @@ import validateIPAddress from 'app/utils/validateIPAddress';
 import validatePort from 'app/utils/validatePort';
 import { useTranslation } from 'react-i18next';
 import AppHeader from 'app/components/AppHeader';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Components from 'app/components';
 import useAppConfigStore from 'app/store/appConfig';
 import uuid from 'react-native-uuid';
@@ -41,7 +40,6 @@ const AddDevice = ({ navigation, route }: Props) => {
   const { colors } = useTheme();
   const theme = useTheme();
   const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
   const mode = route.params.mode;
   const upsertDevice = useAppConfigStore(store => store.upsertDevice);
   const defaultConfigPath = useAppScanConfigStore(store => store.path);
@@ -236,7 +234,7 @@ const AddDevice = ({ navigation, route }: Props) => {
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
@@ -346,7 +344,7 @@ const AddDevice = ({ navigation, route }: Props) => {
         <Button
           disabled={validInputs}
           mode={'contained'}
-          style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: insets.bottom + 8 }]}
+          style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: 8 }]}
           onPress={onPressSave}>
           {buttonTitle}
         </Button>
