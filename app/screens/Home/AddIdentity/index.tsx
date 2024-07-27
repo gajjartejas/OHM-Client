@@ -7,7 +7,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from 'react-native-paper';
 import uuid from 'react-native-uuid';
 import { useTranslation } from 'react-i18next';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 //App modules
 import styles from './styles';
@@ -31,7 +30,6 @@ const AddIdentity = ({ navigation, route }: Props) => {
   //Constants
   const { colors } = useTheme();
   const theme = useTheme();
-  const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const upsertIdentity = useAppConfigStore(store => store.upsertIdentity);
   const identity = route.params.identity;
@@ -87,7 +85,7 @@ const AddIdentity = ({ navigation, route }: Props) => {
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
@@ -152,7 +150,7 @@ const AddIdentity = ({ navigation, route }: Props) => {
         <Button
           disabled={validInputs}
           mode={'contained'}
-          style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: insets.bottom + 8 }]}
+          style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: 8 }]}
           onPress={onPressSave}>
           {identity ? t('addIdentity.updateButton') : t('addIdentity.saveButton')}
         </Button>

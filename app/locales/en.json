@@ -6,7 +6,7 @@
     "connecting": "Connecting..."
   },
   "about": {
-    "version": "Version: {{version}}",
+    "version": "Version: {{id0001}}",
     "sendFeedback": "Send Feedback",
     "rateApp": "Rate App",
     "moreApps": "More Apps",
@@ -21,29 +21,28 @@
       "header": "Default Scan Config",
       "row1": {
         "title": "URL Path",
-        "subTitle": "{{path}}",
+        "subTitle": "{{id2001}}",
         "dialogTitle": "Enter URL Path",
         "dialogSubTitle": "URL Path of the Open Hardware Client"
       },
       "row2": {
         "title": "Port",
-        "subTitle": "{{port}}",
+        "subTitle": "{{id2002}}",
         "dialogTitle": "Enter Port",
         "dialogSubTitle": "Port number of Open Hardware Monitor client"
       }
     },
-
     "section3": {
       "header": "Advanced",
       "row1": {
         "title": "Scan Timeout",
-        "subTitle": "{{scanTimeoutInMs}} ms",
+        "subTitle": "{{id2003}} ms",
         "dialogTitle": "Enter Scan Timeout (1 - 10000)",
         "dialogSubTitle": "Scan timeout per threads, ex: 150 threads per 1500 ms, If device not found try to increase the timeout."
       },
       "row2": {
         "title": "Scan Threads",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{id2004}}",
         "dialogTitle": "Enter Scan Threads (1 - 999)",
         "dialogSubTitle": "Scan threads per timeouts,  ex: 150 threads per 1500 ms, If device not found try to decrease threads."
       }
@@ -164,7 +163,7 @@
     "appearanceTitle": "Appearance",
     "appearanceSubTitle": "Customization of appearance",
     "languageTitle": "App Language",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "scanTitle": "Scan Settings",
     "scanSubTitle": "Auto scan(nearby scan) settings",
     "identitiesTitle": "Identities",

@@ -13,13 +13,14 @@ interface IAppLangConfigActions {
   setSelectedLanguageCode: (code: string) => void;
 }
 
-const DEFAULT_LANGUAGE_CODE = RNLocalize.getLocales()[0].languageCode;
-const FOUND_LANGUAGE = SUPPORTED_LANGUAGES.filter(v => v.code === DEFAULT_LANGUAGE_CODE);
+const DEVICE_LANGUAGE_CODE = RNLocalize.getLocales()[0].languageCode;
+const FOUND_LANGUAGE = SUPPORTED_LANGUAGES.filter(v => v.code === DEVICE_LANGUAGE_CODE);
 
 const initialState: IAppLangConfigState = {
-  selectedLanguageCode: FOUND_LANGUAGE && FOUND_LANGUAGE.length > 0 ? DEFAULT_LANGUAGE_CODE : FOUND_LANGUAGE[0].code,
+  selectedLanguageCode:
+    FOUND_LANGUAGE && FOUND_LANGUAGE.length > 0 ? FOUND_LANGUAGE[0].code : SUPPORTED_LANGUAGES[0].code,
   selectedLanguageName:
-    FOUND_LANGUAGE && FOUND_LANGUAGE.length > 0 ? FOUND_LANGUAGE[0].language : FOUND_LANGUAGE[0].language,
+    FOUND_LANGUAGE && FOUND_LANGUAGE.length > 0 ? FOUND_LANGUAGE[0].language : SUPPORTED_LANGUAGES[0].language,
 };
 
 const useAppLangConfigStore = create<IAppLangConfigState & IAppLangConfigActions>()(

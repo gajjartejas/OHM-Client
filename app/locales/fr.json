@@ -7,7 +7,7 @@
     "sendFeedback": "Envoyer des commentaires",
     "sendFeedbackDetail": "Vous pouvez envoyer vos précieux commentaires sur le problème GitHub.",
     "setting": "Paramètres",
-    "version": "Version : {{version}}"
+    "version": "Version : {{id0001}}"
   },
   "aboutScreen": {
     "developerTitle": "Développeur",
@@ -172,13 +172,13 @@
       "row1": {
         "dialogSubTitle": "Chemin URL du client Open Hardware",
         "dialogTitle": "Entrez le chemin de l'URL",
-        "subTitle": "{{path}}",
+        "subTitle": "{{id2001}}",
         "title": "Chemin de l'URL"
       },
       "row2": {
         "dialogSubTitle": "Numéro de port du client Open Hardware Monitor",
         "dialogTitle": "Entrez le port",
-        "subTitle": "{{port}}",
+        "subTitle": "{{id2002}}",
         "title": "Port"
       }
     },
@@ -187,13 +187,13 @@
       "row1": {
         "dialogSubTitle": "Délai d'expiration de l'analyse par thread, par exemple : 150 threads toutes les 1 500 ms. Si le périphérique n'est pas trouvé, essayez d'augmenter le délai d'attente.",
         "dialogTitle": "Entrez le délai d'expiration de l'analyse (1 - 10 000)",
-        "subTitle": "{{scanTimeoutInMs}} ms",
+        "subTitle": "{{id2003}} ms",
         "title": "Délai d'analyse"
       },
       "row2": {
         "dialogSubTitle": "Analysez les threads par délai d'attente, par exemple : 150 threads toutes les 1 500 ms. Si le périphérique n'est pas trouvé, essayez de diminuer les threads.",
         "dialogTitle": "Entrez les fils de numérisation (1 - 999)",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{id2004}}",
         "title": "Analyser les fils de discussion"
       }
     },
@@ -217,7 +217,7 @@
     "identitiesSubTitle": "Nom d'utilisateur et mots de passe pour l'authentification d'accès de base",
     "identitiesTitle": "Identités",
     "infoHeader": "Information",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "languageTitle": "Langue de l'application",
     "librariesSubTitle": "Liste des bibliothèques open source utilisées dans ce projet",
     "librariesTitle": "Bibliothèques",

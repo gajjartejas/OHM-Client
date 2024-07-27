@@ -7,7 +7,7 @@
     "sendFeedback": "Feedback abschicken",
     "sendFeedbackDetail": "Sie können Ihr wertvolles Feedback an das GitHub-Problem senden.",
     "setting": "Einstellungen",
-    "version": "Version: {{version}}"
+    "version": "Version: {{id0001}}"
   },
   "aboutScreen": {
     "developerTitle": "Entwickler",
@@ -172,13 +172,13 @@
       "row1": {
         "dialogSubTitle": "URL-Pfad des Open Hardware Client",
         "dialogTitle": "Geben Sie den URL-Pfad ein",
-        "subTitle": "{{path}}",
+        "subTitle": "{{id2001}}",
         "title": "URL-Pfad"
       },
       "row2": {
         "dialogSubTitle": "Portnummer des Open Hardware Monitor-Clients",
         "dialogTitle": "Geben Sie den Port ein",
-        "subTitle": "{{port}}",
+        "subTitle": "{{id2002}}",
         "title": "Hafen"
       }
     },
@@ -187,13 +187,13 @@
       "row1": {
         "dialogSubTitle": "Scan-Timeout pro Thread, z. B. 150 Threads pro 1500 ms. Wenn das Gerät nicht gefunden wird, versuchen Sie, das Timeout zu erhöhen.",
         "dialogTitle": "Geben Sie das Scan-Timeout ein (1 - 10000).",
-        "subTitle": "{{scanTimeoutInMs}} ms",
+        "subTitle": "{{id2003}} ms",
         "title": "Scan-Timeout"
       },
       "row2": {
         "dialogSubTitle": "Threads pro Zeitüberschreitung scannen, z. B. 150 Threads pro 1500 ms. Wenn das Gerät nicht gefunden wird, versuchen Sie, die Anzahl der Threads zu verringern.",
         "dialogTitle": "Scan-Threads eingeben (1 - 999)",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{id2004}}",
         "title": "Threads scannen"
       }
     },
@@ -217,7 +217,7 @@
     "identitiesSubTitle": "Benutzername und Passwörter für die grundlegende Zugriffsauthentifizierung",
     "identitiesTitle": "Identitäten",
     "infoHeader": "Information",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "languageTitle": "App-Sprache",
     "librariesSubTitle": "Liste der in diesem Projekt verwendeten Open-Source-Bibliotheken",
     "librariesTitle": "Bibliotheken",

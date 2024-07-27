@@ -140,7 +140,7 @@ const About = ({ navigation }: Props) => {
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
@@ -148,7 +148,7 @@ const About = ({ navigation }: Props) => {
         title={t('aboutScreen.title')}
         style={{ backgroundColor: colors.background }}
       />
-      <Components.AppBaseView scroll edges={['bottom', 'left', 'right']} style={styles.safeArea}>
+      <Components.AppBaseView scroll edges={[]} style={styles.safeArea}>
         <Image source={Config.Images.icons.app_icon} resizeMode="contain" style={styles.appicon} />
         <Text style={[styles.appNameText, { color: colors.onBackground }]}>{DeviceInfo.getApplicationName()}</Text>
         <Text style={[styles.appVersionText, { color: `${colors.onBackground}88` }]}>

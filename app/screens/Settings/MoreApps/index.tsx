@@ -97,7 +97,7 @@ const MoreApps = ({ navigation }: Props) => {
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
@@ -105,8 +105,7 @@ const MoreApps = ({ navigation }: Props) => {
         title={t('moreApps.appsTitle')}
         style={{ backgroundColor: colors.background }}
       />
-
-      <Components.AppBaseView scroll edges={['bottom', 'left', 'right']} style={styles.safeArea}>
+      <Components.AppBaseView edges={[]} scroll={true} style={styles.safeArea}>
         <View style={[styles.listContainer, largeScreenMode && styles.cardTablet]}>
           {apps.map((item, index) => {
             return (

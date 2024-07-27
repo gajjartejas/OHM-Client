@@ -167,7 +167,7 @@ const MoreTab = () => {
             <Image source={Config.Images.icons.app_icon} resizeMode="contain" style={styles.appIcon} />
             <Text style={[styles.appNameText, { color: colors.text }]}>{t('general.appname')}</Text>
             <Text style={[styles.appVersion, { color: colors.text }]}>
-              {t('about.version', { version: DeviceInfo.getReadableVersion() })}
+              {t('about.version', { id0001: DeviceInfo.getReadableVersion() })}
             </Text>
           </View>
 

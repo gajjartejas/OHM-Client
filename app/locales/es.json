@@ -7,7 +7,7 @@
     "sendFeedback": "Enviar comentarios",
     "sendFeedbackDetail": "Puede enviar sus valiosos comentarios a la edición de GitHub.",
     "setting": "Ajustes",
-    "version": "Versión: {{version}}"
+    "version": "Versión: {{id0001}}"
   },
   "aboutScreen": {
     "developerTitle": "Desarrollador",
@@ -172,13 +172,13 @@
       "row1": {
         "dialogSubTitle": "Ruta URL del cliente de hardware abierto",
         "dialogTitle": "Ingrese la ruta URL",
-        "subTitle": "{{path}}",
+        "subTitle": "{{id2001}}",
         "title": "Ruta URL"
       },
       "row2": {
         "dialogSubTitle": "Número de puerto del cliente Open Hardware Monitor",
         "dialogTitle": "Ingresar puerto",
-        "subTitle": "{{port}}",
+        "subTitle": "{{id2002}}",
         "title": "Puerto"
       }
     },
@@ -187,13 +187,13 @@
       "row1": {
         "dialogSubTitle": "Tiempo de espera de escaneo por subproceso, por ejemplo: 150 subprocesos por 1500 ms. Si no se encuentra el dispositivo, intente aumentar el tiempo de espera.",
         "dialogTitle": "Ingrese el tiempo de espera de escaneo (1 - 10000)",
-        "subTitle": "{{scanTimeoutInMs}} ms",
+        "subTitle": "{{id2003}} ms",
         "title": "Tiempo de espera de escaneo"
       },
       "row2": {
         "dialogSubTitle": "Escanee subprocesos por tiempo de espera, por ejemplo: 150 subprocesos cada 1500 ms. Si no se encuentra el dispositivo, intente disminuir los subprocesos.",
         "dialogTitle": "Ingresar hilos de escaneo (1 - 999)",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{id2004}}",
         "title": "Escanear hilos"
       }
     },
@@ -217,7 +217,7 @@
     "identitiesSubTitle": "Nombre de usuario y contraseñas para autenticación de acceso básico",
     "identitiesTitle": "Identidades",
     "infoHeader": "Información",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "languageTitle": "Idioma de la aplicación",
     "librariesSubTitle": "Lista de bibliotecas de código abierto utilizadas en este proyecto",
     "librariesTitle": "Bibliotecas",
