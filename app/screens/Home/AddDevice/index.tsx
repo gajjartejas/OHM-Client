@@ -194,7 +194,7 @@ const AddDevice = ({ navigation, route }: Props) => {
       setConnecting(false);
     }, 5000);
 
-    let deviceAddOrUpdate: IDevice = {
+    const deviceAddOrUpdate: IDevice = {
       id: device ? device.id : uuid.v4().toString(),
       name: connectionName,
       port: parseInt(port, 10),
@@ -204,7 +204,7 @@ const AddDevice = ({ navigation, route }: Props) => {
       identity: identity !== null ? identity : device?.identity,
     };
 
-    let status = await connect(deviceAddOrUpdate, true, abortController);
+    const status = await connect(deviceAddOrUpdate, true, abortController);
     setConnecting(false);
     if (status.deviceInfo) {
       if (Platform.OS === 'android') {
@@ -344,7 +344,7 @@ const AddDevice = ({ navigation, route }: Props) => {
         <Button
           disabled={validInputs}
           mode={'contained'}
-          style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: 8 }]}
+          style={[styles.button, largeScreenMode && styles.cardTablet, styles.bottomMargin]}
           onPress={onPressSave}>
           {buttonTitle}
         </Button>

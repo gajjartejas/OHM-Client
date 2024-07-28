@@ -9,18 +9,14 @@ export interface LicenseTypes {}
 export interface AboutParams {}
 export interface SelectAppearanceParams {}
 export interface TranslatorsParams {}
-export interface DashboardTab {
-  userId: string;
-}
-export interface PurchaseScreen {
+export interface DeviceInfoParams {}
+export interface PurchaseScreenParams {
   fromTheme: boolean;
 }
 
 export interface HomeTabsParams {}
 
 export interface MoreTabParams {}
-export interface DashboardTabParams {}
-export interface ConnectToDeviceListsTabParams {}
 export interface ScanSettingParams {}
 export interface AddDeviceParams {
   device?: IDevice;
@@ -29,8 +25,8 @@ export interface AddDeviceParams {
 export interface IdentitiesParams {
   mode?: 'view' | 'select';
 }
-export interface DevicesParams {
-  mode?: 'view' | 'select';
+export interface ManageDevicesParams {
+  mode?: 'view' | 'select' | 'connect';
 }
 export interface AddIdentityParams {
   identity?: IConnectionIdentity;
@@ -47,19 +43,19 @@ export type LoggedInTabNavigatorParams = {
   SelectAppearance: SelectAppearanceParams;
   License: LicenseTypes;
   Translators: TranslatorsParams;
-  Purchase: PurchaseScreen;
+  Purchase: PurchaseScreenParams;
   ScanSetting: ScanSettingParams;
   AddDevice: AddDeviceParams;
   Identities: IdentitiesParams;
-  Devices: DevicesParams;
+  ManageDevices: ManageDevicesParams;
   AddIdentity: AddIdentityParams;
   ScanDevices: ScanDevicesParams;
   ChangeLanguage: ChangeLanguageParams;
+  DeviceInfo: DeviceInfoParams;
 };
 
 export type HomeTabsNavigatorParams = {
-  DashboardTab: DashboardTabParams;
-  ConnectToDeviceList: ConnectToDeviceListsTabParams;
+  ManageDevices: ManageDevicesParams;
   MoreTab: MoreTabParams;
 };
 

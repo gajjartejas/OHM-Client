@@ -150,7 +150,7 @@ const AddIdentity = ({ navigation, route }: Props) => {
         <Button
           disabled={validInputs}
           mode={'contained'}
-          style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: 8 }]}
+          style={[styles.button, largeScreenMode && styles.cardTablet, styles.bottomMargin]}
           onPress={onPressSave}>
           {identity ? t('addIdentity.updateButton') : t('addIdentity.saveButton')}
         </Button>
