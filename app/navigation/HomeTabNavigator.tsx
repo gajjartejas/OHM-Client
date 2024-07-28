@@ -14,34 +14,22 @@ import About from 'app/screens/Settings/About';
 import SelectAppearance from 'app/screens/Settings/SelectAppearance';
 import License from 'app/screens/Settings/License';
 import Translators from 'app/screens/Settings/Translators';
-import ConnectToDeviceList from 'app/screens/Home/ConnectToDeviceList';
-
-//App Modules
-import { HomeTabsNavigatorParams, LoggedInTabNavigatorParams } from 'app/navigation/types';
-import Loading from 'app/screens/Loading';
-import { AppTheme } from 'app/models/theme';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScanSetting from 'app/screens/Settings/ScanSetting';
 import AddDevice from 'app/screens/Home/AddDevice';
 import Identities from 'app/screens/Home/Identities';
 import AddIdentity from 'app/screens/Home/AddIdentity';
-import Devices from 'app/screens/Home/Devices';
-import useAppConfigStore from 'app/store/appConfig';
-import DashboardTab from 'app/screens/Home/DashboardTab';
+import ManageDevices from 'app/screens/Home/ManageDevices';
 import ScanDevices from 'app/screens/Home/ScanDevices';
 import ChangeLanguage from 'app/screens/Settings/ChangeLanguage';
+import Loading from 'app/screens/Loading';
+
+//App Modules
+import { HomeTabsNavigatorParams, LoggedInTabNavigatorParams } from 'app/navigation/types';
+import { AppTheme } from 'app/models/theme';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import DeviceInfo from 'app/screens/Home/DeviceInfo';
 
 const Tab = createMaterialBottomTabNavigator<HomeTabsNavigatorParams>();
-
-function HomeOrList(props: any) {
-  const selectedDevice = useAppConfigStore(store => store.selectedDevice);
-  return (
-    <>
-      {!!selectedDevice && <DashboardTab {...props} />}
-      {!selectedDevice && <ConnectToDeviceList {...props} />}
-    </>
-  );
-}
 
 function HomeTabs() {
   //Constants
@@ -55,8 +43,9 @@ function HomeTabs() {
       activeColor={colors.secondaryContainer}
       barStyle={{ backgroundColor: colors.background, height: insets.bottom + 60 }}>
       <Tab.Screen
-        name="DashboardTab"
-        component={HomeOrList}
+        name="ManageDevices"
+        component={ManageDevices}
+        initialParams={{ mode: 'connect' }}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
@@ -105,9 +94,10 @@ const LoggedInTabNavigator = () => {
       <LoggedInStack.Screen name="AddDevice" component={AddDevice} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="Identities" component={Identities} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="AddIdentity" component={AddIdentity} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="Devices" component={Devices} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="ManageDevices" component={ManageDevices} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ScanDevices" component={ScanDevices} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ChangeLanguage" component={ChangeLanguage} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="DeviceInfo" component={DeviceInfo} options={{ headerShown: false }} />
     </LoggedInStack.Navigator>
   );
 };

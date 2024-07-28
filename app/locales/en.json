@@ -115,13 +115,13 @@
   },
   "devicesList": {
     "title": "Devices",
-    "createNewDevice": "Create New Device",
+    "createNewDevice": "Add New Device",
     "subTitle": "Devices",
     "emptyName": "No Name",
     "edit": "Edit",
     "delete": "Delete",
     "emptyDeviceTitle": "No Device found!",
-    "emptyDeviceSubtitle": "Please create a new device."
+    "emptyDeviceSubtitle": "Please add a new device."
   },
   "identitiesList": {
     "selectTitle": "Select Identity",
@@ -153,7 +153,7 @@
     "devicesSettings": "Manage Devices",
     "emptyData": {
       "emptyDeviceTitle": "No Device found!",
-      "emptyDeviceSubtitle": "Please create a new device.",
+      "emptyDeviceSubtitle": "Please add a new device.",
       "button": "Add Device"
     }
   },

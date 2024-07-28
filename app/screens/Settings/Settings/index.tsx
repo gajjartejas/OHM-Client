@@ -77,7 +77,7 @@ const Settings = ({ navigation }: Props) => {
             iconType: 'material-community',
             title: t('settings.recentConnectionsTitle'),
             description: t('settings.recentConnectionsSubTitle'),
-            route: 'Devices',
+            route: 'ManageDevices',
           },
         ],
       },

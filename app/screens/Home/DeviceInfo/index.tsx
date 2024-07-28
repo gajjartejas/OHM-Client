@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 
 //ThirdParty
 import { Button, IconButton } from 'react-native-paper';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from 'react-native-paper';
 
 //App modules
@@ -12,20 +12,16 @@ import styles from './styles';
 
 //Redux
 import { ICardViewModel } from 'app/models/viewModels/cardValueViewModel';
-import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
-import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
-import { HomeTabsNavigatorParams, LoggedInTabNavigatorParams } from 'app/navigation/types';
+import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 import useAppConfigStore from 'app/store/appConfig';
 import { convertToViewModel } from 'app/models/mapper/cardValueViewModel';
 import AppHeader from 'app/components/AppHeader';
 import { useTranslation } from 'react-i18next';
 
 //Params
-type DashboardTabNavigationProp = CompositeNavigationProp<
-  MaterialBottomTabNavigationProp<HomeTabsNavigatorParams, 'DashboardTab'>,
-  NativeStackNavigationProp<LoggedInTabNavigatorParams>
->;
-const DashboardTab = ({}: DashboardTabNavigationProp) => {
+type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'DeviceInfo'>;
+
+const DeviceInfo = ({ navigation }: Props) => {
   //Refs
   const refDeviceInfoRequestInProgress = useRef(false);
 
@@ -33,7 +29,6 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
 
   //Constants
   const { colors } = useTheme();
-  const navigation = useNavigation<DashboardTabNavigationProp>();
   const selectedDevice = useAppConfigStore(store => store.selectedDevice);
   const disconnect = useAppConfigStore(store => store.disconnect);
   const connected = useAppConfigStore(store => store.connected);
@@ -66,9 +61,10 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
     setDeviceInfos(convertToViewModel(selectedDevice.deviceInfo));
   }, [selectedDevice]);
 
-  const onLogout = useCallback(() => {
+  const onGoBack = useCallback(() => {
     disconnect();
-  }, [disconnect]);
+    navigation.pop();
+  }, [disconnect, navigation]);
 
   const onPressSetting = useCallback(() => {
     if (!selectedDevice) {
@@ -116,7 +112,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       return;
     }
 
-    let to = setInterval(async () => {
+    const to = setInterval(async () => {
       if (refDeviceInfoRequestInProgress.current) {
         return;
       }
@@ -145,7 +141,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
-        onPressBackButton={onLogout}
+        onPressBackButton={onGoBack}
         title={title}
         style={{ backgroundColor: colors.background }}
         RightViewComponent={
@@ -189,4 +185,4 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   );
 };
 
-export default DashboardTab;
+export default DeviceInfo;

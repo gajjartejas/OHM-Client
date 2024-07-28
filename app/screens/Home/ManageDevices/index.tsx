@@ -5,33 +5,36 @@ import { View, ScrollView } from 'react-native';
 import { Button, FAB, IconButton, List, Menu } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 //App modules
 import styles from './styles';
+import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import IDevice from 'app/models/models/device';
+import Components from 'app/components';
+import useAppConfigStore from 'app/store/appConfig';
+import AppHeader from 'app/components/AppHeader';
+import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 
 //Redux
-import { LoggedInTabNavigatorParams } from 'app/navigation/types';
-import AppHeader from 'app/components/AppHeader';
-import useAppConfigStore from 'app/store/appConfig';
-import Components from 'app/components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import IDevice from 'app/models/models/device';
-import { useTranslation } from 'react-i18next';
-import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 
 //Params
-type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'Devices'>;
+type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'ManageDevices'>;
 
-const Devices = ({ navigation }: Props) => {
+const ManageDevices = ({ navigation, route }: Props) => {
   //Refs
 
   //Constants
   const { colors } = useTheme();
   const devices = useAppConfigStore(store => store.devices);
   const deleteDevice = useAppConfigStore(store => store.deleteDevice);
+  const selectDevice = useAppConfigStore(store => store.selectDevice);
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const largeScreenMode = useLargeScreenMode();
+  const mode = route.params.mode;
+  const showBackButton = mode !== 'connect';
 
   //States
   const [visibleIndex, setVisibleIndex] = React.useState<number | null>(null);
@@ -42,9 +45,14 @@ const Devices = ({ navigation }: Props) => {
 
   const onPressDevice = useCallback(
     (item: IDevice, _index: number) => {
-      navigation.navigate('AddDevice', { device: item, mode: 'edit' });
+      if (mode === 'connect') {
+        selectDevice(item);
+        navigation.navigate('DeviceInfo', {});
+      } else {
+        navigation.navigate('AddDevice', { device: item, mode: 'edit' });
+      }
     },
-    [navigation],
+    [mode, navigation, selectDevice],
   );
 
   const openMenu = useCallback((index: number) => {
@@ -90,7 +98,7 @@ const Devices = ({ navigation }: Props) => {
       edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
-        showBackButton={true}
+        showBackButton={showBackButton}
         onPressBackButton={onGoBack}
         title={t('devicesList.title')}
         style={{ backgroundColor: colors.background }}
@@ -153,4 +161,4 @@ const Devices = ({ navigation }: Props) => {
   );
 };
 
-export default Devices;
+export default ManageDevices;
