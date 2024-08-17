@@ -33,6 +33,8 @@ export interface AddIdentityParams {
 }
 export interface ScanDevicesParams {}
 export interface ChangeLanguageParams {}
+export interface WebViewSettingParams {}
+export interface DeviceInfoWebViewParams {}
 
 export type LoggedInTabNavigatorParams = {
   Loading: LoadingParams;
@@ -52,6 +54,8 @@ export type LoggedInTabNavigatorParams = {
   ScanDevices: ScanDevicesParams;
   ChangeLanguage: ChangeLanguageParams;
   DeviceInfo: DeviceInfoParams;
+  WebViewSetting: WebViewSettingParams;
+  DeviceInfoWebView: DeviceInfoWebViewParams;
 };
 
 export type HomeTabsNavigatorParams = {

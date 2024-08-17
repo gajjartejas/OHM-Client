@@ -9,13 +9,14 @@ import { ICardValueViewModel, ICardViewModel } from 'app/models/viewModels/cardV
 import { useTranslation } from 'react-i18next';
 import { memo } from 'react';
 
-function CardValueText(props: { text: string; style: any }) {
+const CardValueText = memo((props: { text: string; style: any }) => {
   //Const
   const { colors } = useTheme();
   return <Text style={[styles.cardValueText, { color: colors.onSurface }, props.style]}>{props.text}</Text>;
-}
+});
+CardValueText.displayName = 'CardValueText';
 
-function CardValues(props: { value: ICardValueViewModel }) {
+const CardValues = memo((props: { value: ICardValueViewModel }) => {
   return (
     <View style={styles.cardValuesContainer}>
       <CardValueText style={styles.cardValuesTitle} text={props.value.name} />
@@ -24,9 +25,10 @@ function CardValues(props: { value: ICardValueViewModel }) {
       <CardValueText style={styles.cardValuesTitleValue} text={props.value.maxValue} />
     </View>
   );
-}
+});
+CardValues.displayName = 'CardValues';
 
-function CardTitle(props: { title: string }) {
+const CardTitle = memo((props: { title: string }) => {
   //Const
   const { colors } = useTheme();
   const { t } = useTranslation();
@@ -34,17 +36,18 @@ function CardTitle(props: { title: string }) {
   return (
     <View style={styles.cardValuesContainer}>
       <CardValueText style={[styles.cardValuesTitle, { color: colors.primary }]} text={props.title} />
-      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('dashboard.card.min')} />
+      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('deviceInfo.card.min')} />
       <CardValueText
         style={[styles.cardValuesTitleValue, { color: colors.primary }]}
-        text={t('dashboard.card.current')}
+        text={t('deviceInfo.card.current')}
       />
-      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('dashboard.card.max')} />
+      <CardValueText style={[styles.cardValuesTitleValue, { color: colors.primary }]} text={t('deviceInfo.card.max')} />
     </View>
   );
-}
+});
+CardTitle.displayName = 'CardTitle';
 
-const CardLeftTitle = (props: { value: ICardViewModel }) => {
+const CardLeftTitle = memo((props: { value: ICardViewModel }) => {
   //Const
   const { colors } = useTheme();
   return (
@@ -55,7 +58,8 @@ const CardLeftTitle = (props: { value: ICardViewModel }) => {
       })}
     </View>
   );
-};
+});
+CardLeftTitle.displayName = 'CardLeftTitle';
 
 const CardSection = (props: { value: ICardViewModel; root: boolean }) => {
   const { colors } = useTheme();
@@ -101,12 +105,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingTop: 8,
   },
-  cardLeftTitleText: { fontSize: 12, fontWeight: 'bold' },
+  cardLeftTitleText: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
   cardSectionContainer: {
     borderRadius: 8,
     paddingHorizontal: 8,
   },
-  cardSectionText: { fontWeight: 'bold' },
+  cardSectionText: {
+    fontWeight: 'bold',
+  },
 });
 
 export default memo(CardSection);

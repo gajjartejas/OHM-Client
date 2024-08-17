@@ -1,5 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, TextInput, Keyboard, Platform, ToastAndroid, Alert } from 'react-native';
+import {
+  View,
+  ScrollView,
+  TextInput,
+  Keyboard,
+  Platform,
+  ToastAndroid,
+  Alert,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 //ThirdParty
 import { Button, IconButton, List } from 'react-native-paper';
@@ -24,17 +33,21 @@ import validateNum from 'app/utils/validateNum';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import IConnectionIdentity from 'app/models/models/identity';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import inspectService from 'app/services/inspectService';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddDevice'>;
 
 const AddDevice = ({ navigation, route }: Props) => {
   //Refs
-  let connectionNameRef = useRef<TextInput | null>(null);
-  let ipAddressRef = useRef<TextInput | null>(null);
-  let portRef = useRef<TextInput | null>(null);
-  let identityRef = useRef<TextInput | null>(null);
-  let refreshRateInMsRef = useRef<TextInput | null>(null);
+  const connectionNameRef = useRef<TextInput | null>(null);
+  const ipAddressRef = useRef<TextInput | null>(null);
+  const portRef = useRef<TextInput | null>(null);
+  const identityRef = useRef<TextInput | null>(null);
+  const refreshRateInMsRef = useRef<TextInput | null>(null);
+  const ipAddress1Ref = useRef<TextInput | null>(null);
+  const ipAddress2Ref = useRef<TextInput | null>(null);
+  const ipAddress3Ref = useRef<TextInput | null>(null);
 
   //Constants
   const { colors } = useTheme();
@@ -45,7 +58,6 @@ const AddDevice = ({ navigation, route }: Props) => {
   const defaultConfigPath = useAppScanConfigStore(store => store.path);
   const defaultConfigPort = useAppScanConfigStore(store => store.port);
   const defaultRefreshRateInMs = useAppConfigStore(store => store.refreshRateInMs);
-  const connect = useAppConfigStore(store => store.connect);
   const largeScreenMode = useLargeScreenMode();
 
   //States
@@ -53,7 +65,9 @@ const AddDevice = ({ navigation, route }: Props) => {
   const [device, setDevice] = useState<IDevice | null>(null);
 
   const [connectionName, setConnectionName] = useState('');
-  const [ipAddress, setIPAddress] = useState('');
+  const [ipAddress1, setIPAddress1] = useState('');
+  const [ipAddress2, setIPAddress2] = useState('');
+  const [ipAddress3, setIPAddress3] = useState('');
   const [port, setPort] = useState('');
   const [path, setPath] = useState('');
   const [refreshRateInMs, setRefreshRateInMs] = useState<string>('');
@@ -109,7 +123,9 @@ const AddDevice = ({ navigation, route }: Props) => {
     }
 
     setConnectionName(device.name ? device.name : '');
-    setIPAddress(device.ip);
+    setIPAddress1(device.ip1);
+    setIPAddress2(device.ip2 || '');
+    setIPAddress3(device.ip3 || '');
     setPath(device.path);
     setPort(device.port.toString());
     setRefreshRateInMs(device.refreshRateInMs.toString());
@@ -117,53 +133,6 @@ const AddDevice = ({ navigation, route }: Props) => {
       setIdentityTitle(device.identity.name ? device.identity.name : device.identity.username);
     }
   }, [device]);
-
-  const onPressSave = useCallback(async () => {
-    Keyboard.dismiss();
-
-    const deviceAddOrUpdate: IDevice = {
-      id: device ? device.id : uuid.v4().toString(),
-      name: connectionName.trim(),
-      port: parseInt(port, 10),
-      ip: ipAddress.trim(),
-      path: path.trim(),
-      refreshRateInMs: parseInt(refreshRateInMs, 10),
-      identity: identity !== null ? identity : device?.identity,
-    };
-
-    upsertDevice(deviceAddOrUpdate);
-    if (mode === 'connect') {
-      setConnecting(true);
-      let response = await connect(deviceAddOrUpdate, false, null);
-      setConnecting(false);
-
-      if (!response.deviceInfo || response.error) {
-        return;
-      }
-    }
-
-    navigation.pop();
-  }, [
-    connect,
-    connectionName,
-    device,
-    identity,
-    ipAddress,
-    mode,
-    navigation,
-    path,
-    port,
-    refreshRateInMs,
-    upsertDevice,
-  ]);
-
-  const onGoBack = useCallback(() => {
-    navigation.pop();
-  }, [navigation]);
-
-  const onPressSelectIdentity = useCallback(() => {
-    navigation.navigate('Identities', { mode: 'select' });
-  }, [navigation]);
 
   const validPort = useCallback(
     (field: string): string | null => {
@@ -186,6 +155,56 @@ const AddDevice = ({ navigation, route }: Props) => {
     [t],
   );
 
+  const isInvalidInputs = useMemo(() => {
+    return (
+      validPort(port) !== null || validIPAddress(ipAddress1) !== null || validRefreshRate(refreshRateInMs) !== null
+    );
+  }, [ipAddress1, port, refreshRateInMs, validIPAddress, validPort, validRefreshRate]);
+
+  const onPressSave = useCallback(async () => {
+    if (isInvalidInputs) {
+      return;
+    }
+    Keyboard.dismiss();
+
+    const deviceAddOrUpdate: IDevice = {
+      id: device ? device.id : uuid.v4().toString(),
+      name: connectionName.trim(),
+      selectedIp: ipAddress1.trim(),
+      path: path.trim(),
+      ip1: ipAddress1.trim(),
+      ip2: ipAddress2.trim(),
+      ip3: ipAddress3.trim(),
+      port: parseInt(port, 10),
+      secureConnection: false,
+      refreshRateInMs: parseInt(refreshRateInMs, 10),
+      identity: identity !== null ? identity : device?.identity,
+    };
+    upsertDevice(deviceAddOrUpdate);
+    navigation.pop();
+  }, [
+    connectionName,
+    device,
+    identity,
+    ipAddress1,
+    ipAddress2,
+    ipAddress3,
+    navigation,
+    path,
+    port,
+    refreshRateInMs,
+    upsertDevice,
+    isInvalidInputs,
+  ]);
+
+  const onGoBack = useCallback(() => {
+    navigation.pop();
+  }, [navigation]);
+
+  const onPressSelectIdentity = useCallback(() => {
+    navigation.navigate('Identities', { mode: 'select' });
+  }, [navigation]);
+
   const onPressTestConnection = useCallback(async () => {
     setConnecting(true);
     let abortController = new AbortController();
@@ -196,41 +215,46 @@ const AddDevice = ({ navigation, route }: Props) => {
 
     const deviceAddOrUpdate: IDevice = {
       id: device ? device.id : uuid.v4().toString(),
-      name: connectionName,
+      name: connectionName.trim(),
+      selectedIp: ipAddress1.trim(),
+      path: path.trim(),
+      ip1: ipAddress1.trim(),
+      ip2: ipAddress2.trim(),
+      ip3: ipAddress3.trim(),
       port: parseInt(port, 10),
-      ip: ipAddress,
-      path: path,
+      secureConnection: false,
       refreshRateInMs: parseInt(refreshRateInMs, 10),
       identity: identity !== null ? identity : device?.identity,
     };
 
-    const status = await connect(deviceAddOrUpdate, true, abortController);
-    setConnecting(false);
-    if (status.deviceInfo) {
+    try {
+      await inspectService({
+        ipAddress: deviceAddOrUpdate.selectedIp,
+        port: deviceAddOrUpdate.port,
+        path: deviceAddOrUpdate.path,
+        username: deviceAddOrUpdate.identity ? deviceAddOrUpdate.identity.username : null,
+        password: deviceAddOrUpdate.identity ? deviceAddOrUpdate.identity.password : null,
+        abortController: null,
+      });
       if (Platform.OS === 'android') {
         ToastAndroid.show(t('addDevice.connectionOk'), ToastAndroid.SHORT);
       } else if (Platform.OS === 'ios') {
         Alert.alert(t('addDevice.connectionOk'));
       }
-    } else if (status.error) {
+    } catch (e: any) {
       if (Platform.OS === 'android') {
-        ToastAndroid.show(
-          status.error.code === 401 ? t('addDevice.authRequired') : status.error.message,
-          ToastAndroid.SHORT,
-        );
+        ToastAndroid.show(e.code === 401 ? t('addDevice.authRequired') : e.message, ToastAndroid.SHORT);
       } else if (Platform.OS === 'ios') {
-        Alert.alert(status.error.code === 401 ? t('addDevice.authRequired') : status.error.message);
+        Alert.alert(e.code === 401 ? t('addDevice.authRequired') : e.message);
       }
     }
-  }, [connect, connectionName, device, identity, ipAddress, path, port, refreshRateInMs, t]);
+
+    setConnecting(false);
+  }, [connectionName, device, identity, ipAddress1, ipAddress2, ipAddress3, path, port, refreshRateInMs, t]);
 
   const onScanDevices = useCallback(() => {
     navigation.navigate('ScanDevices', {});
   }, [navigation]);
-
-  const validInputs = useMemo(() => {
-    return validPort(port) !== null || validIPAddress(ipAddress) !== null || validRefreshRate(refreshRateInMs) !== null;
-  }, [ipAddress, port, refreshRateInMs, validIPAddress, validPort, validRefreshRate]);
 
   return (
     <Components.AppBaseView
@@ -242,8 +266,8 @@ const AddDevice = ({ navigation, route }: Props) => {
         title={headerTitle}
         style={{ backgroundColor: colors.background }}
       />
-      <View style={styles.subView}>
-        <ScrollView style={styles.scrollView}>
+      <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={0} style={styles.subView}>
+        <ScrollView style={styles.scrollView} keyboardDismissMode={'interactive'}>
           <View style={[styles.centeredView]}>
             <View
               style={[
@@ -258,27 +282,54 @@ const AddDevice = ({ navigation, route }: Props) => {
                 onChangeText={setConnectionName}
                 placeholder={t('addDevice.inputPlaceholder1')!}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 onSubmitEditing={() => ipAddressRef.current?.focus()}
                 keyboardType={'default'}
                 returnKeyType={'next'}
               />
 
               <Components.AppTextInput
-                ref={ipAddressRef}
+                ref={ipAddress1Ref}
                 autoCapitalize="none"
-                value={ipAddress}
-                onChangeText={setIPAddress}
+                spellCheck={false}
+                autoCorrect={false}
+                value={ipAddress1}
+                onChangeText={setIPAddress1}
                 placeholder={t('addDevice.inputPlaceholder2')!}
-                errorText={validIPAddress(ipAddress)}
+                errorText={validIPAddress(ipAddress1)}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
-                onSubmitEditing={() => identityRef.current?.focus()}
-                keyboardType={'numeric'}
+                onSubmitEditing={() => connectionNameRef.current?.focus()}
+                keyboardType={'url'}
                 returnKeyType={'next'}
                 RightAccessoryView={
                   <IconButton icon="magnify" iconColor={theme.colors.primary} size={20} onPress={onScanDevices} />
                 }
+              />
+              <Components.AppTextInput
+                ref={ipAddress2Ref}
+                autoCapitalize="none"
+                spellCheck={false}
+                autoCorrect={false}
+                value={ipAddress2}
+                onChangeText={setIPAddress2}
+                placeholder={t('addDevice.inputPlaceholder3')!}
+                containerStyle={styles.inputStyle}
+                onSubmitEditing={() => ipAddress1Ref.current?.focus()}
+                keyboardType={'url'}
+                returnKeyType={'next'}
+              />
+
+              <Components.AppTextInput
+                ref={ipAddress3Ref}
+                autoCapitalize="none"
+                spellCheck={false}
+                autoCorrect={false}
+                value={ipAddress3}
+                onChangeText={setIPAddress3}
+                placeholder={t('addDevice.inputPlaceholder4')!}
+                containerStyle={styles.inputStyle}
+                onSubmitEditing={() => ipAddress2Ref.current?.focus()}
+                keyboardType={'url'}
+                returnKeyType={'done'}
               />
 
               <Components.AppTextInput
@@ -286,10 +337,9 @@ const AddDevice = ({ navigation, route }: Props) => {
                 autoCapitalize="none"
                 value={path}
                 onChangeText={setPath}
-                placeholder={t('addDevice.inputPlaceholder3')!}
+                placeholder={t('addDevice.inputPlaceholder5')!}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
-                onSubmitEditing={() => portRef.current?.focus()}
+                onSubmitEditing={() => ipAddress3Ref.current?.focus()}
                 keyboardType={'default'}
                 returnKeyType={'next'}
               />
@@ -299,11 +349,10 @@ const AddDevice = ({ navigation, route }: Props) => {
                 autoCapitalize="none"
                 value={port}
                 onChangeText={setPort}
-                placeholder={t('addDevice.inputPlaceholder4')!}
+                placeholder={t('addDevice.inputPlaceholder6')!}
                 errorText={validPort(port)}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
-                onSubmitEditing={() => refreshRateInMsRef.current?.focus()}
+                onSubmitEditing={() => identityRef.current?.focus()}
                 keyboardType={'numeric'}
                 returnKeyType={'done'}
               />
@@ -313,10 +362,9 @@ const AddDevice = ({ navigation, route }: Props) => {
                 autoCapitalize="none"
                 value={refreshRateInMs}
                 onChangeText={setRefreshRateInMs}
-                placeholder={t('addDevice.inputPlaceholder5')!}
+                placeholder={t('addDevice.inputPlaceholder7')!}
                 errorText={validRefreshRate(refreshRateInMs)}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 onSubmitEditing={onPressSave}
                 keyboardType={'numeric'}
                 returnKeyType={'done'}
@@ -332,24 +380,22 @@ const AddDevice = ({ navigation, route }: Props) => {
             </View>
           </View>
         </ScrollView>
+      </KeyboardAvoidingView>
+      <Button
+        disabled={isInvalidInputs}
+        mode={'text'}
+        style={[styles.button, largeScreenMode && styles.cardTablet]}
+        onPress={onPressTestConnection}>
+        {t('addDevice.testConnection')}
+      </Button>
 
-        <Button
-          disabled={validInputs}
-          mode={'text'}
-          style={[styles.button, largeScreenMode && styles.cardTablet]}
-          onPress={onPressTestConnection}>
-          {t('addDevice.testConnection')}
-        </Button>
-
-        <Button
-          disabled={validInputs}
-          mode={'contained'}
-          style={[styles.button, largeScreenMode && styles.cardTablet, styles.bottomMargin]}
-          onPress={onPressSave}>
-          {buttonTitle}
-        </Button>
-      </View>
-
+      <Button
+        disabled={isInvalidInputs}
+        mode={'contained'}
+        style={[styles.button, largeScreenMode && styles.cardTablet, styles.bottomMargin]}
+        onPress={onPressSave}>
+        {buttonTitle}
+      </Button>
       {connecting && <Components.AppLoader message={t('general.connecting')} />}
     </Components.AppBaseView>
   );

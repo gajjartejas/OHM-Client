@@ -79,6 +79,14 @@ const Settings = ({ navigation }: Props) => {
             description: t('settings.recentConnectionsSubTitle'),
             route: 'ManageDevices',
           },
+          {
+            id: 5,
+            iconName: 'web',
+            iconType: 'material-community',
+            title: t('settings.webViewSettingsTitle'),
+            description: t('settings.webViewSettingsSubTitle'),
+            route: 'WebViewSetting',
+          },
         ],
       },
       {

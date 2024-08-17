@@ -127,8 +127,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
   },
-  button: { flex: 1 },
-  spacing: { width: 8 },
+  button: {
+    flex: 1,
+  },
+  spacing: {
+    width: 8,
+  },
   hintText: {
     fontSize: 12,
     marginVertical: 8,

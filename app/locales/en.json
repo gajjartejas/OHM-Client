@@ -3,7 +3,9 @@
     "appname": "OHMClient",
     "close": "CLOSE",
     "save": "SAVE",
-    "connecting": "Connecting..."
+    "connecting": "Connecting...",
+    "cancel": "CANCEL",
+    "ok": "OK"
   },
   "about": {
     "version": "Version: {{id0001}}",
@@ -55,7 +57,96 @@
       }
     }
   },
-  "dashboard": {
+  "webViewSetting": {
+    "title": "Webview Settings",
+    "section1": {
+      "header": "General Settings",
+      "row1": {
+        "title": "Media Playback Requires User Action",
+        "subTitle": "Boolean that determines whether HTML5 audio and video requires the user to tap them before they start playing. The default value is true. (Android API minimum version 17)."
+      },
+      "row2": {
+        "title": "Scales Page To Fit",
+        "subTitle": "Boolean that controls whether the web content is scaled to fit the view and enables the user to change the scale. The default value is true."
+      },
+      "row3": {
+        "title": "Dom Storage Enabled",
+        "subTitle": "Boolean value to control whether DOM Storage is enabled. Used only in Android."
+      },
+      "row4": {
+        "title": "Java Script Enabled",
+        "subTitle": "Boolean value to enable JavaScript in the WebView. The default value is true."
+      },
+      "row5": {
+        "title": "Third Party Cookies Enabled",
+        "subTitle": "Boolean value to enable third-party cookies in the WebView. Used on Android Lollipop and above only as third-party cookies are enabled by default on Android Kitkat and below and iOS. The default value is true."
+      },
+      "row6": {
+        "title": "User-Agent",
+        "subTitle": "Sets the user agent for the WebView.",
+        "dialogTitle": "Enter User Agent String",
+        "dialogSubTitle": "The User-Agent (UA) string is contained in the HTTP headers and is intended to identify devices requesting online content."
+      },
+      "row7": {
+        "title": "Allows full-screen Video",
+        "subTitle": "Boolean that determines whether videos are allowed to be played in full screen. The default value is false."
+      },
+      "row8": {
+        "title": "Allows Inline Media Playback",
+        "subTitle": "Boolean that determines whether HTML5 videos play inline or use the native full-screen controller. The default value is false."
+      },
+      "row9": {
+        "title": "Allows Air Play For Media Playback",
+        "subTitle": "A Boolean value indicating whether AirPlay is allowed. The default value is false."
+      },
+      "row10": {
+        "title": "Bounces",
+        "subTitle": "Boolean value that determines whether the web view bounces when it reaches the edge of the content. The default value is true."
+      },
+      "row11": {
+        "title": "Content Mode",
+        "subTitle": "Controls the type of content to load. Available on iOS 13 and later. Defaults to recommended, which loads mobile content on iPhone & iPad Mini but desktop content on larger iPads."
+      },
+      "row12": {
+        "title": "Geolocation Enabled",
+        "subTitle": "Set whether Geolocation is enabled in the WebView. The default value is false. Used only in Android."
+      },
+      "row13": {
+        "title": "Allow File Access From File Ur Ls",
+        "subTitle": "Boolean that sets whether JavaScript running in the context of a file scheme URL should be allowed to access content from other file scheme URLs. The default value is false."
+      },
+      "row14": {
+        "title": "Allows Back Forward Navigation Gestures",
+        "subTitle": "If true, this will be able to horizontal swipe gestures. The default value is false."
+      },
+      "row15": {
+        "title": "Pull To Refresh Enabled",
+        "subTitle": "Boolean value that determines whether a pull to refresh gesture is available in the WebView. The default value is false. If true, sets bounces automatically to true."
+      },
+      "row16": {
+        "title": "Force Dark On",
+        "subTitle": "Configuring Dark Theme"
+      },
+      "row17": {
+        "title": "Allows Protected Media",
+        "subTitle": "Whether or not the Webview can play media protected by DRM. Default is false."
+      }
+    },
+    "section2": {
+      "header": "Other",
+      "row1": {
+        "title": "Clear WebView Data",
+        "subTitle": "Free up space by clearing all WebView data",
+        "dialogTitle": "Clear webview data?",
+        "dialogSubTitle": "Are you sure you want to clear webview data?"
+      },
+      "row2": {
+        "title": "Restore Default",
+        "subTitle": "Restore default all webview settings."
+      }
+    }
+  },
+  "deviceInfo": {
     "card": {
       "min": "Min",
       "current": "Current",
@@ -81,7 +172,21 @@
         "title": "Disconnected",
         "button": "Update Settings"
       }
-    }
+    },
+    "selectIpAddress": {
+      "title": "Select IP Address"
+    },
+    "infoDialog": {
+      "title": "Info",
+      "description": "URL Loaded:\n{{id3001}}",
+      "copy": "Copy",
+      "done": "Done"
+    },
+    "copyJSON": "Copy JSON",
+    "copyURL": "Copy URL",
+    "info": "Info",
+    "loading": "Loading...",
+    "switchedURL": "Switched to alternative URL:\n{{id3002}}."
   },
   "addDevice": {
     "titleCreate": "CREATE",
@@ -95,10 +200,12 @@
     "connectionOk": "Connection ok",
     "authRequired": "Authorization required!",
     "inputPlaceholder1": "Enter the connection name (Optional)",
-    "inputPlaceholder2": "Enter IP Address",
-    "inputPlaceholder3": "Enter Path (ex: /data.json)",
-    "inputPlaceholder4": "Enter Port",
-    "inputPlaceholder5": "Enter refresh rate in milliseconds",
+    "inputPlaceholder2": "Enter URL or IPv4/IPv6",
+    "inputPlaceholder3": "Enter URL or IPv4/IPv6 (Alternative) Optional",
+    "inputPlaceholder4": "Enter URL or IPv4/IPv6 (Alternative) Optional",
+    "inputPlaceholder5": "Enter Path (ex: /data.json)",
+    "inputPlaceholder6": "Enter Port",
+    "inputPlaceholder7": "Enter refresh rate in milliseconds",
     "selectIdentity": "Select Identity (Optional)",
     "testConnection": "Test Connection"
   },
@@ -144,18 +251,8 @@
       "help": "Help",
       "or": "OR",
       "rescan": "Scan Again"
-    }
-  },
-  "connectToDeviceList": {
-    "savedConnections": "Saved Devices",
-    "noDeviceFoundTryAddingItManually": "No device found!\nPlease try adding it manually.",
-    "addManually": "Add Device",
-    "devicesSettings": "Manage Devices",
-    "emptyData": {
-      "emptyDeviceTitle": "No Device found!",
-      "emptyDeviceSubtitle": "Please add a new device.",
-      "button": "Add Device"
-    }
+    },
+    "refresh": "Refresh"
   },
   "settings": {
     "title": "Settings",
@@ -170,6 +267,8 @@
     "identitiesSubTitle": "Username and passwords for basic access authentication",
     "recentConnectionsTitle": "Devices",
     "recentConnectionsSubTitle": "Manage added devices",
+    "webViewSettingsTitle": "Webview Settings",
+    "webViewSettingsSubTitle": "Manage webview settings",
     "infoHeader": "Information",
     "changelogTitle": "Changelog",
     "changelogSubTitle": "List of changes made in all updates",

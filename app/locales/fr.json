@@ -1,1 +1,340 @@
-{}
+{
+  "about": {
+    "app": "À propos de OHMClient",
+    "github": "Contribuer sur GitHub",
+    "moreApps": "Plus d'applications",
+    "rateApp": "Évaluer l'application",
+    "sendFeedback": "Envoyer des commentaires",
+    "sendFeedbackDetail": "Vous pouvez envoyer vos précieux commentaires sur le problème GitHub.",
+    "setting": "Paramètres",
+    "version": "Version : {{id0001}}"
+  },
+  "aboutScreen": {
+    "developerTitle": "Promoteur",
+    "githubSubTitle": "Profil de développeur et liste des projets open source",
+    "githubTitle": "GitHub",
+    "infoAuthorNameTitle": "Tejas Gajjar",
+    "infoDescTitle": "« OHM-Client » est une application client de surveillance matérielle ouverte non officielle pour Android et iOS écrite en réactif natif. \nEn utilisant cette application, vous pouvez surveiller le serveur Web du moniteur matériel ouvert.",
+    "infoHeader": "Information",
+    "instagramSubTitle": "Mon passe-temps et mes gadgets",
+    "instagramTitle": "Instagram",
+    "portfolioSubTitle": "Toutes les informations sur le développeur",
+    "portfolioTitle": "Portefeuille",
+    "telegramSubTitle": "Discussion sur les bugs, les améliorations, les demandes de fonctionnalités et les actualités de développement",
+    "telegramTitle": "Rejoindre Telegram",
+    "title": "À propos de OHMClient",
+    "twitterSubTitle": "Micro-blog personnel",
+    "twitterTitle": "Gazouillement"
+  },
+  "addDevice": {
+    "addDevice": "Ajouter un appareil",
+    "authRequired": "Autorisation requise!",
+    "connectDevice": "Connecter",
+    "connectionOk": "Connexion ok",
+    "inputPlaceholder1": "Entrez le nom de la connexion (facultatif)",
+    "inputPlaceholder2": "Saisissez l'URL ou IPv4/IPv6",
+    "inputPlaceholder3": "Entrez l'URL ou IPv4/IPv6 (alternative) Facultatif",
+    "inputPlaceholder4": "Entrez l'URL ou IPv4/IPv6 (alternative) Facultatif",
+    "inputPlaceholder5": "Entrez le chemin (ex : /data.json)",
+    "inputPlaceholder6": "Entrez le port",
+    "inputPlaceholder7": "Entrez le taux de rafraîchissement en millisecondes",
+    "invalidIpAddress": "Adresse IP invalide",
+    "invalidRefreshRate": "Taux de rafraîchissement invalide",
+    "selectIdentity": "Sélectionnez Identité (Facultatif)",
+    "testConnection": "Tester la connexion",
+    "titleConnect": "CONNECTER",
+    "titleCreate": "CRÉER",
+    "titleUpdate": "MISE À JOUR",
+    "updateDevice": "Mettre à jour l'appareil"
+  },
+  "addIdentity": {
+    "inputPlaceholder1": "Entrez le nom (facultatif)",
+    "inputPlaceholder2": "Entrez le nom d'utilisateur",
+    "inputPlaceholder3": "Entrez le mot de passe",
+    "passwordRequired": "Un mot de passe est requis !",
+    "saveButton": "SAUVEGARDER",
+    "titleAddIdentity": "Ajouter une identité",
+    "titleUpdate": "Mettre à jour l'identité",
+    "updateButton": "MISE À JOUR",
+    "usernameRequired": "Le nom d'utilisateur est requis !"
+  },
+  "appearanceSettings": {
+    "accentColorSubTitle": "Couleur utilisée pour teinter les éléments de l'interface utilisateur",
+    "accentColorTitle": "Couleur d'accentuation",
+    "interfaceHeader": "Interface",
+    "otherHeader": "Autre",
+    "otherSubTitle": "Restaurer les paramètres de thème par défaut",
+    "otherTitle": "Restaurer le thème par défaut",
+    "themeOption": "Thème",
+    "themeOption1": "Lumière",
+    "themeOption2": "Sombre",
+    "themeOption3": "Valeur par défaut du système",
+    "themeSubTitle": "Thème principal de l'application",
+    "themeTitle": "Thème",
+    "title": "Apparence"
+  },
+  "changeLanguageScreen": {
+    "title": "Changer de langue"
+  },
+  "deviceInfo": {
+    "card": {
+      "current": "Actuel",
+      "max": "Max.",
+      "min": "Min."
+    },
+    "copyJSON": "Copier JSON",
+    "copyURL": "Copier l'URL",
+    "emptyData": {
+      "item1": {
+        "button": "Mettre à jour les paramètres",
+        "message": "Appareil déconnecté, veuillez réessayer !",
+        "title": "Déconnecté !"
+      },
+      "item2": {
+        "button": "Mettre à jour les paramètres",
+        "message": "L'appareil met beaucoup de temps à se connecter. Veuillez réessayer !",
+        "title": "Délai de connexion"
+      },
+      "item3": {
+        "button": "Mettre à jour les paramètres",
+        "message": "Une autorisation est requise, veuillez la mettre à jour à partir des paramètres.",
+        "title": "Autorisation requise!"
+      },
+      "item4": {
+        "button": "Mettre à jour les paramètres",
+        "title": "Déconnecté"
+      }
+    },
+    "info": "Informations",
+    "infoDialog": {
+      "copy": "Copie",
+      "description": "URL chargée :\n\n{{id3001}}",
+      "done": "Fait",
+      "title": "Informations"
+    },
+    "loading": "Chargement...",
+    "selectIpAddress": {
+      "title": "Sélectionnez l'adresse IP"
+    },
+    "switchedURL": "Passé à une URL alternative :\n\n{{id3002}}."
+  },
+  "devicesList": {
+    "createNewDevice": "Ajouter un nouvel appareil",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "emptyDeviceSubtitle": "Veuillez ajouter un nouvel appareil.",
+    "emptyDeviceTitle": "Aucun appareil trouvé !",
+    "emptyName": "Pas de nom",
+    "subTitle": "Appareils",
+    "title": "Appareils"
+  },
+  "general": {
+    "appname": "OHMClient",
+    "cancel": "ANNULER",
+    "close": "FERMER",
+    "connecting": "De liaison...",
+    "ok": "D'ACCORD",
+    "save": "SAUVEGARDER"
+  },
+  "identitiesList": {
+    "createNewIdentity": "Créer une nouvelle identité",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "emptyData": {
+      "message": "Veuillez créer une nouvelle identité.",
+      "title": "Aucune identité trouvée !"
+    },
+    "listTitle": "Identités",
+    "selectTitle": "Sélectionnez l'identité",
+    "subTitle": "Identités"
+  },
+  "librariesScreen": {
+    "title": "Bibliothèques"
+  },
+  "moreApps": {
+    "apps1Desc": "Cette application vous permet d'activer/désactiver les publicités ou les recommandations pour diverses applications sur les appareils Xiaomi (MIUI).",
+    "apps1Title": "MIUI – Assistant pour les annonces",
+    "apps2Desc": "Une manière interactive d'apprendre le gujarati kakko, le barakhadi et les chiffres.",
+    "apps2Title": "Kano",
+    "apps3Desc": "PiGo - le compagnon mobile open source et gratuit pour les passionnés de Raspberry Pi. \nExplorez et gérez sans effort plusieurs serveurs Pi en déplacement.",
+    "apps3Title": "PiGo - Explorez vos serveurs Pi en déplacement",
+    "apps4Desc": "« OHM-Client » est une application client de surveillance matérielle ouverte non officielle pour Android et iOS écrite en réactif natif. \nEn utilisant cette application, vous pouvez surveiller le serveur Web du moniteur matériel ouvert.",
+    "apps4Title": "Client OHM",
+    "appsTitle": "Plus d'applications"
+  },
+  "scanDevices": {
+    "emptyData": {
+      "help": "Aide",
+      "or": "OU",
+      "rescan": "Scanner à nouveau",
+      "subtitle": "Veuillez réessayer de numériser",
+      "title": "Aucun appareil à proximité trouvé !"
+    },
+    "refresh": "Rafraîchir",
+    "subTitle": "Appareils à proximité",
+    "title": "Appareils à proximité"
+  },
+  "scanSetting": {
+    "section1": {
+      "header": "Configuration de numérisation par défaut",
+      "row1": {
+        "dialogSubTitle": "Chemin URL du client matériel ouvert",
+        "dialogTitle": "Entrez le chemin de l'URL",
+        "subTitle": "{{id2001}}",
+        "title": "Chemin de l'URL"
+      },
+      "row2": {
+        "dialogSubTitle": "Numéro de port du client Open Hardware Monitor",
+        "dialogTitle": "Entrez le port",
+        "subTitle": "{{id2002}}",
+        "title": "Port"
+      }
+    },
+    "section3": {
+      "header": "Avancé",
+      "row1": {
+        "dialogSubTitle": "Délai d'expiration de l'analyse par thread, par exemple : 150 threads toutes les 1 500 ms. Si le périphérique n'est pas trouvé, essayez d'augmenter le délai d'attente.",
+        "dialogTitle": "Entrez le délai d'expiration de l'analyse (1 - 10 000)",
+        "subTitle": "{{id2003}} Mme",
+        "title": "Expiration du délai d'analyse"
+      },
+      "row2": {
+        "dialogSubTitle": "Analysez les threads par délai d'attente, par exemple : 150 threads toutes les 1 500 ms. Si le périphérique n'est pas trouvé, essayez de diminuer les threads.",
+        "dialogTitle": "Entrez les fils de numérisation (1 - 999)",
+        "subTitle": "{{id2004}}",
+        "title": "Analyser les fils de discussion"
+      }
+    },
+    "section4": {
+      "header": "Autre",
+      "row1": {
+        "subTitle": "Restaurer les paramètres par défaut",
+        "title": "Restaurer les valeurs par défaut"
+      }
+    },
+    "title": "Paramètres de numérisation"
+  },
+  "settings": {
+    "appearanceSubTitle": "Personnalisation de l'apparence",
+    "appearanceTitle": "Apparence",
+    "changelogSubTitle": "Liste des modifications apportées dans toutes les mises à jour",
+    "changelogTitle": "Journal des modifications",
+    "commonHeader": "Paramètres communs",
+    "faqSubTitle": "Réponse aux questions fréquemment posées",
+    "faqTitle": "FAQ",
+    "identitiesSubTitle": "Nom d'utilisateur et mots de passe pour l'authentification d'accès de base",
+    "identitiesTitle": "Identités",
+    "infoHeader": "Information",
+    "languageSubTitle": "{{id10001}}",
+    "languageTitle": "Langue de l'application",
+    "librariesSubTitle": "Liste des bibliothèques open source utilisées dans ce projet",
+    "librariesTitle": "Bibliothèques",
+    "privacySubTitle": "Politique d'utilisation des informations et des autorisations",
+    "privacyTitle": "Politique de confidentialité",
+    "recentConnectionsSubTitle": "Gérer les appareils ajoutés",
+    "recentConnectionsTitle": "Appareils",
+    "scanSubTitle": "Paramètres de numérisation automatique (scan à proximité)",
+    "scanTitle": "Paramètres de numérisation",
+    "title": "Paramètres",
+    "translateSubTitle": "Traduisez cette application dans votre langue",
+    "translateTitle": "Traduire cette application",
+    "translatorsSubTitle": "Personnes qui ont aidé à localiser cette application",
+    "translatorsTitle": "Traducteurs",
+    "webViewSettingsSubTitle": "Gérer les paramètres d'affichage Web",
+    "webViewSettingsTitle": "Paramètres d'affichage Web"
+  },
+  "translatorsScreen": {
+    "emptyList": "Soyez le pionnier - aucun contributeur trouvé pour l'instant !",
+    "emptyListAction": "Cliquez ici pour contribuer",
+    "title": "Traducteurs"
+  },
+  "webViewSetting": {
+    "section1": {
+      "header": "Paramètres généraux",
+      "row1": {
+        "subTitle": "Booléen qui détermine si l'audio et la vidéo HTML5 nécessitent que l'utilisateur les appuie avant de commencer à jouer. \nLa valeur par défaut est vraie. \n(API Android version minimale 17).",
+        "title": "La lecture multimédia nécessite une action de l'utilisateur"
+      },
+      "row10": {
+        "subTitle": "Valeur booléenne qui détermine si la vue Web rebondit lorsqu'elle atteint le bord du contenu. \nLa valeur par défaut est vraie.",
+        "title": "Rebonds"
+      },
+      "row11": {
+        "subTitle": "Contrôle le type de contenu à charger. \nDisponible sur iOS 13 et versions ultérieures. \nPar défaut, recommandé, qui charge le contenu mobile sur iPhone",
+        "title": "Mode contenu"
+      },
+      "row12": {
+        "subTitle": "Définissez si la géolocalisation est activée dans WebView. \nLa valeur par défaut est fausse. \nUtilisé uniquement sous Android.",
+        "title": "Géolocalisation activée"
+      },
+      "row13": {
+        "subTitle": "Booléen qui définit si JavaScript exécuté dans le contexte d'une URL de schéma de fichiers doit être autorisé à accéder au contenu d'autres URL de schéma de fichiers. \nLa valeur par défaut est fausse.",
+        "title": "Autoriser l'accès aux fichiers à partir du fichier Ur Ls"
+      },
+      "row14": {
+        "subTitle": "Si c'est vrai, cela permettra d'effectuer des gestes de balayage horizontal. \nLa valeur par défaut est fausse.",
+        "title": "Permet les gestes de navigation arrière et avant"
+      },
+      "row15": {
+        "subTitle": "Valeur booléenne qui détermine si un geste d'extraction pour actualiser est disponible dans WebView. \nLa valeur par défaut est fausse. \nSi vrai, définit automatiquement les rebonds sur vrai.",
+        "title": "Tirer pour actualiser activé"
+      },
+      "row16": {
+        "subTitle": "Configuration du thème sombre",
+        "title": "Forcer l'obscurité"
+      },
+      "row17": {
+        "subTitle": "Si la Webview peut ou non lire des médias protégés par DRM. \nLa valeur par défaut est fausse.",
+        "title": "Autorise les médias protégés"
+      },
+      "row2": {
+        "subTitle": "Booléen qui contrôle si le contenu Web est mis à l'échelle pour s'adapter à la vue et permet à l'utilisateur de modifier l'échelle. \nLa valeur par défaut est vraie.",
+        "title": "Ajuste la page pour l'adapter"
+      },
+      "row3": {
+        "subTitle": "Valeur booléenne pour contrôler si le stockage DOM est activé. \nUtilisé uniquement sous Android.",
+        "title": "Stockage Dom activé"
+      },
+      "row4": {
+        "subTitle": "Valeur booléenne pour activer JavaScript dans WebView. \nLa valeur par défaut est vraie.",
+        "title": "Javascript activé"
+      },
+      "row5": {
+        "subTitle": "Valeur booléenne pour activer les cookies tiers dans WebView. \nUtilisé sur Android Lollipop et versions ultérieures uniquement, car les cookies tiers sont activés par défaut sur Android Kitkat et versions ultérieures et iOS. \nLa valeur par défaut est vraie.",
+        "title": "Cookies tiers activés"
+      },
+      "row6": {
+        "dialogSubTitle": "La chaîne User-Agent (UA) est contenue dans les en-têtes HTTP et est destinée à identifier les appareils demandant du contenu en ligne.",
+        "dialogTitle": "Entrez la chaîne de l'agent utilisateur",
+        "subTitle": "Définit l'agent utilisateur pour WebView.",
+        "title": "Agent utilisateur"
+      },
+      "row7": {
+        "subTitle": "Booléen qui détermine si les vidéos peuvent être lues en plein écran. \nLa valeur par défaut est fausse.",
+        "title": "Permet la vidéo en plein écran"
+      },
+      "row8": {
+        "subTitle": "Booléen qui détermine si les vidéos HTML5 sont lues en ligne ou utilisent le contrôleur plein écran natif. \nLa valeur par défaut est fausse.",
+        "title": "Permet la lecture multimédia en ligne"
+      },
+      "row9": {
+        "subTitle": "Une valeur booléenne indiquant si AirPlay est autorisé. \nLa valeur par défaut est fausse.",
+        "title": "Permet la lecture aérienne pour la lecture multimédia"
+      }
+    },
+    "section2": {
+      "header": "Autre",
+      "row1": {
+        "dialogSubTitle": "Êtes-vous sûr de vouloir effacer les données de la vue Web ?",
+        "dialogTitle": "Effacer les données de la vue Web ?",
+        "subTitle": "Libérez de l'espace en effaçant toutes les données WebView",
+        "title": "Effacer les données WebView"
+      },
+      "row2": {
+        "subTitle": "Restaurez par défaut tous les paramètres d'affichage Web.",
+        "title": "Restaurer les valeurs par défaut"
+      }
+    },
+    "title": "Paramètres d'affichage Web"
+  }
+}

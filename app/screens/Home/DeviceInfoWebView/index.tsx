@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { View, Animated } from 'react-native';
 
 //ThirdParty
-import { Button, Dialog, IconButton, Menu, Portal, Snackbar, Text } from 'react-native-paper';
+import { Button, Dialog, IconButton, Menu, Portal, ProgressBar, Snackbar, Text } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from 'react-native-paper';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -12,27 +12,26 @@ import Components from 'app/components';
 import styles from './styles';
 
 //Redux
-import { ICardViewModel } from 'app/models/viewModels/cardValueViewModel';
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 import useAppConfigStore from 'app/store/appConfig';
-import { convertToViewModel } from 'app/models/mapper/cardValueViewModel';
 import AppHeader from 'app/components/AppHeader';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
-import getLiveURL from 'app/utils/getLiveURL';
+import WebView from 'react-native-webview';
+import useAppWebViewConfigStore from 'app/store/webViewConfig';
+import Utils from 'app/utils';
 import inspectService from 'app/services/inspectService';
 
 const THRESHOLD_DIFF_Y = 100;
 
 //Params
-type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'DeviceInfo'>;
+type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'DeviceInfoWebView'>;
 
-const DeviceInfo = ({ navigation }: Props) => {
+const DeviceInfoWebView = ({ navigation }: Props) => {
   //Refs
-  const refDeviceInfoRequestInProgress = useRef(false);
   const refCurrentURL = useRef<string | null>(null);
-  const refJSONData = useRef<string | null>(null);
+  const webViewRef = useRef<WebView | null>(null);
 
   //Actions
 
@@ -52,22 +51,58 @@ const DeviceInfo = ({ navigation }: Props) => {
     outputRange: [0, THRESHOLD_DIFF_Y],
     extrapolate: 'clamp',
   });
+  const [
+    mediaPlaybackRequiresUserAction,
+    scalesPageToFit,
+    domStorageEnabled,
+    javaScriptEnabled,
+    thirdPartyCookiesEnabled,
+    userAgent,
+    allowsFullScreenVideo,
+    allowsInlineMediaPlayback,
+    allowsAirPlayForMediaPlayback,
+    bounces,
+    contentMode,
+    geolocationEnabled,
+    allowFileAccessFromFileUrls,
+    allowsBackForwardNavigationGestures,
+    pullToRefreshEnabled,
+    forceDarkOn,
+    allowsProtectedMedia,
+  ] = useAppWebViewConfigStore(store => [
+    store.mediaPlaybackRequiresUserAction,
+    store.scalesPageToFit,
+    store.domStorageEnabled,
+    store.javaScriptEnabled,
+    store.thirdPartyCookiesEnabled,
+    store.userAgent,
+    store.allowsFullScreenVideo,
+    store.allowsInlineMediaPlayback,
+    store.allowsAirPlayForMediaPlayback,
+    store.bounces,
+    store.contentMode,
+    store.geolocationEnabled,
+    store.allowFileAccessFromFileUrls,
+    store.allowsBackForwardNavigationGestures,
+    store.pullToRefreshEnabled,
+    store.forceDarkOn,
+    store.allowsProtectedMedia,
+  ]);
 
   //States
+  const [webViewKey, setWebViewKey] = useState<number>(0);
   const [menuVisible, setMenuVisible] = useState(false);
   const [title, setTitle] = useState('');
-  const [deviceInfos, setDeviceInfos] = useState<ICardViewModel[]>([]);
   const [errorMessageTitle, setErrorMessageTitle] = useState<string | null>(null);
   const [errorMessageDesc, setErrorMessageDesc] = useState<string | null>(null);
   const [buttonTitle, setButtonTitle] = useState<string | null>(null);
-  const [connecting, setConnecting] = useState(true);
   const [infoDialogVisible, setInfoDialogVisible] = useState<boolean>(false);
   const [appServerURL, setAppServerURL] = useState<string | null>(null);
   const [subTitleDialogVisible, setSubTitleDialogVisible] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState<boolean>(false);
-  const [appServerAltURL, setAppServerAltURL] = useState<string | null>(null);
-  const [switchUrlError, setSwitchUrlError] = useState<any | null>(null);
   const [error, setError] = useState<any | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [infoLoaded, setInfoLoaded] = useState(false);
 
   const urls: string[] = useMemo(() => {
     return selectedDevice
@@ -75,77 +110,50 @@ const DeviceInfo = ({ navigation }: Props) => {
       : [];
   }, [selectedDevice]);
 
-  const allUrls = useMemo(() => {
-    return [selectedDevice?.ip1, selectedDevice?.ip2, selectedDevice?.ip3].filter(v => !!v);
-  }, [selectedDevice?.ip1, selectedDevice?.ip2, selectedDevice?.ip3]);
-
   const subTitle = useMemo(() => {
     return selectedDevice ? `${selectedDevice.selectedIp}:${selectedDevice.port}` : undefined;
   }, [selectedDevice]);
 
-  const getURL = useCallback((url: string, path: string, port: number, secure: boolean) => {
-    return (secure ? 'https://' : 'http://') + url + ':' + port + '/' + path.replace(/^\//, '');
-  }, []);
-
-  const loadURL = useCallback(() => {
+  const loadRequest = useCallback(async () => {
     if (!selectedDevice) {
-      setAppServerURL(null);
       return;
     }
-    const serverURL = getURL(
-      selectedDevice?.selectedIp,
-      selectedDevice.path,
-      selectedDevice.port,
-      selectedDevice.secureConnection,
-    );
-    console.log('serverURL>>>>', serverURL);
-    setAppServerURL(serverURL);
-  }, [getURL, selectedDevice]);
-
-  const fetchAlternateAddress = useCallback(async (): Promise<string | null> => {
-    const abortController = new AbortController();
     try {
-      const serverURLs = allUrls
-        .filter(v => v !== selectedDevice?.selectedIp)
-        .map(v => {
-          return getURL(v!, selectedDevice!.path, selectedDevice!.port, selectedDevice!.secureConnection);
-        });
-      const value = await getLiveURL(serverURLs, abortController);
-      console.log('fetchAlternateAddress->value:', value);
-      return value;
-    } catch (e) {
-      console.log('fetchAlternateAddress->error:', e);
-      return null;
-    }
-  }, [allUrls, getURL, selectedDevice]);
+      await inspectService({
+        ipAddress: selectedDevice.selectedIp,
+        port: selectedDevice.port,
+        path: selectedDevice.path,
+        username: selectedDevice.identity ? selectedDevice.identity.username : null,
+        password: selectedDevice.identity ? selectedDevice.identity.password : null,
+        abortController: null,
+      });
 
-  useEffect(() => {
-    loadURL();
-    fetchAlternateAddress().then(url => {
-      if (url) {
-        setAppServerAltURL(url);
-      }
-    });
-  }, [fetchAlternateAddress, loadURL]);
+      const { secureConnection, selectedIp, port, identity } = selectedDevice;
+      const auth = identity ? `${identity.username}:${identity.password}@` : '';
+      const serverURL = (secureConnection ? 'https://' : 'http://') + auth + selectedIp + ':' + port;
 
-  useEffect(() => {
-    if (switchUrlError && appServerAltURL && appServerURL !== appServerAltURL) {
-      setSwitchUrlError(null);
-      setAppServerURL(appServerAltURL);
-      setSnackbarVisible(true);
+      setInfoLoaded(true);
+      setAppServerURL(serverURL);
+      setError(null);
+    } catch (e: any) {
+      setError(e);
     }
-  }, [appServerAltURL, appServerURL, switchUrlError]);
+  }, [selectedDevice]);
 
   useEffect(() => {
     if (!selectedDevice) {
       return;
     }
+    (async () => {
+      await loadRequest();
+    })();
+
     if (selectedDevice.name) {
       setTitle(selectedDevice.name);
       return;
     }
     setTitle(selectedDevice?.selectedIp! + ':' + selectedDevice?.port);
-  }, [selectedDevice, selectedDevice?.selectedIp, selectedDevice?.port]);
+  }, [loadRequest, selectedDevice]);
 
   const onGoBack = useCallback(() => {
     navigation.pop();
@@ -159,7 +167,7 @@ const DeviceInfo = ({ navigation }: Props) => {
   }, [navigation, selectedDevice]);
 
   useEffect(() => {
-    if (!deviceInfos && !error) {
+    if (!infoLoaded && !error) {
       setErrorMessageTitle(t('deviceInfo.emptyData.item1.title'));
       setErrorMessageDesc(t('deviceInfo.emptyData.item1.message'));
       setButtonTitle(t('deviceInfo.emptyData.item1.button'));
@@ -190,57 +198,7 @@ const DeviceInfo = ({ navigation }: Props) => {
     setErrorMessageTitle(t('deviceInfo.emptyData.item4.title'));
     setErrorMessageDesc(error.message);
     setButtonTitle(t('deviceInfo.emptyData.item4.button'));
-  }, [deviceInfos, error, t]);
-
-  const loadRequest = useCallback(async () => {
-    if (!selectedDevice) {
-      return;
-    }
-    if (refDeviceInfoRequestInProgress.current) {
-      return;
-    }
-
-    refDeviceInfoRequestInProgress.current = true;
-
-    try {
-      let response = await inspectService({
-        ipAddress: selectedDevice.selectedIp,
-        port: selectedDevice.port,
-        path: selectedDevice.path,
-        username: selectedDevice.identity ? selectedDevice.identity.username : null,
-        password: selectedDevice.identity ? selectedDevice.identity.password : null,
-        abortController: null,
-      });
-      refJSONData.current = JSON.stringify(response);
-      setError(null);
-      setDeviceInfos(convertToViewModel(response));
-    } catch (e: any) {
-      setError(e);
-    }
-
-    setConnecting(false);
-    refDeviceInfoRequestInProgress.current = false;
-  }, [selectedDevice]);
-
-  useEffect(() => {
-    if (!selectedDevice) {
-      return;
-    }
-
-    (async () => {
-      setConnecting(true);
-      await loadRequest();
-      setConnecting(false);
-    })();
-
-    const to = setInterval(async () => {
-      await loadRequest();
-    }, selectedDevice.refreshRateInMs);
-
-    return () => {
-      clearInterval(to);
-    };
-  }, [error, loadRequest, selectedDevice]);
+  }, [error, infoLoaded, t]);
 
   const renderNoDataButtons = useCallback(() => {
     return (
@@ -259,8 +217,12 @@ const DeviceInfo = ({ navigation }: Props) => {
   }, []);
 
   const onOpenWith = useCallback(() => {
-    navigation.navigate('DeviceInfoWebView', {});
-  }, [navigation]);
+    if (refCurrentURL.current !== null) {
+      Utils.openBrowser(refCurrentURL.current);
+    } else if (appServerURL) {
+      Utils.openBrowser(appServerURL);
+    }
+  }, [appServerURL]);
 
   const onInfo = useCallback(() => {
     setMenuVisible(false);
@@ -272,17 +234,17 @@ const DeviceInfo = ({ navigation }: Props) => {
   }, []);
 
   const onWRefresh = useCallback(async () => {
-    setConnecting(true);
-    await loadRequest();
-    setConnecting(false);
-  }, [loadRequest]);
+    setWebViewKey(v => v + 1);
+  }, []);
 
   const onCopyJSON = useCallback(() => {
-    setMenuVisible(false);
-    if (refJSONData.current !== null) {
-      Clipboard.setString(refJSONData.current);
+    setInfoDialogVisible(false);
+    if (refCurrentURL.current !== null) {
+      Clipboard.setString(refCurrentURL.current);
+    } else if (appServerURL) {
+      Clipboard.setString(appServerURL);
     }
-  }, []);
+  }, [appServerURL]);
 
   const handleScroll = useCallback(
     (event: any) => {
@@ -304,7 +266,7 @@ const DeviceInfo = ({ navigation }: Props) => {
   );
 
   const onScroll = Animated.event([{ nativeEvent: { contentOffset: {} } }], {
-    useNativeDriver: true,
+    useNativeDriver: false,
     listener: event => handleScroll(event),
   });
 
@@ -347,6 +309,31 @@ const DeviceInfo = ({ navigation }: Props) => {
     setSnackbarVisible(false);
   }, []);
 
+  const onLoadProgress = useCallback(({ nativeEvent }: any) => {
+    setProgress(nativeEvent.progress);
+  }, []);
+
+  const onNavigationStateChange = useCallback((state: any) => {
+    refCurrentURL.current = state.url;
+  }, []);
+
+  const onHttpError = useCallback((e: any) => {
+    console.log('onHttpError', e.nativeEvent.description);
+    // setError(e);
+  }, []);
+
+  const onError = useCallback((e: any) => {
+    console.log('onHttpError', e.nativeEvent.description);
+    // setError(e);
+  }, []);
+
+  const onLoadEnd = useCallback(() => {
+    console.log('onLoadEnd');
+    setTimeout(() => {
+      setProgress(0);
+    }, 300);
+  }, []);
+
   return (
     <Components.AppBaseView
       edges={['bottom', 'left', 'right']}
@@ -362,7 +349,7 @@ const DeviceInfo = ({ navigation }: Props) => {
         }
       />
 
-      {errorMessageDesc && deviceInfos.length > 0 && (
+      {errorMessageDesc && infoLoaded && (
         <Components.AppMiniBanner
           onPress={onPressSetting}
           RightViewComponent={
@@ -372,17 +359,42 @@ const DeviceInfo = ({ navigation }: Props) => {
         />
       )}
 
-      {deviceInfos.length > 0 && !connecting && (
+      {!!appServerURL && (
         <View style={styles.subView}>
-          <Animated.ScrollView onScroll={onScroll} scrollEventThrottle={16} style={styles.scrollView}>
-            {deviceInfos.map(item => {
-              return <Components.CardSection key={item.id} value={item} root={true} />;
-            })}
-          </Animated.ScrollView>
+          <WebView
+            key={webViewKey}
+            ref={webViewRef}
+            onScroll={onScroll}
+            source={{ uri: appServerURL }}
+            style={{ ...styles.webview, backgroundColor: colors.background }}
+            originWhitelist={['*']}
+            onLoadProgress={onLoadProgress}
+            onNavigationStateChange={onNavigationStateChange}
+            onHttpError={onHttpError}
+            onError={onError}
+            onLoadEnd={onLoadEnd}
+            mediaPlaybackRequiresUserAction={mediaPlaybackRequiresUserAction}
+            scalesPageToFit={scalesPageToFit}
+            domStorageEnabled={domStorageEnabled}
+            javaScriptEnabled={javaScriptEnabled}
+            thirdPartyCookiesEnabled={thirdPartyCookiesEnabled}
+            userAgent={userAgent}
+            allowsFullscreenVideo={allowsFullScreenVideo}
+            allowsInlineMediaPlayback={allowsInlineMediaPlayback}
+            allowsAirPlayForMediaPlayback={allowsAirPlayForMediaPlayback}
+            bounces={bounces}
+            contentMode={contentMode ? 'desktop' : 'mobile'}
+            geolocationEnabled={geolocationEnabled}
+            allowFileAccessFromFileURLs={allowFileAccessFromFileUrls}
+            allowsBackForwardNavigationGestures={allowsBackForwardNavigationGestures}
+            pullToRefreshEnabled={pullToRefreshEnabled}
+            forceDarkOn={forceDarkOn}
+            allowsProtectedMedia={allowsProtectedMedia}
+          />
         </View>
       )}
 
-      {deviceInfos.length < 1 && error && !connecting && (
+      {error && !infoLoaded && (
         <Components.AppEmptyDataView
           iconType={'font-awesome5'}
           iconName="box-open"
@@ -405,9 +417,12 @@ const DeviceInfo = ({ navigation }: Props) => {
           visible={menuVisible}
           onDismiss={onDismissModal}
           anchor={<IconButton icon={'dots-vertical'} size={26} onPress={onPressMore} />}>
-          <Menu.Item leadingIcon={'content-copy'} onPress={onCopyJSON} title={t('deviceInfo.copyJSON')} />
+          <Menu.Item leadingIcon={'content-copy'} onPress={onCopyJSON} title={t('deviceInfo.copyURL')} />
           <Menu.Item leadingIcon={'information-outline'} onPress={onInfo} title={t('deviceInfo.info')} />
         </Menu>
+        <View pointerEvents={'none'} style={styles.dockerLoadingProgress}>
+          <ProgressBar color={`${colors.primary}50`} style={styles.progressBar} progress={progress} />
+        </View>
       </Animated.View>
 
       <Portal>
@@ -427,7 +442,7 @@ const DeviceInfo = ({ navigation }: Props) => {
       </Portal>
 
       <Snackbar visible={snackbarVisible} onDismiss={onDismissSnackbar}>
-        {t('deviceInfo.switchedURL', { id3002: appServerAltURL })}
+        {t('deviceInfo.switchedURL', { URL: appServerURL })}
       </Snackbar>
 
       <Components.AppRadioSelectDialog
@@ -438,10 +453,8 @@ const DeviceInfo = ({ navigation }: Props) => {
         onPressCancel={onCloseSubTitleDialog}
         selectedItem={selectedDevice ? selectedDevice.selectedIp : '-'}
       />
-
-      {connecting && <Components.AppLoader message={t('deviceInfo.loading')} />}
     </Components.AppBaseView>
   );
 };
 
-export default DeviceInfo;
+export default DeviceInfoWebView;
