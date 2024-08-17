@@ -114,7 +114,7 @@ const ManageDevices = ({ navigation, route }: Props) => {
                     key={idx.toString()}
                     onPress={() => onPressDevice(item, idx)}
                     title={item.name ? item.name : t('devicesList.emptyName')}
-                    description={`${item.ip}:${item.port}`}
+                    description={`${item.selectedIp}:${item.port}`}
                     left={props => <List.Icon {...props} icon="server-network" />}
                     right={props => (
                       <Menu

@@ -1,14 +1,17 @@
-import IDeviceInfo from 'app/models/models/deviceInfo';
 import IConnectionIdentity from 'app/models/models/identity';
 
 interface IDevice {
   id: string;
-  name?: string | null;
-  port: number;
+  name: string | null;
+  ip1: string;
+  ip2: string | null;
+  ip3: string | null;
   path: string;
+  port: number;
+  selectedIp: string;
+  reachable?: boolean;
+  secureConnection: boolean;
   refreshRateInMs: number;
-  ip: string;
-  deviceInfo?: IDeviceInfo | null;
   identity?: IConnectionIdentity | null;
 }
 

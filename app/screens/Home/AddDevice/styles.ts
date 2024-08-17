@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 16,
     marginBottom: 8,
+    marginHorizontal: 24,
   },
   errorText: {
     fontSize: 12,

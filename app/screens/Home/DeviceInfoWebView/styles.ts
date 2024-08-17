@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   subView: {
-    marginHorizontal: 8,
     flex: 1,
   },
   noDataButtonsContainer: {
@@ -56,6 +55,15 @@ const styles = StyleSheet.create({
   cardTablet: {
     width: '70%',
     alignSelf: 'center',
+  },
+  webview: {
+    flex: 1,
+    height: '100%',
+    width: '100%',
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: 'transparent',
   },
 });
 

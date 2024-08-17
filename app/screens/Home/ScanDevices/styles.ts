@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
     width: '70%',
     alignSelf: 'center',
   },
+  navigationButton: {
+    marginHorizontal: 16,
+  },
 });
 
 export default styles;

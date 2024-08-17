@@ -18,10 +18,11 @@ import Utils from 'app/utils';
 import IDevice from 'app/models/models/device';
 import useAppScanConfigStore from 'app/store/appScanConfig';
 import uuid from 'react-native-uuid';
-import useAppConfigStore from 'app/store/appConfig';
 import AppHeader from 'app/components/AppHeader';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import useAppConfigStore from 'app/store/appConfig';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'ScanDevices'>;
@@ -35,12 +36,12 @@ const ScanDevices = ({ navigation }: Props) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const port = useAppScanConfigStore(store => store.port);
-  const path = useAppScanConfigStore(store => store.path);
   const scanThreads = useAppScanConfigStore(store => store.scanThreads);
   const scanTimeoutInMs = useAppScanConfigStore(store => store.scanTimeoutInMs);
   const refreshRateInMs = useAppConfigStore(store => store.refreshRateInMs);
   const onSelectScannedDeviceEmitter = useEventEmitter<IDevice>('on_select_scanned_device');
   const largeScreenMode = useLargeScreenMode();
+  const insets = useSafeAreaInsets();
 
   //States
   const [scanningFinished, setScanningFinished] = useState(false);
@@ -67,7 +68,38 @@ const ScanDevices = ({ navigation }: Props) => {
       result => {
         if (result) {
           setScannedDevices(d => {
-            return [...d, { id: uuid.v4().toString(), refreshRateInMs: refreshRateInMs, path: path, ...result }];
+            const updatedDevices = d.map(device => {
+              if (device.ip1 === result.ip) {
+                return {
+                  ...device,
+                  ip1: result.ip,
+                  ip2: null,
+                  ip3: null,
+                  selectedIp: result.ip,
+                  refreshRateInMs: refreshRateInMs,
+                  path: '/data.json',
+                  secureConnection: false,
+                };
+              }
+              return device;
+            });
+            return updatedDevices.some(device => device.ip1 === result.ip)
+              ? updatedDevices
+              : [
+                  ...updatedDevices,
+                  {
+                    id: uuid.v4().toString(),
+                    name: '',
+                    ip1: result.ip,
+                    ip2: null,
+                    ip3: null,
+                    selectedIp: result.ip,
+                    refreshRateInMs: refreshRateInMs,
+                    secureConnection: false,
+                    path: '/data.json',
+                    ...result,
+                  },
+                ];
           });
         }
       },
@@ -75,7 +107,7 @@ const ScanDevices = ({ navigation }: Props) => {
         setScanningFinished(true);
       },
     );
-  }, [path, port, refreshRateInMs, scanThreads, scanTimeoutInMs]);
+  }, [port, refreshRateInMs, scanThreads, scanTimeoutInMs]);
 
   useEffect(() => {
     (async () => {
@@ -122,7 +154,13 @@ const ScanDevices = ({ navigation }: Props) => {
         onPressBackButton={onGoBack}
         title={t('scanDevices.title')}
         RightViewComponent={
-          <IconButton icon="cog" iconColor={colors.onBackground} size={20} onPress={onPressSettings} />
+          <IconButton
+            style={styles.navigationButton}
+            icon="cog"
+            iconColor={colors.onBackground}
+            size={20}
+            onPress={onPressSettings}
+          />
         }
         style={{ backgroundColor: colors.background }}
       />
@@ -136,9 +174,9 @@ const ScanDevices = ({ navigation }: Props) => {
                   <List.Item
                     key={device.id}
                     onPress={() => onPressDevice(device, idx)}
-                    title={device.ip}
+                    title={device.ip1}
                     description={device.port}
-                    left={props => <List.Icon {...props} icon="microsoft-windows" />}
+                    left={props => <List.Icon {...props} icon="raspberry-pi" />}
                     right={props => <List.Icon {...props} icon={'antenna'} color={'green'} />}
                   />
                 );
@@ -150,7 +188,7 @@ const ScanDevices = ({ navigation }: Props) => {
         {scanningFinished && scannedDevices.length < 1 && (
           <Components.AppEmptyDataView
             iconType={'font-awesome5'}
-            iconName="box-open"
+            iconName="raspberry-pi"
             style={{}}
             header={t('scanDevices.emptyData.title')}
             subHeader={t('scanDevices.emptyData.subtitle')}
@@ -158,6 +196,12 @@ const ScanDevices = ({ navigation }: Props) => {
           />
         )}
         {!scanningFinished && <Components.AppLoadingPlaceHolder />}
+
+        {scanningFinished && scannedDevices.length > 0 && (
+          <Button style={{ marginBottom: insets.bottom }} icon={'refresh'} mode={'text'} onPress={startScan}>
+            {t('scanDevices.refresh')}
+          </Button>
+        )}
       </View>
     </Components.AppBaseView>
   );

@@ -13,6 +13,8 @@ import AppHeader from './AppHeader';
 import AppToast from './AppToast';
 import AppTextInput from './AppTextInput';
 import AppActionDialog from './AppActionDialog';
+import AppInputDialog from './AppInputDialog';
+import AppRadioSelectDialog from './AppRadioSelectDialog';
 
 const Components = {
   AppMiniBanner,
@@ -30,6 +32,8 @@ const Components = {
   AppToast,
   AppTextInput,
   AppActionDialog,
+  AppInputDialog,
+  AppRadioSelectDialog,
 };
 
 export default Components;

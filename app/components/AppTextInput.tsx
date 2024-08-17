@@ -24,11 +24,11 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
   const theme = useTheme();
   const { errorText, containerStyle, onBlur, onFocus, RightAccessoryView, onPress, viewOnly, ...otherProps } = props;
   const [isFocused, setIsFocused] = useState(false);
-  const [isBlured, setIsBlured] = useState(false);
+  const [isBlurred, setIsBlurred] = useState(false);
 
   const handleOnBlur = useCallback(
     (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
-      setIsBlured(true);
+      setIsBlurred(true);
       setIsFocused(false);
       if (onBlur) {
         onBlur(event);
@@ -40,7 +40,7 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
   const handleOnFocus = useCallback(
     (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
       setIsFocused(true);
-      setIsBlured(false);
+      setIsBlurred(false);
       if (onFocus) {
         onFocus(event);
       }
@@ -53,7 +53,7 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
       <Text
         style={[
           styles.titleTextStyle,
-          { color: isFocused && !isBlured ? theme.colors.primary : `${theme.colors.onBackground}cc` },
+          { color: isFocused && !isBlurred ? theme.colors.primary : `${theme.colors.onBackground}cc` },
         ]}>
         {props.placeholder}
       </Text>
@@ -64,7 +64,7 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
         style={[
           styles.textInputContainer,
           !viewOnly && {
-            borderBottomColor: isFocused && !isBlured ? theme.colors.primary : `${theme.colors.onBackground}50`,
+            borderBottomColor: isFocused && !isBlurred ? theme.colors.primary : `${theme.colors.onBackground}50`,
           },
           viewOnly && {
             borderBottomColor: `${theme.colors.onBackground}20`,
@@ -83,7 +83,7 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
         {RightAccessoryView}
       </TouchableOpacity>
 
-      {isBlured && !!errorText && <Text style={[styles.errorText, { color: theme.colors.error }]}>{errorText}</Text>}
+      {isBlurred && !!errorText && <Text style={[styles.errorText, { color: theme.colors.error }]}>{errorText}</Text>}
     </View>
   );
 });

@@ -22,12 +22,14 @@ import ManageDevices from 'app/screens/Home/ManageDevices';
 import ScanDevices from 'app/screens/Home/ScanDevices';
 import ChangeLanguage from 'app/screens/Settings/ChangeLanguage';
 import Loading from 'app/screens/Loading';
+import DeviceInfo from 'app/screens/Home/DeviceInfo';
+import WebViewSetting from 'app/screens/Settings/WebViewSetting';
+import DeviceInfoWebView from 'app/screens/Home/DeviceInfoWebView';
 
 //App Modules
 import { HomeTabsNavigatorParams, LoggedInTabNavigatorParams } from 'app/navigation/types';
 import { AppTheme } from 'app/models/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import DeviceInfo from 'app/screens/Home/DeviceInfo';
 
 const Tab = createMaterialBottomTabNavigator<HomeTabsNavigatorParams>();
 
@@ -98,6 +100,8 @@ const LoggedInTabNavigator = () => {
       <LoggedInStack.Screen name="ScanDevices" component={ScanDevices} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ChangeLanguage" component={ChangeLanguage} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="DeviceInfo" component={DeviceInfo} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="WebViewSetting" component={WebViewSetting} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="DeviceInfoWebView" component={DeviceInfoWebView} options={{ headerShown: false }} />
     </LoggedInStack.Navigator>
   );
 };
