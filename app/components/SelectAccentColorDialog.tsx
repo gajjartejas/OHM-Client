@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 //ThirdParty
@@ -61,13 +61,16 @@ function SelectAccentDialog(props: ISelectAccentDialogProps) {
     ];
   }, []);
 
-  const onSelect = (item: SelectAccentDialogColor) => {
-    props.onSelect(item);
-  };
+  const onSelect = useCallback(
+    (item: SelectAccentDialogColor) => {
+      props.onSelect(item);
+    },
+    [props],
+  );
 
-  const onDismiss = () => {
+  const onDismiss = useCallback(() => {
     props.onDismiss();
-  };
+  }, [props]);
 
   return (
     <Portal>

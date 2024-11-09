@@ -1,170 +1,188 @@
 {
-    "@react-native-async-storage/async-storage@1.16.1": {
+    "@react-native-async-storage/async-storage@1.24.0": {
         "licenses": "MIT",
         "repository": "https://github.com/react-native-async-storage/async-storage",
         "licenseUrl": "https://github.com/react-native-async-storage/async-storage/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "@react-native-firebase/analytics@14.5.0": {
+    "@react-native-clipboard/clipboard@1.14.3": {
+        "licenses": "MIT",
+        "repository": "https://github.com/react-native-clipboard/clipboard",
+        "licenseUrl": "https://github.com/react-native-clipboard/clipboard/raw/master/LICENSE",
+        "parents": "OpenHardwareMonClient"
+    },
+    "@react-native-cookies/cookies@6.2.1": {
+        "licenses": "MIT",
+        "repository": "https://github.com/react-native-cookies/cookies",
+        "licenseUrl": "https://github.com/react-native-cookies/cookies/raw/master/LICENSE",
+        "parents": "OpenHardwareMonClient"
+    },
+    "@react-native-firebase/analytics@20.3.0": {
         "licenses": "Apache-2.0",
         "repository": "https://github.com/invertase/react-native-firebase/tree/main/packages/analytics",
         "licenseUrl": "https://github.com/invertase/react-native-firebase/tree/main/packages/analytics/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "@react-native-firebase/app@14.5.0": {
+    "@react-native-firebase/app@20.3.0": {
         "licenses": "Apache-2.0",
         "repository": "https://github.com/invertase/react-native-firebase/tree/main/packages/app",
         "licenseUrl": "https://github.com/invertase/react-native-firebase/tree/main/packages/app/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "@react-native-firebase/crashlytics@14.5.0": {
+    "@react-native-firebase/crashlytics@20.3.0": {
         "licenses": "Apache-2.0",
         "repository": "https://github.com/invertase/react-native-firebase/tree/main/packages/crashlytics",
         "licenseUrl": "https://github.com/invertase/react-native-firebase/tree/main/packages/crashlytics/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "@react-navigation/material-bottom-tabs@6.1.1": {
+    "@react-navigation/material-bottom-tabs@6.2.29": {
         "licenses": "MIT",
         "repository": "https://github.com/react-navigation/react-navigation",
         "licenseUrl": "https://github.com/react-navigation/react-navigation/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "@react-navigation/native-stack@6.5.0": {
+    "@react-navigation/native-stack@6.10.1": {
         "licenses": "MIT",
         "repository": "https://github.com/react-navigation/react-navigation",
         "licenseUrl": "https://github.com/react-navigation/react-navigation/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "@react-navigation/native@6.0.8": {
+    "@react-navigation/native@6.1.18": {
         "licenses": "MIT",
         "repository": "https://github.com/react-navigation/react-navigation",
         "licenseUrl": "https://github.com/react-navigation/react-navigation/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "i18next@21.6.11": {
+    "i18next@23.12.2": {
         "licenses": "MIT",
         "repository": "https://github.com/i18next/i18next",
         "licenseUrl": "https://github.com/i18next/i18next/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-i18next@11.15.4": {
+    "react-i18next@15.0.0": {
         "licenses": "MIT",
         "repository": "https://github.com/i18next/react-i18next",
         "licenseUrl": "https://github.com/i18next/react-i18next/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native-bootsplash@4.1.3": {
+    "react-native-base64@0.2.1": {
         "licenses": "MIT",
-        "repository": "https://github.com/zoontek/react-native-bootsplash",
-        "licenseUrl": "https://github.com/zoontek/react-native-bootsplash/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "repository": "https://github.com/eranbo/react-native-base64",
+        "licenseUrl": "https://github.com/eranbo/react-native-base64/raw/master/LICENSE",
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native-device-info@8.4.9": {
+    "react-native-device-info@11.1.0": {
         "licenses": "MIT",
         "repository": "https://github.com/react-native-device-info/react-native-device-info",
         "licenseUrl": "https://github.com/react-native-device-info/react-native-device-info/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native-easy-icon@1.0.7": {
+    "react-native-easy-icon@1.0.10": {
         "licenses": "MIT",
         "repository": "https://github.com/NewBieBR/react-native-easy-icon",
         "licenseUrl": "https://github.com/NewBieBR/react-native-easy-icon",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native-inappbrowser-reborn@3.6.3": {
+    "react-native-in-app-review@4.3.3": {
+        "licenses": "MIT",
+        "repository": "https://github.com/MinaSamir11/react-native-in-app-review",
+        "licenseUrl": "https://github.com/MinaSamir11/react-native-in-app-review/raw/master/LICENSE",
+        "parents": "OpenHardwareMonClient"
+    },
+    "react-native-inappbrowser-reborn@3.7.0": {
         "licenses": "MIT",
         "repository": "https://github.com/proyecto26/react-native-inappbrowser",
         "licenseUrl": "https://github.com/proyecto26/react-native-inappbrowser/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native-lan-port-scanner@1.0.2": {
+    "react-native-lan-port-scanner@1.4.2": {
         "licenses": "MIT",
         "repository": "https://github.com/gajjartejas/react-native-lan-port-scanner",
         "licenseUrl": "https://github.com/gajjartejas/react-native-lan-port-scanner/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native-localize@2.2.0": {
+    "react-native-localize@3.2.0": {
         "licenses": "MIT",
         "repository": "https://github.com/zoontek/react-native-localize",
         "licenseUrl": "https://github.com/zoontek/react-native-localize/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native-paper@4.11.2": {
+    "react-native-mmkv@2.12.2": {
+        "licenses": "(MIT AND BSD-3-Clause)",
+        "repository": "https://github.com/mrousavy/react-native-mmkv",
+        "licenseUrl": "https://github.com/mrousavy/react-native-mmkv/raw/master/LICENSE",
+        "parents": "OpenHardwareMonClient"
+    },
+    "react-native-modal@13.0.1": {
+        "licenses": "MIT",
+        "repository": "https://github.com/react-native-community/react-native-modal",
+        "licenseUrl": "https://github.com/react-native-community/react-native-modal/raw/master/LICENSE.md",
+        "parents": "OpenHardwareMonClient"
+    },
+    "react-native-paper@5.12.3": {
         "licenses": "MIT",
         "repository": "https://github.com/callstack/react-native-paper",
         "licenseUrl": "https://github.com/callstack/react-native-paper/raw/master/LICENSE.md",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native-safe-area-context@3.4.1": {
+    "react-native-safe-area-context@4.10.8": {
         "licenses": "MIT",
         "repository": "https://github.com/th3rdwave/react-native-safe-area-context",
         "licenseUrl": "https://github.com/th3rdwave/react-native-safe-area-context/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native-screens@3.12.0": {
+    "react-native-screens@3.32.0": {
         "licenses": "MIT",
         "repository": "https://github.com/software-mansion/react-native-screens",
         "licenseUrl": "https://github.com/software-mansion/react-native-screens/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
     "react-native-tcp@4.0.0": {
         "licenses": "MIT",
         "repository": "https://github.com/aprock/react-native-tcp",
         "licenseUrl": "https://github.com/aprock/react-native-tcp/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native-vector-icons@9.1.0": {
+    "react-native-toast-message@2.2.0": {
+        "licenses": "MIT",
+        "repository": "https://github.com/calintamas/react-native-toast-message",
+        "licenseUrl": "https://github.com/calintamas/react-native-toast-message/raw/master/LICENSE",
+        "parents": "OpenHardwareMonClient"
+    },
+    "react-native-uuid@2.0.2": {
+        "licenses": "MIT",
+        "repository": "https://github.com/eugenehp/react-native-uuid",
+        "licenseUrl": "https://github.com/eugenehp/react-native-uuid/raw/master/LICENSE",
+        "parents": "OpenHardwareMonClient"
+    },
+    "react-native-vector-icons@10.1.0": {
         "licenses": "MIT",
         "repository": "https://github.com/oblador/react-native-vector-icons",
         "licenseUrl": "https://github.com/oblador/react-native-vector-icons/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "react-native@0.67.2": {
+    "react-native-webview@13.10.5": {
         "licenses": "MIT",
-        "repository": "github:facebook/react-native",
-        "licenseUrl": "github:facebook/react-native",
-        "parents": "openhardwaremonclient"
+        "repository": "https://github.com/react-native-webview/react-native-webview",
+        "licenseUrl": "https://github.com/react-native-webview/react-native-webview/raw/master/LICENSE",
+        "parents": "OpenHardwareMonClient"
     },
-    "react-redux@7.2.6": {
+    "react-native@0.74.3": {
         "licenses": "MIT",
-        "repository": "github:reduxjs/react-redux",
-        "licenseUrl": "github:reduxjs/react-redux",
-        "parents": "openhardwaremonclient"
+        "repository": "https://github.com/facebook/react-native",
+        "licenseUrl": "https://github.com/facebook/react-native/raw/master/LICENSE",
+        "parents": "OpenHardwareMonClient"
     },
-    "react@17.0.2": {
+    "react@18.2.0": {
         "licenses": "MIT",
         "repository": "https://github.com/facebook/react",
         "licenseUrl": "https://github.com/facebook/react/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "parents": "OpenHardwareMonClient"
     },
-    "readable-stream@1.0.33": {
+    "zustand@4.5.4": {
         "licenses": "MIT",
-        "repository": "https://github.com/isaacs/readable-stream",
-        "licenseUrl": "https://github.com/isaacs/readable-stream/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
-    },
-    "redux-persist@6.0.0": {
-        "licenses": "MIT",
-        "repository": "https://github.com/rt2zz/redux-persist",
-        "licenseUrl": "https://github.com/rt2zz/redux-persist/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
-    },
-    "redux-saga@1.1.3": {
-        "licenses": "MIT",
-        "repository": "https://github.com/redux-saga/redux-saga/tree/master/packages/core",
-        "licenseUrl": "https://github.com/redux-saga/redux-saga/tree/master/packages/core/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
-    },
-    "redux@4.1.2": {
-        "licenses": "MIT",
-        "repository": "github:reduxjs/redux",
-        "licenseUrl": "github:reduxjs/redux",
-        "parents": "openhardwaremonclient"
-    },
-    "stream-browserify@1.0.0": {
-        "licenses": "MIT",
-        "repository": "https://github.com/substack/stream-browserify",
-        "licenseUrl": "https://github.com/substack/stream-browserify/raw/master/LICENSE",
-        "parents": "openhardwaremonclient"
+        "repository": "https://github.com/pmndrs/zustand",
+        "licenseUrl": "https://github.com/pmndrs/zustand/raw/master/LICENSE",
+        "parents": "OpenHardwareMonClient"
     }
 }

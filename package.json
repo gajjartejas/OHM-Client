@@ -7,11 +7,12 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "license-crawler": "npx npm-license-crawler -onlyDirectDependencies -json licenses.json"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.24.0",
-    "@react-native-clipboard/clipboard": "^1.14.1",
+    "@react-native-clipboard/clipboard": "github:react-native-clipboard/clipboard",
     "@react-native-cookies/cookies": "^6.2.1",
     "@react-native-firebase/analytics": "^20.3.0",
     "@react-native-firebase/app": "^20.3.0",

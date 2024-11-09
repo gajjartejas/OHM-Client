@@ -17,8 +17,8 @@ Get the app from Google Play:
 
 |                                                |                                                    |                                          |                                          |                                           |
 |:----------------------------------------------:|:--------------------------------------------------:|:----------------------------------------:|:----------------------------------------:|:-----------------------------------------:|
-| ![Accounts List](docs/images/screenshot-1.png) | ![Transactions List](docs/images/screenshot-2.png) | ![Reports](docs/images/screenshot-3.png) | ![Reports](docs/images/screenshot-4.png) | ![Reports](docs/images/screenshot-5.png)  |
-| ![Accounts List](docs/images/screenshot-6.png) | ![Transactions List](docs/images/screenshot-7.png) | ![Reports](docs/images/screenshot-8.png) | ![Reports](docs/images/screenshot-9.png) | ![Reports](docs/images/screenshot-10.png) |
+| ![Accounts List](docs/images/home-devices-list.png) | ![Transactions List](docs/images/add-device.png) | ![Reports](docs/images/device-info-1.png) | ![Reports](docs/images/device-info-2.png) | ![Reports](docs/images/settings.png)  |
+| ![Accounts List](docs/images/scan-setting.png) | ![Transactions List](docs/images/identities-list.png) | ![Reports](docs/images/update-identity.png) | ![Reports](docs/images/nearby-devices-list.png) | ![Reports](docs/images/appearance-setting.png) |
 
 The application supports Android 5.0 (API 21) and above.
 

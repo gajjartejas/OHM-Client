@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Platform, StatusBar } from 'react-native';
 
 //Third Party
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
+import analytics from '@react-native-firebase/analytics';
 
 //Screens
 import LoggedInTabNavigator from 'app/navigation/HomeTabNavigator';
@@ -15,7 +16,6 @@ import { HomeTabNavigatorParams } from 'app/navigation/types';
 import useToastConfig from 'app/hooks/useToastConfig';
 import { PaperThemeDark, PaperThemeDefault } from 'app/config/app-theme-config';
 import useThemeConfigStore from 'app/store/themeConfig';
-import { navigationRef } from 'app/navigation/NavigationService';
 
 const homeOptions: Object = {
   title: 'Home',
@@ -26,6 +26,8 @@ const homeOptions: Object = {
 };
 
 const RootNavigation: React.FC = () => {
+  const navigationRef = useNavigationContainerRef();
+  const routeNameRef = useRef<any | null>();
   const isDark = useThemeConfigStore(state => state.isDark);
   const primary = useThemeConfigStore(state => state.primary);
   const onPrimary = useThemeConfigStore(state => state.onPrimary);
@@ -66,11 +68,30 @@ const RootNavigation: React.FC = () => {
     return () => clearTimeout(to);
   }, []);
 
+  const onReady = useCallback(async () => {
+    routeNameRef.current = navigationRef?.getCurrentRoute()?.name;
+  }, [navigationRef]);
+
+  const onStateChange = useCallback(async () => {
+    const previousRouteName = routeNameRef.current;
+    const currentRouteName = navigationRef?.getCurrentRoute()?.name;
+    const currentRouteParams = navigationRef?.getCurrentRoute()?.params;
+
+    if (previousRouteName !== currentRouteName) {
+      analytics().logScreenView({
+        screen_name: currentRouteName,
+        screen_class: currentRouteName,
+        screen_params: currentRouteParams,
+      });
+    }
+    routeNameRef.current = currentRouteName;
+  }, [navigationRef]);
+
   return (
     <PaperProvider theme={theme}>
-      <NavigationContainer ref={navigationRef} theme={theme}>
+      <NavigationContainer ref={navigationRef} theme={theme} onReady={onReady} onStateChange={onStateChange}>
         <StatusBar
-          backgroundColor={'#FFFFFF01'}
+          backgroundColor={'#FFFFFF00'}
           barStyle={isDark ? 'light-content' : 'dark-content'}
           translucent={true}
         />

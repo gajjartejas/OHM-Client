@@ -197,7 +197,7 @@ const ScanSetting = ({ navigation }: Props) => {
         </View>
       </Components.AppBaseView>
 
-      <Components.InputModal
+      <Components.AppInputDialog
         ref={modalVisibleUrlPathRef}
         modalVisible={modalVisibleUrlPath}
         header={t('scanSetting.section1.row1.dialogTitle')}
@@ -217,7 +217,7 @@ const ScanSetting = ({ navigation }: Props) => {
         }}
       />
 
-      <Components.InputModal
+      <Components.AppInputDialog
         ref={modalVisibleUrlPortRef}
         modalVisible={modalVisibleUrlPort}
         header={t('scanSetting.section1.row2.dialogTitle')}
@@ -240,7 +240,7 @@ const ScanSetting = ({ navigation }: Props) => {
         }}
       />
 
-      <Components.InputModal
+      <Components.AppInputDialog
         ref={modalVisibleScanTimeoutRef}
         modalVisible={modalVisibleScanTimeout}
         header={t('scanSetting.section3.row1.dialogTitle')}
@@ -263,7 +263,7 @@ const ScanSetting = ({ navigation }: Props) => {
         }}
       />
 
-      <Components.InputModal
+      <Components.AppInputDialog
         ref={modalVisibleScanThreadsRef}
         modalVisible={modalVisibleScanThreads}
         header={t('scanSetting.section3.row2.dialogTitle')}
