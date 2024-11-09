@@ -13,7 +13,7 @@ import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 interface IAboutFeedbackDialogProps {
   visible: boolean;
   onPressGithub: () => void;
-  onPressEmail: () => void;
+  onPressGithubDiscussion: () => void;
   onPressHideDialog: () => void;
 }
 
@@ -46,9 +46,14 @@ function AboutFeedbackDialog(props: IAboutFeedbackDialogProps) {
           <TouchableRipple
             borderless={true}
             style={[styles.button, { backgroundColor: `${colors.onBackground}33` }]}
-            onPress={props.onPressEmail}
+            onPress={props.onPressGithubDiscussion}
             rippleColor="rgba(0, 0, 0, .32)">
-            <Icon type="ionicon" name="mail-outline" color={`${colors.onBackground}88`} size={24} />
+            <Icon
+              type="material-community"
+              name="comment-question-outline"
+              color={`${colors.onBackground}88`}
+              size={24}
+            />
           </TouchableRipple>
         </View>
         <Dialog.Actions>
@@ -70,8 +75,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginHorizontal: 8,
   },
-  buttonsContainer: { flexDirection: 'row', alignSelf: 'center' },
-  descriptionText: { fontSize: 16 },
+  buttonsContainer: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+  },
+  descriptionText: {
+    fontSize: 16,
+  },
   cardTablet: {
     width: '70%',
     alignSelf: 'center',

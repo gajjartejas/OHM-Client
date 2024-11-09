@@ -2,7 +2,6 @@ import AppMiniBanner from './AppMiniBanner';
 import AppLoadingPlaceHolder from './AppLoadingPlaceHolder';
 import CardSection from './CardLeftTitle';
 import MoreAppCard from './MoreAppCard';
-import InputModal from './InputModal';
 import AppEmptyDataView from './AppEmptyDataView';
 import AboutFeedbackDialog from './AboutFeedbackDialog';
 import SelectThemeDialog from './SelectThemeDialog';
@@ -21,7 +20,6 @@ const Components = {
   AppLoadingPlaceHolder,
   CardSection,
   MoreAppCard,
-  InputModal,
   AppEmptyDataView,
   AboutFeedbackDialog,
   SelectThemeDialog,

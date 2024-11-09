@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 
 //ThirdParty
@@ -95,6 +95,10 @@ const Identities = ({ navigation, route }: Props) => {
     );
   }, [onRedirectToCreateIdentity, t]);
 
+  const bottomInsets = useMemo(() => {
+    return insets.bottom > 0 ? insets.bottom : 16;
+  }, [insets.bottom]);
+
   return (
     <Components.AppBaseView
       edges={['bottom', 'left', 'right']}
@@ -158,7 +162,7 @@ const Identities = ({ navigation, route }: Props) => {
         )}
       </View>
 
-      <FAB icon="plus" style={[styles.fab, { bottom: insets.bottom + 16 }]} onPress={onPressAddNewIdentity} />
+      <FAB icon="plus" style={[styles.fab, { bottom: bottomInsets }]} onPress={onPressAddNewIdentity} />
     </Components.AppBaseView>
   );
 };

@@ -21,6 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 xcshareddata
+*.GoogleService-Info.plist
 
 # Android/IntelliJ
 #
@@ -73,6 +74,8 @@ android/app/build/*
 android/build/*
 android/app/release/*
 android/app/releaseStaging/*
+output-metadata.json
+
 
 *.apk
 *.aab

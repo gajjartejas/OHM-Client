@@ -17,6 +17,7 @@ interface IAppInputDialogProps extends TextInputProps {
 }
 
 const AppInputDialog = React.forwardRef((props: IAppInputDialogProps, ref: any) => {
+  //Const
   const theme = useTheme();
   const { t } = useTranslation();
   const largeScreenMode = useLargeScreenMode();

@@ -323,7 +323,7 @@
   "aboutScreen": {
     "title": "About OHMClient",
     "infoHeader": "Information",
-    "infoDescTitle": "`OHM-Client` is an unofficial open hardware monitor client app for Android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
+    "infoDescTitle": "OHM-Client is an unofficial open hardware monitor client app for Android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
     "infoAuthorNameTitle": "Tejas Gajjar",
     "developerTitle": "Developer",
     "portfolioTitle": "Portfolio",
