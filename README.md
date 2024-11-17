@@ -32,6 +32,7 @@ The application supports Android 5.0 (API 21) and above.
 - Multi-language support.
 
 ## Building
+>  Note: You can't Publish any Source code without permission.
 
 ### Basic setup
 
