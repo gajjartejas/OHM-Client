@@ -78,11 +78,14 @@
   },
   "deviceInfo": {
     "card": {
+      "name": "Датчик",
       "current": "Текущий",
       "max": "Макс",
       "min": "Мин"
     },
     "copyJSON": "Копировать JSON",
+    "showMinValue": "Показать мин. значение",
+    "showMaxValue": "Показать макс. значение",
     "copyURL": "Копировать URL",
     "emptyData": {
       "item1": {

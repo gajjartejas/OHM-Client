@@ -9,6 +9,8 @@ interface IAppConfigState {
   devices: IDevice[];
   selectedDevice: IDevice | null;
   refreshRateInMs: number;
+  showMinValue: boolean;
+  showMaxValue: boolean;
 }
 
 interface IAppConfigActions {
@@ -19,6 +21,10 @@ interface IAppConfigActions {
   deleteDevice: (deviceId: string) => void;
   selectDevice: (device: IDevice) => void;
   switchDeviceIp: (ipAddress: string) => void;
+  toggleShowMinValue: () => void;
+  setShowMinValue: (show: boolean) => void;
+  toggleShowMaxValue: () => void;
+  setShowMaxValue: (show: boolean) => void;
 }
 
 const initialState: IAppConfigState = {
@@ -26,6 +32,8 @@ const initialState: IAppConfigState = {
   devices: [],
   selectedDevice: null,
   refreshRateInMs: 1000,
+  showMinValue: false,
+  showMaxValue: true,
 };
 
 const useAppConfigStore = create<IAppConfigState & IAppConfigActions>()(
@@ -34,6 +42,10 @@ const useAppConfigStore = create<IAppConfigState & IAppConfigActions>()(
       set => ({
         ...initialState,
         reset: () => set(_state => ({ ...initialState })),
+        toggleShowMinValue: () => set(state => ({ showMinValue: !state.showMinValue })),
+        setShowMinValue: (show: boolean) => set(() => ({ showMinValue: show })),
+        toggleShowMaxValue: () => set(state => ({ showMaxValue: !state.showMaxValue })),
+        setShowMaxValue: (show: boolean) => set(() => ({ showMaxValue: show })),
         upsertIdentity: (idnt: IConnectionIdentity) =>
           set(state => {
             const newIdentifier = [...state.identities];

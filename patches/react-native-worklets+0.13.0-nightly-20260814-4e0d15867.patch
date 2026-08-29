@@ -1,0 +1,141 @@
+diff --git a/node_modules/react-native-worklets/android/build.gradle.kts b/node_modules/react-native-worklets/android/build.gradle.kts
+index 8a77bff..22e29bb 100644
+--- a/node_modules/react-native-worklets/android/build.gradle.kts
++++ b/node_modules/react-native-worklets/android/build.gradle.kts
+@@ -317,9 +317,54 @@ androidComponents {
+     }
+ }
+ 
++fun resolveNodeExecutable(): String {
++    val nodeProperty = safeAppExtGet("NODE_EXECUTABLE", null)?.toString()
++    if (!nodeProperty.isNullOrEmpty() && File(nodeProperty).exists()) {
++        return nodeProperty
++    }
++    val nodeEnv = System.getenv("NODE_BINARY")
++    if (!nodeEnv.isNullOrEmpty() && File(nodeEnv).exists()) {
++        return nodeEnv
++    }
++    val standardPaths = listOf(
++        "/opt/homebrew/bin/node",
++        "/usr/local/bin/node",
++        "/usr/bin/node",
++        "/bin/node"
++    )
++    for (path in standardPaths) {
++        if (File(path).exists()) return path
++    }
++    val userHome = System.getProperty("user.home") ?: ""
++    if (userHome.isNotEmpty()) {
++        val nvmDir = File(userHome, ".nvm/versions/node")
++        if (nvmDir.exists() && nvmDir.isDirectory) {
++            val nvmNodes = nvmDir.listFiles()
++                ?.filter { it.isDirectory }
++                ?.map { File(it, "bin/node") }
++                ?.filter { it.exists() }
++                ?.sortedByDescending { it.parentFile.parentFile.name }
++            if (!nvmNodes.isNullOrEmpty()) {
++                return nvmNodes.first().absolutePath
++            }
++        }
++        val managerPaths = listOf(
++            "$userHome/.local/share/fnm/current/bin/node",
++            "$userHome/.fnm/current/bin/node",
++            "$userHome/.volta/bin/node",
++            "$userHome/.asdf/shims/node",
++            "$userHome/.nodenv/shims/node"
++        )
++        for (path in managerPaths) {
++            if (File(path).exists()) return path
++        }
++    }
++    return "node"
++}
++
+ val validateReactNativeVersionResult = providers.exec {
+     workingDir(projectDir.path)
+-    commandLine("node", "./../scripts/validate-react-native-version.js", REACT_NATIVE_VERSION)
++    commandLine(resolveNodeExecutable(), "./../scripts/validate-react-native-version.js", REACT_NATIVE_VERSION)
+     isIgnoreExitValue = true
+ }
+ 
+diff --git a/node_modules/react-native-worklets/lib/module/WorkletsModule/NativeWorklets.native.js b/node_modules/react-native-worklets/lib/module/WorkletsModule/NativeWorklets.native.js
+index 8965d28..d9722b5 100644
+--- a/node_modules/react-native-worklets/lib/module/WorkletsModule/NativeWorklets.native.js
++++ b/node_modules/react-native-worklets/lib/module/WorkletsModule/NativeWorklets.native.js
+@@ -187,13 +187,16 @@ function installUnpackers(workletsModuleProxy) {
+   const shareableHost = installShareableHostUnpacker.__initData;
+   const shareableGuest = installShareableGuestUnpacker.__initData;
+   const remoteFunction = installRemoteFunctionUnpacker.__initData;
++  if (!value) {
++    return;
++  }
+   if (value.bytecode !== undefined) {
+     if (__DEV__) {
+       throw new Error('[Worklets] Unpackers were compiled to Hermes bytecode in a development build, which is not supported.');
+     }
+-    workletsModuleProxy.loadUnpackersWithBytecode(value.bytecode, synchronizable.bytecode, customSerializable.bytecode, shareableHost.bytecode, shareableGuest.bytecode, remoteFunction.bytecode);
+-  } else {
+-    workletsModuleProxy.loadUnpackersWithCode(value.code, value.location ?? '', value.sourceMap ?? '', synchronizable.code, synchronizable.location ?? '', synchronizable.sourceMap ?? '', customSerializable.code, customSerializable.location ?? '', customSerializable.sourceMap ?? '', shareableHost.code, shareableHost.location ?? '', shareableHost.sourceMap ?? '', shareableGuest.code, shareableGuest.location ?? '', shareableGuest.sourceMap ?? '', remoteFunction.code, remoteFunction.location ?? '', remoteFunction.sourceMap ?? '');
++    workletsModuleProxy.loadUnpackersWithBytecode(value.bytecode, synchronizable?.bytecode, customSerializable?.bytecode, shareableHost?.bytecode, shareableGuest?.bytecode, remoteFunction?.bytecode);
++  } else if (value.code) {
++    workletsModuleProxy.loadUnpackersWithCode(value.code, value.location ?? '', value.sourceMap ?? '', synchronizable?.code ?? '', synchronizable?.location ?? '', synchronizable?.sourceMap ?? '', customSerializable?.code ?? '', customSerializable?.location ?? '', customSerializable?.sourceMap ?? '', shareableHost?.code ?? '', shareableHost?.location ?? '', shareableHost?.sourceMap ?? '', shareableGuest?.code ?? '', shareableGuest?.location ?? '', shareableGuest?.sourceMap ?? '', remoteFunction?.code ?? '', remoteFunction?.location ?? '', remoteFunction?.sourceMap ?? '');
+   }
+ }
+ //# sourceMappingURL=NativeWorklets.native.js.map
+\ No newline at end of file
+diff --git a/node_modules/react-native-worklets/src/WorkletsModule/NativeWorklets.native.ts b/node_modules/react-native-worklets/src/WorkletsModule/NativeWorklets.native.ts
+index 3d19d9c..374b864 100644
+--- a/node_modules/react-native-worklets/src/WorkletsModule/NativeWorklets.native.ts
++++ b/node_modules/react-native-worklets/src/WorkletsModule/NativeWorklets.native.ts
+@@ -411,18 +411,22 @@ See https://docs.swmansion.com/react-native-worklets/docs/guides/troubleshooting
+ export const WorkletsModule: IWorkletsModule = new NativeWorklets();
+ 
+ function installUnpackers(workletsModuleProxy: WorkletsModuleProxy) {
+-  const value = (installValueUnpacker as WorkletFunction).__initData!;
++  const value = (installValueUnpacker as WorkletFunction).__initData;
+   const synchronizable = (installSynchronizableUnpacker as WorkletFunction)
+-    .__initData!;
++    ?.__initData;
+   const customSerializable = (
+     installCustomSerializableUnpacker as WorkletFunction
+-  ).__initData!;
++  )?.__initData;
+   const shareableHost = (installShareableHostUnpacker as WorkletFunction)
+-    .__initData!;
++    ?.__initData;
+   const shareableGuest = (installShareableGuestUnpacker as WorkletFunction)
+-    .__initData!;
++    ?.__initData;
+   const remoteFunction = (installRemoteFunctionUnpacker as WorkletFunction)
+-    .__initData!;
++    ?.__initData;
++
++  if (!value) {
++    return;
++  }
+ 
+   if (value.bytecode !== undefined) {
+     if (__DEV__) {
+@@ -432,15 +436,15 @@ function installUnpackers(workletsModuleProxy: WorkletsModuleProxy) {
+     }
+     workletsModuleProxy.loadUnpackersWithBytecode(
+       value.bytecode,
+-      synchronizable.bytecode!,
+-      customSerializable.bytecode!,
+-      shareableHost.bytecode!,
+-      shareableGuest.bytecode!,
+-      remoteFunction.bytecode!
++      synchronizable?.bytecode!,
++      customSerializable?.bytecode!,
++      shareableHost?.bytecode!,
++      shareableGuest?.bytecode!,
++      remoteFunction?.bytecode!
+     );
+-  } else {
++  } else if (value.code) {
+     workletsModuleProxy.loadUnpackersWithCode(
+-      value.code!,
++      value.code,
+       value.location ?? '',
+       value.sourceMap ?? '',
+       synchronizable.code!,

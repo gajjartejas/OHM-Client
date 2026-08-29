@@ -38,12 +38,14 @@
     "react-native-modal": "^14.0.0-rc.1",
     "react-native-nitro-modules": "^0.36.5",
     "react-native-paper": "^5.15.3",
+    "react-native-reanimated": "^4.6.0-nightly-20260814-4e0d15867",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screens": "^4.27.0",
     "react-native-tcp": "github:gajjartejas/react-native-tcp",
     "react-native-toast-message": "^2.4.0",
     "react-native-uuid": "^2.0.4",
     "react-native-webview": "^14.0.1",
+    "react-native-worklets": "^0.13.0-nightly-20260814-4e0d15867",
     "zustand": "^5.0.15"
   },
   "devDependencies": {
