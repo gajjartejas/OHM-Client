@@ -11,6 +11,9 @@ interface IAppConfigState {
   refreshRateInMs: number;
   showMinValue: boolean;
   showMaxValue: boolean;
+  viewMode: 'table' | 'grid';
+  essentialSensorsOnly: boolean;
+  autoRefresh: boolean;
 }
 
 interface IAppConfigActions {
@@ -25,6 +28,12 @@ interface IAppConfigActions {
   setShowMinValue: (show: boolean) => void;
   toggleShowMaxValue: () => void;
   setShowMaxValue: (show: boolean) => void;
+  toggleViewMode: () => void;
+  setViewMode: (mode: 'table' | 'grid') => void;
+  toggleEssentialSensorsOnly: () => void;
+  setEssentialSensorsOnly: (val: boolean) => void;
+  toggleAutoRefresh: () => void;
+  setAutoRefresh: (auto: boolean) => void;
 }
 
 const initialState: IAppConfigState = {
@@ -34,6 +43,9 @@ const initialState: IAppConfigState = {
   refreshRateInMs: 1000,
   showMinValue: false,
   showMaxValue: true,
+  viewMode: 'table',
+  essentialSensorsOnly: false,
+  autoRefresh: true,
 };
 
 const useAppConfigStore = create<IAppConfigState & IAppConfigActions>()(
@@ -46,6 +58,14 @@ const useAppConfigStore = create<IAppConfigState & IAppConfigActions>()(
         setShowMinValue: (show: boolean) => set(() => ({ showMinValue: show })),
         toggleShowMaxValue: () => set(state => ({ showMaxValue: !state.showMaxValue })),
         setShowMaxValue: (show: boolean) => set(() => ({ showMaxValue: show })),
+        toggleViewMode: () =>
+          set(state => ({ viewMode: state.viewMode === 'grid' ? 'table' : 'grid' })),
+        setViewMode: (mode: 'table' | 'grid') => set(() => ({ viewMode: mode })),
+        toggleEssentialSensorsOnly: () =>
+          set(state => ({ essentialSensorsOnly: !state.essentialSensorsOnly })),
+        setEssentialSensorsOnly: (val: boolean) => set(() => ({ essentialSensorsOnly: val })),
+        toggleAutoRefresh: () => set(state => ({ autoRefresh: !state.autoRefresh })),
+        setAutoRefresh: (auto: boolean) => set(() => ({ autoRefresh: auto })),
         upsertIdentity: (idnt: IConnectionIdentity) =>
           set(state => {
             const newIdentifier = [...state.identities];

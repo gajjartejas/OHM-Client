@@ -84,8 +84,11 @@
       "min": "Min."
     },
     "copyJSON": "Copier JSON",
+    "openInBrowser": "Ouvrir dans le navigateur",
+    "autoRefresh": "Actualisation automatique",
     "showMinValue": "Afficher la valeur min",
     "showMaxValue": "Afficher la valeur max",
+    "essentialOnly": "Infos essentielles uniquement",
     "copyURL": "Copier l'URL",
     "emptyData": {
       "item1": {

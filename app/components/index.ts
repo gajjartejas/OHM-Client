@@ -15,11 +15,13 @@ import AppActionDialog from './AppActionDialog';
 import AppInputDialog from './AppInputDialog';
 import AppRadioSelectDialog from './AppRadioSelectDialog';
 import CommonIcon from './CommonIcon';
+import GridCardView from './GridCardView';
 
 const Components = {
   AppMiniBanner,
   AppLoadingPlaceHolder,
   CardSection,
+  GridCardView,
   MoreAppCard,
   AppEmptyDataView,
   AboutFeedbackDialog,
@@ -33,7 +35,7 @@ const Components = {
   AppActionDialog,
   AppInputDialog,
   AppRadioSelectDialog,
-  CommonIcon
+  CommonIcon,
 };
 
 export default Components;
