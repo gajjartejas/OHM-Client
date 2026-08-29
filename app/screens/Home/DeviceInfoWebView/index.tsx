@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, Animated } from 'react-native';
+import { View, Animated, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 
 //ThirdParty
-import { Button, Dialog, IconButton, Menu, Portal, ProgressBar, Snackbar, Text } from 'react-native-paper';
+import { Button, Dialog, IconButton, Menu, Portal, ProgressBar, Snackbar, Text, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 //App modules
@@ -19,9 +18,22 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import WebView from 'react-native-webview';
+import type {
+  WebViewNavigation,
+  WebViewProgressEvent,
+  WebViewHttpErrorEvent,
+  WebViewErrorEvent,
+} from 'react-native-webview/lib/WebViewTypes';
 import useAppWebViewConfigStore from 'app/store/webViewConfig';
 import Utils from 'app/utils';
 import inspectService from 'app/services/inspectService';
+
+interface IAppError {
+  message?: string;
+  code?: number;
+}
+
+const WebViewComponent = WebView as unknown as React.ComponentClass<React.ComponentProps<typeof WebView>>;
 
 const THRESHOLD_DIFF_Y = 100;
 
@@ -31,7 +43,7 @@ type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'DeviceInfoWebVi
 const DeviceInfoWebView = ({ navigation }: Props) => {
   //Refs
   const refCurrentURL = useRef<string | null>(null);
-  const webViewRef = useRef<WebView | null>(null);
+  const webViewRef = useRef<WebView>(null);
 
   //Actions
 
@@ -51,43 +63,44 @@ const DeviceInfoWebView = ({ navigation }: Props) => {
     outputRange: [0, THRESHOLD_DIFF_Y],
     extrapolate: 'clamp',
   });
-  const [
-    mediaPlaybackRequiresUserAction,
-    scalesPageToFit,
-    domStorageEnabled,
-    javaScriptEnabled,
-    thirdPartyCookiesEnabled,
-    userAgent,
-    allowsFullScreenVideo,
-    allowsInlineMediaPlayback,
-    allowsAirPlayForMediaPlayback,
-    bounces,
-    contentMode,
-    geolocationEnabled,
-    allowFileAccessFromFileUrls,
-    allowsBackForwardNavigationGestures,
-    pullToRefreshEnabled,
-    forceDarkOn,
-    allowsProtectedMedia,
-  ] = useAppWebViewConfigStore(store => [
-    store.mediaPlaybackRequiresUserAction,
-    store.scalesPageToFit,
-    store.domStorageEnabled,
-    store.javaScriptEnabled,
-    store.thirdPartyCookiesEnabled,
-    store.userAgent,
-    store.allowsFullScreenVideo,
-    store.allowsInlineMediaPlayback,
-    store.allowsAirPlayForMediaPlayback,
-    store.bounces,
-    store.contentMode,
-    store.geolocationEnabled,
-    store.allowFileAccessFromFileUrls,
-    store.allowsBackForwardNavigationGestures,
-    store.pullToRefreshEnabled,
-    store.forceDarkOn,
-    store.allowsProtectedMedia,
-  ]);
+
+  const mediaPlaybackRequiresUserAction = useAppWebViewConfigStore(
+    store => store.mediaPlaybackRequiresUserAction,
+  );
+  const scalesPageToFit = useAppWebViewConfigStore(store => store.scalesPageToFit);
+  const domStorageEnabled = useAppWebViewConfigStore(store => store.domStorageEnabled);
+  const javaScriptEnabled = useAppWebViewConfigStore(store => store.javaScriptEnabled);
+  const thirdPartyCookiesEnabled = useAppWebViewConfigStore(
+    store => store.thirdPartyCookiesEnabled,
+  );
+  const userAgent = useAppWebViewConfigStore(store => store.userAgent);
+  const allowsFullScreenVideo = useAppWebViewConfigStore(
+    store => store.allowsFullScreenVideo,
+  );
+  const allowsInlineMediaPlayback = useAppWebViewConfigStore(
+    store => store.allowsInlineMediaPlayback,
+  );
+  const allowsAirPlayForMediaPlayback = useAppWebViewConfigStore(
+    store => store.allowsAirPlayForMediaPlayback,
+  );
+  const bounces = useAppWebViewConfigStore(store => store.bounces);
+  const contentMode = useAppWebViewConfigStore(store => store.contentMode);
+  const geolocationEnabled = useAppWebViewConfigStore(
+    store => store.geolocationEnabled,
+  );
+  const allowFileAccessFromFileUrls = useAppWebViewConfigStore(
+    store => store.allowFileAccessFromFileUrls,
+  );
+  const allowsBackForwardNavigationGestures = useAppWebViewConfigStore(
+    store => store.allowsBackForwardNavigationGestures,
+  );
+  const pullToRefreshEnabled = useAppWebViewConfigStore(
+    store => store.pullToRefreshEnabled,
+  );
+  const forceDarkOn = useAppWebViewConfigStore(store => store.forceDarkOn);
+  const allowsProtectedMedia = useAppWebViewConfigStore(
+    store => store.allowsProtectedMedia,
+  );
 
   //States
   const [webViewKey, setWebViewKey] = useState<number>(0);
@@ -100,7 +113,7 @@ const DeviceInfoWebView = ({ navigation }: Props) => {
   const [appServerURL, setAppServerURL] = useState<string | null>(null);
   const [subTitleDialogVisible, setSubTitleDialogVisible] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState<boolean>(false);
-  const [error, setError] = useState<any | null>(null);
+  const [error, setError] = useState<IAppError | null>(null);
   const [progress, setProgress] = useState(0);
   const [infoLoaded, setInfoLoaded] = useState(false);
 
@@ -135,8 +148,8 @@ const DeviceInfoWebView = ({ navigation }: Props) => {
       setInfoLoaded(true);
       setAppServerURL(serverURL);
       setError(null);
-    } catch (e: any) {
-      setError(e);
+    } catch (e: unknown) {
+      setError(e as IAppError);
     }
   }, [selectedDevice]);
 
@@ -196,7 +209,7 @@ const DeviceInfoWebView = ({ navigation }: Props) => {
     }
 
     setErrorMessageTitle(t('deviceInfo.emptyData.item4.title'));
-    setErrorMessageDesc(error.message);
+    setErrorMessageDesc(error.message ?? null);
     setButtonTitle(t('deviceInfo.emptyData.item4.button'));
   }, [error, infoLoaded, t]);
 
@@ -247,7 +260,7 @@ const DeviceInfoWebView = ({ navigation }: Props) => {
   }, [appServerURL]);
 
   const handleScroll = useCallback(
-    (event: any) => {
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const { y } = event.nativeEvent.contentOffset;
 
       if (y < 0) {
@@ -267,7 +280,7 @@ const DeviceInfoWebView = ({ navigation }: Props) => {
 
   const onScroll = Animated.event([{ nativeEvent: { contentOffset: {} } }], {
     useNativeDriver: false,
-    listener: event => handleScroll(event),
+    listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => handleScroll(event),
   });
 
   const contentContainerStyle = useMemo(
@@ -309,21 +322,21 @@ const DeviceInfoWebView = ({ navigation }: Props) => {
     setSnackbarVisible(false);
   }, []);
 
-  const onLoadProgress = useCallback(({ nativeEvent }: any) => {
+  const onLoadProgress = useCallback(({ nativeEvent }: WebViewProgressEvent) => {
     setProgress(nativeEvent.progress);
   }, []);
 
-  const onNavigationStateChange = useCallback((state: any) => {
+  const onNavigationStateChange = useCallback((state: WebViewNavigation) => {
     refCurrentURL.current = state.url;
   }, []);
 
-  const onHttpError = useCallback((e: any) => {
+  const onHttpError = useCallback((e: WebViewHttpErrorEvent) => {
     console.log('onHttpError', e.nativeEvent.description);
     // setError(e);
   }, []);
 
-  const onError = useCallback((e: any) => {
-    console.log('onHttpError', e.nativeEvent.description);
+  const onError = useCallback((e: WebViewErrorEvent) => {
+    console.log('onError', e.nativeEvent.description);
     // setError(e);
   }, []);
 
@@ -361,7 +374,7 @@ const DeviceInfoWebView = ({ navigation }: Props) => {
 
       {!!appServerURL && (
         <View style={styles.subView}>
-          <WebView
+          <WebViewComponent
             key={webViewKey}
             ref={webViewRef}
             onScroll={onScroll}
@@ -394,9 +407,9 @@ const DeviceInfoWebView = ({ navigation }: Props) => {
         </View>
       )}
 
-      {error && !infoLoaded && (
+      {!!error && !infoLoaded && (
         <Components.AppEmptyDataView
-          iconType={'font-awesome5'}
+          iconType={'fontawesome6'}
           iconName="box-open"
           style={styles.emptyView}
           header={errorMessageTitle}

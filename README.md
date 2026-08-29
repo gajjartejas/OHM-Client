@@ -3,7 +3,7 @@
 
 # Introduction
 
-`OHM-Client` is an unofficial open-source open hardware monitor and Libre Hardware Monitor client app for Android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.
+`OHM-Client` is an unofficial open-source Open Hardware Monitor and Libre Hardware Monitor client app for Android and iOS written in React Native. Using this app you can monitor Open Hardware Monitor / Libre Hardware Monitor web servers remotely.
 
 ## Installation
 
@@ -17,65 +17,64 @@ Get the app from Google Play:
 
 |                                                |                                                    |                                          |                                          |                                           |
 |:----------------------------------------------:|:--------------------------------------------------:|:----------------------------------------:|:----------------------------------------:|:-----------------------------------------:|
-| ![Accounts List](docs/images/home-devices-list.png) | ![Transactions List](docs/images/add-device.png) | ![Reports](docs/images/device-info-1.png) | ![Reports](docs/images/device-info-2.png) | ![Reports](docs/images/settings.png)  |
-| ![Accounts List](docs/images/scan-setting.png) | ![Transactions List](docs/images/identities-list.png) | ![Reports](docs/images/update-identity.png) | ![Reports](docs/images/nearby-devices-list.png) | ![Reports](docs/images/appearance-setting.png) |
+| ![Devices List](docs/images/home-devices-list.png) | ![Add Device](docs/images/add-device.png) | ![Device Info 1](docs/images/device-info-1.png) | ![Device Info 2](docs/images/device-info-2.png) | ![Settings](docs/images/settings.png)  |
+| ![Scan Settings](docs/images/scan-setting.png) | ![Identities List](docs/images/identities-list.png) | ![Update Identity](docs/images/update-identity.png) | ![Nearby Devices](docs/images/nearby-devices-list.png) | ![Appearance Setting](docs/images/appearance-setting.png) |
 
-The application supports Android 5.0 (API 21) and above.
+The application supports Android 5.0 (API 21) and above, and iOS 15.1 and above.
 
 ## Features include:
 
-- Auto scan live open hardware monitor remote/Libre Hardware Monitor web server.
-- Basic authentication support.
-- Add manually/Scan automatically remote web server using IP address and port.
-- Auto refresh system information from the remote web server.
-- Dark theme support.
-- Multi-language support.
+- Auto scan live Open Hardware Monitor / Libre Hardware Monitor web servers across your local network.
+- Basic authentication support with secure identities management.
+- Add manually or scan automatically remote web servers using IP address and port.
+- Auto refresh system information from the remote web server with custom polling rates.
+- WebView monitoring mode for advanced hardware telemetry.
+- Dark theme and accent color customization.
+- Multi-language localization support.
 
 ## Building
 >  Note: You can't Publish any Source code without permission.
 
 ### Basic setup
 
-If you want to build from source, just do
+```sh
+git clone https://github.com/gajjartejas/OHM-Client.git
+cd OHM-Client
+npm install
+```
 
-    git clone https://github.com/gajjartejas/OHM-Client.git
-    cd OHM-Client
-    `npm install` or `yarn`
-    cd ios && pod install && cd..
+### With Android Studio / Android CLI
 
-### With Android Studio
+```sh
+# Start Metro bundler
+npm start
 
-1. Clone repo `git clone https://github.com/gajjartejas/OHM-Client.git`
-2. In Android Studio select "Open an existing Android Studio Project"
-3. Wait for Gradel to sync and then run or build.
+# In another terminal, run on connected device/emulator
+npm run android
+```
 
-### With Xcode
+Or open the `android` folder directly in Android Studio and run.
 
-1. Clone repo `git clone https://github.com/gajjartejas/OHM-Client.git`
-2. Navigate to `OHM-Client/ios` and open `OpenHardwareMonClient.xcworkspace` folder.
-3. Run the project.
+### With Xcode / iOS CLI
 
-## Todo
+```sh
+# Install CocoaPods
+cd ios && bundle exec pod install && cd ..
 
-1. List all remote web servers within the network. - Done
-   Share text or PDF via react-native-share, print system info, or HTML download.
-2. Real-time chart.
-3. Take a snapshot of data in the database at a particular time or manually.
-4. Display data over the internet.
-5. Widget support.
-6. Alert based on CPU usage, GPU usage, or device goes offline.
-7. Firebase real-time support with a separate electron app that syncs data with Firebase login and QR code support.
+# Run iOS app
+npm run ios
+```
+
+Or open `ios/OHMC.xcworkspace` in Xcode and run.
 
 ## Contributing
 
-There are many ways you can contribute to the development.
+There are many ways you can contribute to the development:
 
 - Pull requests are always welcome!
-- You must respect conventional commits for your commits and MR title.
-- You can merge only if your CI is green.
-- give priority to squash and merge, and not merge with a merge commit
-- Please visit [CrowdIn](https://crowdin.com/project/openhardwaremonitorclient) to update and create new translations
+- Respect conventional commits for your commits and PR titles.
+- Please visit [CrowdIn](https://crowdin.com/project/openhardwaremonitorclient) to update and create new translations.
 
 ## License
 
-OHM-Client is licensed under the [MIT License](https://github.com/gajjartejas/OHM-Client/blob/main/LICENSE).
+OHM-Client is licensed under the [MIT License](LICENSE).

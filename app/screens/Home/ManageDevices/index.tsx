@@ -2,9 +2,8 @@ import React, { useCallback, useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 
 //ThirdParty
-import { Button, FAB, IconButton, List, Menu } from 'react-native-paper';
+import { Button, FAB, IconButton, List, Menu, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 //App modules
@@ -33,7 +32,7 @@ const ManageDevices = ({ navigation, route }: Props) => {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const largeScreenMode = useLargeScreenMode();
-  const mode = route.params.mode;
+  const mode = route?.params?.mode ?? 'connect';
   const showBackButton = mode !== 'connect';
 
   //States
@@ -150,7 +149,7 @@ const ManageDevices = ({ navigation, route }: Props) => {
 
         {devices.length < 1 && (
           <Components.AppEmptyDataView
-            iconType={'font-awesome5'}
+            iconType={'fontawesome6'}
             iconName="box-open"
             style={{}}
             header={t('devicesList.emptyDeviceTitle')}

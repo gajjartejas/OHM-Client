@@ -35,15 +35,23 @@ const useThemeConfigStore = create<IThemeConfigState>()(
         onSecondary: '#FFFFFF',
         setAppearance: a =>
           set(_state => ({
-            isDark: a === IAppearanceType.Auto ? Appearance.getColorScheme() === 'dark' : a === 'dark',
+            isDark:
+              a === IAppearanceType.Auto
+                ? Appearance.getColorScheme() === 'dark'
+                : a === 'dark',
             appearance: a,
           })),
         setIsDarkMode: a =>
           set(_state => ({
             isDark: a,
           })),
-        resetTheme: () => set(_state => ({ isDark: colorScheme === 'dark', appearance: IAppearanceType.Auto })),
-        setPrimaryColor: (p: string, o: string) => set(_state => ({ primary: p, onPrimary: o, secondaryContainer: p })),
+        resetTheme: () =>
+          set(_state => ({
+            isDark: colorScheme === 'dark',
+            appearance: IAppearanceType.Auto,
+          })),
+        setPrimaryColor: (p: string, o: string) =>
+          set(_state => ({ primary: p, onPrimary: o, secondaryContainer: p })),
       }),
       {
         name: 'app-theme-storage',

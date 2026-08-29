@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingTop: 16,
-    paddingBottom: 8,
+    paddingBottom: 16,
   },
   cardTablet: {
     width: '70%',

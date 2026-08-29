@@ -163,6 +163,11 @@
     "appsTitle": "Más aplicaciones"
   },
   "scanDevices": {
+    "title": "Dispositivos cercanos",
+    "subTitle": "Dispositivos cercanos",
+    "scanning": "Escaneando red...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "Descubiertos: {{count}}",
     "emptyData": {
       "help": "Ayuda",
       "or": "O",
@@ -170,9 +175,7 @@
       "subtitle": "Por favor intente escanear nuevamente",
       "title": "¡No se encontraron dispositivos cercanos!"
     },
-    "refresh": "Refrescar",
-    "subTitle": "Dispositivos cercanos",
-    "title": "Dispositivos cercanos"
+    "refresh": "Refrescar"
   },
   "scanSetting": {
     "section1": {

@@ -245,6 +245,9 @@
   "scanDevices": {
     "title": "Nearby Devices",
     "subTitle": "Nearby Devices",
+    "scanning": "Scanning network...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "Discovered: {{count}}",
     "emptyData": {
       "title": "No nearby devices found!",
       "subtitle": "Please try scanning again",

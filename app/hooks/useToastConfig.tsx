@@ -6,9 +6,15 @@ import { ToastConfigParams } from 'react-native-toast-message/lib/src/types';
 
 const useToastConfig = () => {
   return {
-    success: (props: ToastConfigParams<IAppSuccessToastProps>) => <AppToast {...props} type={'success'} />,
-    error: (props: ToastConfigParams<IAppSuccessToastProps>) => <AppToast {...props} type={'error'} />,
-    info: (props: ToastConfigParams<IAppSuccessToastProps>) => <AppToast {...props} type={'info'} />,
+    success: (props: ToastConfigParams<IAppSuccessToastProps>) => (
+      <AppToast {...props} type={'success'} />
+    ),
+    error: (props: ToastConfigParams<IAppSuccessToastProps>) => (
+      <AppToast {...props} type={'error'} />
+    ),
+    info: (props: ToastConfigParams<IAppSuccessToastProps>) => (
+      <AppToast {...props} type={'info'} />
+    ),
   };
 };
 

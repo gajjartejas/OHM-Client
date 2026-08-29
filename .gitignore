@@ -22,6 +22,9 @@ DerivedData
 *.xcuserstate
 xcshareddata
 *.GoogleService-Info.plist
+ios/GoogleService-Info.plist
+ios/Kano/GoogleService-Info.plist
+**/.xcode.env.local
 
 # Android/IntelliJ
 #
@@ -30,44 +33,14 @@ build/
 .gradle
 local.properties
 *.iml
-google-services.json
-*.jks
-# node.js
-#
-node_modules/
-npm-debug.log
-yarn-error.log
-android/api-play-store-key.json
-
-# BUCK
-buck-out/
-\.buckd/
+*.hprof
+.cxx/
 *.keystore
+*.jks
 !debug.keystore
-
-# fastlane
-#
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
-# screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/
-
-*/fastlane/report.xml
-*/fastlane/Preview.html
-*/fastlane/screenshots
-*/fastlane/.env*
-# Bundle artifact
-*.jsbundle
-
-# CocoaPods
-/ios/Pods/
-
-
-# Xcode related
-ios/Pods/*
-
-
-# Android related
+.kotlin/
+google-services.json
+android/api-play-store-key.json
 android/app/src/main/assets/index.android.bundle
 android/app/src/main/assets/index.android.bundle.meta
 android/app/build/*
@@ -75,27 +48,79 @@ android/build/*
 android/app/release/*
 android/app/releaseStaging/*
 output-metadata.json
-
-
+android/link-assets-manifest.json
 *.apk
 *.aab
-*.hprof
+*.cxx
+android/app/google-services.json
 
-#amplify
+# node.js
+#
+node_modules/
+npm-debug.log
+yarn-error.log
+.eslintcache
+
+# BUCK
+buck-out/
+\.buckd/
+
+# fastlane
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+**/fastlane/.env*
+
+# Bundle artifact
+*.jsbundle
+
+# CocoaPods & Ruby
+/ios/Pods/
+ios/Pods/*
+**/Pods/
+/vendor/bundle/
+vendor/
+vendor
+ios/android/link-assets-manifest.json
+ios/build/
+
+# Xcode / iOS generated & assets copied via postinstall
+ios/assets/svgs/
+ios/assets/audio/
+ios/assets/fonts/
+ios/assets/
+
+# Android generated & assets copied via postinstall
+android/app/build/
+android/build/
+android/app/release/
+android/app/releaseStaging/
+android/app/src/main/assets/svgs/
+android/app/src/main/assets/fonts/
+android/app/src/main/assets/custom/
+android/app/src/main/assets/audio/
+android/app/src/main/res/raw/*.mp3
+android/app/src/main/res/raw/
+
+# Metro file watcher check
+.metro-health-check*
+
+# Amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/mock-data
 amplify/backend/amplify-meta.json
 amplify/backend/awscloudformation
-build/
 dist/
-node_modules/
 aws-exports.js
 awsconfiguration.json
 
-vendor
-
-# testing
+# Testing
 /coverage
 
 # Yarn

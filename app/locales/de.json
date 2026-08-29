@@ -163,6 +163,11 @@
     "appsTitle": "Weitere Apps"
   },
   "scanDevices": {
+    "title": "Geräte in der Nähe",
+    "subTitle": "Geräte in der Nähe",
+    "scanning": "Netzwerk wird gescannt...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "Gefunden: {{count}}",
     "emptyData": {
       "help": "Helfen",
       "or": "ODER",
@@ -170,9 +175,7 @@
       "subtitle": "Versuchen Sie bitte erneut zu scannen",
       "title": "Keine Geräte in der Nähe gefunden!"
     },
-    "refresh": "Aktualisieren",
-    "subTitle": "Geräte in der Nähe",
-    "title": "Geräte in der Nähe"
+    "refresh": "Aktualisieren"
   },
   "scanSetting": {
     "section1": {

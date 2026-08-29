@@ -1,11 +1,16 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { View, TextInput } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
 import { Divider, List, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Icon from 'react-native-easy-icon';
 
 //App modules
 import Components from 'app/components';
@@ -13,30 +18,36 @@ import styles from './styles';
 import useAppScanConfigStore from 'app/store/appScanConfig';
 
 //Modals
-import { ISettingItem, ISettingSection } from 'app/models/viewModels/settingItem';
+import {
+  ISettingItem,
+  ISettingSection,
+} from 'app/models/viewModels/settingItem';
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 import AppHeader from 'app/components/AppHeader';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import CommonIcon from 'app/components/CommonIcon';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'ScanSetting'>;
 
 const ScanSetting = ({ navigation }: Props) => {
   //Refs
-  let modalVisibleUrlPathRef = useRef<TextInput | null>(null);
-  let modalVisibleUrlPortRef = useRef<TextInput | null>(null);
-
-  let modalVisibleScanTimeoutRef = useRef<TextInput | null>(null);
-  let modalVisibleScanThreadsRef = useRef<TextInput | null>(null);
+  const modalVisibleUrlPortsRef = useRef<TextInput | null>(null);
+  const modalVisibleScanTimeoutRef = useRef<TextInput | null>(null);
+  const modalVisibleScanThreadsRef = useRef<TextInput | null>(null);
 
   //Actions
-  const [path, setPath] = useAppScanConfigStore(store => [store.path, store.setPath]);
-  const [port, setPort] = useAppScanConfigStore(store => [store.port, store.setPort]);
-  const [scanTimeoutInMs, setScanTimeoutInMs] = useAppScanConfigStore(store => [
-    store.scanTimeoutInMs,
-    store.setScanTimeoutInMs,
-  ]);
-  const [scanThreads, setScanThreads] = useAppScanConfigStore(store => [store.scanThreads, store.setScanThreads]);
+  const ports = useAppScanConfigStore(store => store.ports);
+  const setPorts = useAppScanConfigStore(store => store.setPorts);
+
+  const scanTimeoutInMs = useAppScanConfigStore(store => store.scanTimeoutInMs);
+  const setScanTimeoutInMs = useAppScanConfigStore(
+    store => store.setScanTimeoutInMs,
+  );
+
+  const scanThreads = useAppScanConfigStore(store => store.scanThreads);
+  const setScanThreads = useAppScanConfigStore(store => store.setScanThreads);
+
   const reset = useAppScanConfigStore(store => store.reset);
   const largeScreenMode = useLargeScreenMode();
 
@@ -45,97 +56,99 @@ const ScanSetting = ({ navigation }: Props) => {
   const { colors } = useTheme();
 
   //States
-  const apps: ISettingSection[] = [
-    {
-      id: 0,
-      title: t('scanSetting.section1.header'),
-      items: [
-        {
-          id: 0,
-          iconName: 'web',
-          iconType: 'material-community',
-          title: t('scanSetting.section1.row1.title'),
-          description: t('scanSetting.section1.row1.subTitle', { id2001: path }),
-          route: '',
-        },
-        {
-          id: 1,
-          iconName: 'network',
-          iconType: 'material-community',
-          title: t('scanSetting.section1.row2.title'),
-          description: t('scanSetting.section1.row2.subTitle', { id2002: port }),
-          route: '',
-        },
-      ],
-    },
-    {
-      id: 1,
-      title: t('scanSetting.section3.header'),
-      items: [
-        {
-          id: 0,
-          iconName: 'timer-sand-full',
-          iconType: 'material-community',
-          title: t('scanSetting.section3.row1.title'),
-          description: t('scanSetting.section3.row1.subTitle', { id2003: scanTimeoutInMs }),
-          route: '',
-        },
-        {
-          id: 1,
-          iconName: 'speedometer',
-          iconType: 'material-community',
-          title: t('scanSetting.section3.row2.title'),
-          description: t('scanSetting.section3.row2.subTitle', { id2004: scanThreads }),
-          route: '',
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: t('scanSetting.section4.header'),
-      items: [
-        {
-          id: 0,
-          iconName: 'backup-restore',
-          iconType: 'material-community',
-          title: t('scanSetting.section4.row1.title'),
-          description: t('scanSetting.section4.row1.subTitle'),
-          route: 'SelectAppearance',
-        },
-      ],
-    },
-  ];
+  const apps: ISettingSection[] = useMemo(() => {
+    return [
+      {
+        id: 0,
+        title: t('scanSetting.section1.header'),
+        items: [
+          {
+            id: 0,
+            iconName: 'network',
+            iconType: 'material',
+            title: t('scanSetting.section1.row1.title'),
+            description: t('scanSetting.section1.row1.subTitle', {
+              id2001: ports.join(', '),
+            }),
+            route: '',
+          },
+        ],
+      },
+      {
+        id: 1,
+        title: t('scanSetting.section3.header'),
+        items: [
+          {
+            id: 0,
+            iconName: 'timer-sand-full',
+            iconType: 'material',
+            title: t('scanSetting.section3.row1.title'),
+            description: t('scanSetting.section3.row1.subTitle', {
+              id2003: scanTimeoutInMs,
+            }),
+            route: '',
+          },
+          {
+            id: 1,
+            iconName: 'speedometer',
+            iconType: 'material',
+            title: t('scanSetting.section3.row2.title'),
+            description: t('scanSetting.section3.row2.subTitle', {
+              id2004: scanThreads,
+            }),
+            route: '',
+          },
+        ],
+      },
+      {
+        id: 3,
+        title: t('scanSetting.section4.header'),
+        items: [
+          {
+            id: 0,
+            iconName: 'backup-restore',
+            iconType: 'material',
+            title: t('scanSetting.section4.row1.title'),
+            description: t('scanSetting.section4.row1.subTitle'),
+            route: 'SelectAppearance',
+          },
+        ],
+      },
+    ];
+  }, [ports, scanThreads, scanTimeoutInMs, t]);
 
-  const [modalVisibleUrlPath, setModalVisiblePath] = useState(false);
-  const [modalVisibleUrlPort, setModalVisiblePort] = useState(false);
-
+  const [modalVisibleUrlPorts, setModalVisiblePorts] = useState(false);
   const [modalVisibleScanTimeout, setModalVisibleScanTimeout] = useState(false);
   const [modalVisibleScanThreads, setModalVisibleScanThreads] = useState(false);
 
-  const [modalPath, setModalPath] = useState(path);
-  const [modalPort, setModalPort] = useState(`${port}`);
-
-  const [modalScanTimeout, setModalScanTimeout] = useState(`${scanTimeoutInMs}`);
+  const [modalPorts, setModalPorts] = useState<string>(ports.join(', '));
+  const [modalScanTimeout, setModalScanTimeout] = useState(
+    `${scanTimeoutInMs}`,
+  );
   const [modalScanThreads, setModalScanThreads] = useState(`${scanThreads}`);
 
-  useCallback(() => {}, []);
+  useEffect(() => {
+    setModalPorts(ports.join(', '));
+  }, [ports]);
 
-  const onGoBack = () => {
+  const onGoBack = useCallback(() => {
     navigation.pop();
-  };
+  }, [navigation]);
 
   const resetSettings = useCallback(() => {
     reset();
   }, [reset]);
 
   const onPressAppearanceOption = useCallback(
-    (item: ISettingSection, index: number, subItem: ISettingItem, subIndex: number) => {
+    (
+      item: ISettingSection,
+      index: number,
+      subItem: ISettingItem,
+      subIndex: number,
+    ) => {
       switch (true) {
         case index === 0 && subIndex === 0:
-          setModalVisiblePath(true);
-          break;
-        case index === 0 && subIndex === 1:
-          setModalVisiblePort(true);
+          setModalVisiblePorts(true);
           break;
         case index === 1 && subIndex === 0:
           setModalVisibleScanTimeout(true);
@@ -155,7 +168,8 @@ const ScanSetting = ({ navigation }: Props) => {
   return (
     <Components.AppBaseView
       edges={['bottom', 'left', 'right']}
-      style={[styles.container, { backgroundColor: colors.background }]}>
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -164,22 +178,30 @@ const ScanSetting = ({ navigation }: Props) => {
       />
 
       <Components.AppBaseView scroll edges={[]} style={styles.safeArea}>
-        <View style={[styles.listContainer, largeScreenMode && styles.cardTablet]}>
+        <View
+          style={[styles.listContainer, largeScreenMode && styles.cardTablet]}
+        >
           {apps.map((item, index) => {
             return (
               <View key={item.id.toString()}>
-                <List.Subheader style={[styles.listSubHeader, { color: colors.primary }]}>{item.title}</List.Subheader>
+                <List.Subheader
+                  style={[styles.listSubHeader, { color: colors.primary }]}
+                >
+                  {item.title}
+                </List.Subheader>
                 {item.items.map((subItem, subIndex) => {
                   return (
                     <List.Item
                       key={subItem.id.toString()}
                       titleStyle={{ color: colors.onSurface }}
                       descriptionStyle={{ color: `${colors.onSurface}88` }}
-                      onPress={() => onPressAppearanceOption(item, index, subItem, subIndex)}
+                      onPress={() =>
+                        onPressAppearanceOption(item, index, subItem, subIndex)
+                      }
                       title={subItem.title}
                       description={subItem.description}
                       left={() => (
-                        <Icon
+                        <CommonIcon
                           style={styles.listItemIcon}
                           type={subItem.iconType}
                           name={subItem.iconName}
@@ -198,46 +220,31 @@ const ScanSetting = ({ navigation }: Props) => {
       </Components.AppBaseView>
 
       <Components.AppInputDialog
-        ref={modalVisibleUrlPathRef}
-        modalVisible={modalVisibleUrlPath}
+        ref={modalVisibleUrlPortsRef}
+        modalVisible={modalVisibleUrlPorts}
         header={t('scanSetting.section1.row1.dialogTitle')}
         hint={t('scanSetting.section1.row1.dialogSubTitle')}
         onPressClose={() => {
-          setModalVisiblePath(false);
+          setModalVisiblePorts(false);
         }}
         onPressSave={() => {
-          setModalVisiblePath(false);
-          setPath(modalPath.trim());
+          setModalVisiblePorts(false);
+          const p = modalPorts.split(',').reduce((ac: number[], v: string) => {
+            if (!isNaN(Number(v))) {
+              ac.push(Number(v));
+            }
+            return ac;
+          }, []);
+          setPorts(p);
         }}
         placeholder={t('scanSetting.section1.row1.dialogTitle')!}
-        value={modalPath}
-        onChangeText={text => setModalPath(text)}
-        onBackButtonPress={() => {
-          setModalVisiblePath(false);
-        }}
-      />
-
-      <Components.AppInputDialog
-        ref={modalVisibleUrlPortRef}
-        modalVisible={modalVisibleUrlPort}
-        header={t('scanSetting.section1.row2.dialogTitle')}
-        hint={t('scanSetting.section1.row2.dialogSubTitle')}
-        onPressClose={async () => {
-          setModalVisiblePort(false);
-        }}
-        onPressSave={async () => {
-          setModalVisiblePort(false);
-          if (!isNaN(Number(modalPort))) {
-            setPort(parseInt(modalPort, 10));
-          }
-        }}
-        placeholder={t('scanSetting.section1.row2.dialogTitle')!}
-        value={modalPort}
-        onChangeText={text => setModalPort(text)}
+        value={modalPorts}
+        onChangeText={text => setModalPorts(text)}
         keyboardType={'numeric'}
         onBackButtonPress={() => {
-          setModalVisiblePath(false);
+          setModalVisiblePorts(false);
         }}
+        multiline={false}
       />
 
       <Components.AppInputDialog
@@ -245,10 +252,10 @@ const ScanSetting = ({ navigation }: Props) => {
         modalVisible={modalVisibleScanTimeout}
         header={t('scanSetting.section3.row1.dialogTitle')}
         hint={t('scanSetting.section3.row1.dialogSubTitle')}
-        onPressClose={async () => {
+        onPressClose={() => {
           setModalVisibleScanTimeout(false);
         }}
-        onPressSave={async () => {
+        onPressSave={() => {
           setModalVisibleScanTimeout(false);
           if (!isNaN(Number(modalScanTimeout))) {
             setScanTimeoutInMs(parseInt(modalScanTimeout, 10));
@@ -259,7 +266,7 @@ const ScanSetting = ({ navigation }: Props) => {
         onChangeText={text => setModalScanTimeout(text)}
         keyboardType={'numeric'}
         onBackButtonPress={() => {
-          setModalVisiblePath(false);
+          setModalVisibleScanTimeout(false);
         }}
       />
 
@@ -268,10 +275,10 @@ const ScanSetting = ({ navigation }: Props) => {
         modalVisible={modalVisibleScanThreads}
         header={t('scanSetting.section3.row2.dialogTitle')}
         hint={t('scanSetting.section3.row2.dialogSubTitle')}
-        onPressClose={async () => {
+        onPressClose={() => {
           setModalVisibleScanThreads(false);
         }}
-        onPressSave={async () => {
+        onPressSave={() => {
           setModalVisibleScanThreads(false);
           if (!isNaN(Number(modalScanThreads))) {
             setScanThreads(parseInt(modalScanThreads, 10));
@@ -282,7 +289,7 @@ const ScanSetting = ({ navigation }: Props) => {
         onChangeText={text => setModalScanThreads(text)}
         keyboardType={'numeric'}
         onBackButtonPress={() => {
-          setModalVisiblePath(false);
+          setModalVisibleScanThreads(false);
         }}
       />
     </Components.AppBaseView>

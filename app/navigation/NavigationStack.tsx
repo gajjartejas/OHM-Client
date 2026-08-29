@@ -1,12 +1,16 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import { Platform, StatusBar } from 'react-native';
+import * as React from 'react';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
 
 //Third Party
-import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
-import analytics from '@react-native-firebase/analytics';
+import { getAnalytics, logScreenView } from '@react-native-firebase/analytics';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 //Screens
 import LoggedInTabNavigator from 'app/navigation/HomeTabNavigator';
@@ -16,6 +20,7 @@ import { HomeTabNavigatorParams } from 'app/navigation/types';
 import useToastConfig from 'app/hooks/useToastConfig';
 import { PaperThemeDark, PaperThemeDefault } from 'app/config/app-theme-config';
 import useThemeConfigStore from 'app/store/themeConfig';
+import { useCallback, useRef, useState } from 'react';
 
 const homeOptions: Object = {
   title: 'Home',
@@ -26,16 +31,21 @@ const homeOptions: Object = {
 };
 
 const RootNavigation: React.FC = () => {
-  const navigationRef = useNavigationContainerRef();
-  const routeNameRef = useRef<any | null>();
+  const navigationRef = useNavigationContainerRef<any>();
+  const routeNameRef = useRef<any | null>(null);
+  const [devScreenName, setDevScreenName] = useState<string>('');
+  const insets = useSafeAreaInsets();
+
   const isDark = useThemeConfigStore(state => state.isDark);
   const primary = useThemeConfigStore(state => state.primary);
   const onPrimary = useThemeConfigStore(state => state.onPrimary);
-  const secondaryContainer = useThemeConfigStore(state => state.secondaryContainer);
+  const secondaryContainer = useThemeConfigStore(
+    state => state.secondaryContainer,
+  );
   const onSecondary = useThemeConfigStore(state => state.onSecondary);
   const Stack = createNativeStackNavigator<HomeTabNavigatorParams>();
   const toastConfig = useToastConfig();
-  const theme = isDark
+  const theme: any = isDark
     ? {
         ...PaperThemeDark,
         colors: {
@@ -57,31 +67,42 @@ const RootNavigation: React.FC = () => {
         },
       };
 
-  useEffect(() => {
-    if (Platform.OS === 'ios') {
-      return;
-    }
-    let to = setTimeout(() => {
-      StatusBar.setBackgroundColor('#FFFFFF01');
-    }, 500);
-
-    return () => clearTimeout(to);
-  }, []);
-
   const onReady = useCallback(async () => {
-    routeNameRef.current = navigationRef?.getCurrentRoute()?.name;
+    const currentRoute = navigationRef?.getCurrentRoute();
+    const currentRouteName = currentRoute?.name;
+    routeNameRef.current = currentRouteName;
+    if (__DEV__ && currentRouteName) {
+      setDevScreenName(currentRouteName);
+    }
   }, [navigationRef]);
 
   const onStateChange = useCallback(async () => {
     const previousRouteName = routeNameRef.current;
-    const currentRouteName = navigationRef?.getCurrentRoute()?.name;
-    const currentRouteParams = navigationRef?.getCurrentRoute()?.params;
+    const currentRoute = navigationRef?.getCurrentRoute();
+    const currentRouteName = currentRoute?.name;
+    const currentRouteParams = currentRoute?.params;
 
-    if (previousRouteName !== currentRouteName) {
-      analytics().logScreenView({
+    if (__DEV__ && currentRouteName) {
+      setDevScreenName(currentRouteName);
+    }
+
+    if (previousRouteName !== currentRouteName && currentRouteName) {
+      const sanitizedParams: Record<string, string | number | boolean> = {};
+      if (currentRouteParams && typeof currentRouteParams === 'object') {
+        for (const [key, value] of Object.entries(currentRouteParams)) {
+          if (
+            typeof value === 'string' ||
+            typeof value === 'number' ||
+            typeof value === 'boolean'
+          ) {
+            sanitizedParams[key] = value;
+          }
+        }
+      }
+      logScreenView(getAnalytics(), {
         screen_name: currentRouteName,
         screen_class: currentRouteName,
-        screen_params: currentRouteParams,
+        ...sanitizedParams,
       });
     }
     routeNameRef.current = currentRouteName;
@@ -89,19 +110,59 @@ const RootNavigation: React.FC = () => {
 
   return (
     <PaperProvider theme={theme}>
-      <NavigationContainer ref={navigationRef} theme={theme} onReady={onReady} onStateChange={onStateChange}>
+      <NavigationContainer
+        ref={navigationRef}
+        theme={theme}
+        onReady={onReady}
+        onStateChange={onStateChange}
+      >
         <StatusBar
-          backgroundColor={'#FFFFFF00'}
           barStyle={isDark ? 'light-content' : 'dark-content'}
-          translucent={true}
+          animated={true}
         />
+        {__DEV__ && !!devScreenName && (
+          <View
+            pointerEvents="none"
+            style={[
+              styles.devScreenBadge,
+              { top: Math.max(insets.top, 8) + 2 },
+            ]}
+          >
+            <Text style={styles.devScreenText}>{devScreenName}</Text>
+          </View>
+        )}
         <Stack.Navigator>
-          <Stack.Screen name="LoggedInTabNavigator" component={LoggedInTabNavigator} options={homeOptions} />
+          <Stack.Screen
+            name="LoggedInTabNavigator"
+            component={LoggedInTabNavigator}
+            options={homeOptions}
+          />
         </Stack.Navigator>
         <Toast config={toastConfig} />
       </NavigationContainer>
     </PaperProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  devScreenBadge: {
+    position: 'absolute',
+    alignSelf: 'center',
+    zIndex: 999999,
+    elevation: 999999,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 8,
+    borderWidth: 0.5,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  devScreenText: {
+    color: '#00FF66',
+    fontSize: 9,
+    fontWeight: '700',
+    letterSpacing: 0.5,
+  },
+});
 
 export default RootNavigation;

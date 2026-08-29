@@ -1,0 +1,35 @@
+diff --git a/node_modules/react-native-nitro-modules/android/build.gradle b/node_modules/react-native-nitro-modules/android/build.gradle
+index f564aad..7e20163 100644
+--- a/node_modules/react-native-nitro-modules/android/build.gradle
++++ b/node_modules/react-native-nitro-modules/android/build.gradle
+@@ -38,6 +38,19 @@ def getExtOrIntegerDefault(name) {
+ 
+ logger.warn("[NitroModules] 🔥 Your app is boosted by nitro modules!")
+ 
++def prepareHeadersDir = {
++  def headersDir = file("${project.buildDir}/headers/nitromodules/NitroModules/")
++  headersDir.mkdirs()
++  copy {
++    from fileTree('./src/main/cpp').filter { it.isFile() }
++    from fileTree('../cpp/').filter { it.isFile() }
++    include "*.hpp"
++    into headersDir
++    includeEmptyDirs = false
++  }
++}
++prepareHeadersDir()
++
+ android {
+   namespace "com.margelo.nitro"
+ 
+@@ -157,6 +170,10 @@ if (isNewArchitectureEnabled()) {
+   }
+ }
+ 
++afterEvaluate {
++  prepareHeadersDir()
++}
++
+ tasks.register('prepareHeaders', Copy) {
+   from fileTree('./src/main/cpp').filter { it.isFile() }
+   from fileTree('../cpp/').filter { it.isFile() }

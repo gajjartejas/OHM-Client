@@ -6,6 +6,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //App Modules
 import { IHintConfig } from 'app/hooks/useHintConfig';
+import {
+  getCrashlytics,
+  recordError,
+} from '@react-native-firebase/crashlytics';
 
 interface ToastMessage {
   type: 'info' | 'success' | 'warning' | 'error';
@@ -16,7 +20,7 @@ interface ToastMessage {
 
 const useToastMessages = (hintConfig: IHintConfig): null => {
   const { id, hints } = hintConfig;
-  const timersRef = useRef<NodeJS.Timeout[]>([]);
+  const timersRef = useRef<any[]>([]);
 
   useEffect(() => {
     const clearToast = (): void => {
@@ -28,29 +32,32 @@ const useToastMessages = (hintConfig: IHintConfig): null => {
     const visibilityTime = 4000;
     const delay = 1000;
 
-    AsyncStorage.getItem(id.toString(), (error, result) => {
-      if (!error && result === '1' && !__DEV__) {
-        return;
-      }
-      hints.forEach((hint, index) => {
-        const timer = setTimeout(() => {
-          const toastMessage: ToastMessage = {
-            type: 'info',
-            text1: hint,
-            visibilityTime: visibilityTime,
-            position: 'bottom',
-          };
+    AsyncStorage.getItem(id.toString())
+      .then(result => {
+        if (result === '1' && !__DEV__) {
+          return;
+        }
+        hints.forEach((hint, index) => {
+          const timer = setTimeout(() => {
+            const toastMessage: ToastMessage = {
+              type: 'info',
+              text1: hint,
+              visibilityTime: visibilityTime,
+              position: 'bottom',
+            };
 
-          Toast.show(toastMessage);
-          if (index === hints.length - 1) {
-            AsyncStorage.setItem(id.toString(), '1').then(() => {});
-          }
-        }, visibilityTime * index + (index + 1) * delay);
-        timersRef.current.push(timer);
+            Toast.show(toastMessage);
+            if (index === hints.length - 1) {
+              AsyncStorage.setItem(id.toString(), '1').then(() => {});
+            }
+          }, visibilityTime * index + (index + 1) * delay);
+          timersRef.current.push(timer);
+        });
+      })
+      .catch((error: any) => {
+        recordError(getCrashlytics(), error, 'useToastMessages.ts->readSvg');
+        console.log('error', error);
       });
-    }).catch(error => {
-      console.log('error', error);
-    });
 
     return clearToast;
   }, [hints, id]);

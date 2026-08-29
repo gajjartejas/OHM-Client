@@ -4,7 +4,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 //Third Party
 import { useTheme } from 'react-native-paper';
 import { BaseToast } from 'react-native-toast-message';
-import Icon from 'react-native-easy-icon';
+import CommonIcon from './CommonIcon';
 import { ToastConfigParams } from 'react-native-toast-message/lib/src/types';
 
 //App modules
@@ -33,7 +33,7 @@ const AppToast = (props: ToastConfigParams<IAppSuccessToastProps>) => {
         },
         largeScreenMode && { width: Dimensions.get('window').width * 0.7 },
       ]}
-      renderLeadingIcon={() => <Icon type={'font-awesome'} name={'info-circle'} color={colors.white} size={18} />}
+      renderLeadingIcon={() => <CommonIcon type={'fontawesome6'} name={'circle-info'} color={colors.white} size={18} />}
       contentContainerStyle={styles.contentContainerStyle}
       text1Style={[styles.text1Style, { color: colors.white }]}
       text2Style={[styles.text2Style, { color: colors.white }]}

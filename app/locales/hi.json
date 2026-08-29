@@ -163,6 +163,11 @@
     "appsTitle": "और ऐप"
   },
   "scanDevices": {
+    "title": "निकट के उपकरण",
+    "subTitle": "निकट के उपकरण",
+    "scanning": "नेटवर्क स्कैन किया जा रहा है...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "खोजे गए: {{count}}",
     "emptyData": {
       "help": "मदद",
       "or": "या",
@@ -170,9 +175,7 @@
       "subtitle": "कृपया पुनः स्कैन करने का प्रयास करें",
       "title": "आस-पास कोई उपकरण नहीं मिला!"
     },
-    "refresh": "ताज़ा करना",
-    "subTitle": "निकट के उपकरण",
-    "title": "निकट के उपकरण"
+    "refresh": "ताज़ा करना"
   },
   "scanSetting": {
     "section1": {

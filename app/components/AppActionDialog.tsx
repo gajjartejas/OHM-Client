@@ -20,16 +20,36 @@ interface IAppActionDialogProps {
 
 function AppActionDialog(props: IAppActionDialogProps) {
   //Constants
-  const { title, description, onPressConfirm, onPressCancel, confirmText, cancelText } = props;
+  const {
+    title,
+    description,
+    onPressConfirm,
+    onPressCancel,
+    confirmText,
+    cancelText,
+  } = props;
   const { colors } = useTheme();
   const largeScreenMode = useLargeScreenMode();
 
   return (
     <Portal>
-      <Dialog style={[largeScreenMode && styles.cardTablet]} visible={props.visible} onDismiss={onPressCancel}>
-        <Dialog.Title style={{ color: colors.onBackground }}>{title}</Dialog.Title>
+      <Dialog
+        style={[largeScreenMode && styles.cardTablet]}
+        visible={props.visible}
+        onDismiss={onPressCancel}
+      >
+        <Dialog.Title style={{ color: colors.onBackground }}>
+          {title}
+        </Dialog.Title>
         <Dialog.Content>
-          <Text style={[styles.descriptionText, { color: `${colors.onBackground}88` }]}>{description}</Text>
+          <Text
+            style={[
+              styles.descriptionText,
+              { color: `${colors.onBackground}88` },
+            ]}
+          >
+            {description}
+          </Text>
         </Dialog.Content>
         <Dialog.Actions>
           <Button onPress={onPressCancel}>{cancelText}</Button>

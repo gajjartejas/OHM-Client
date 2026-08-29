@@ -1,4 +1,35 @@
-rootProject.name = 'OpenHardwareMonClient'
-apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+pluginManagement { includeBuild("../node_modules/@react-native/gradle-plugin") }
+plugins { id("com.facebook.react.settings") }
+
+def findNodeExecutable() {
+    def candidates = [
+        System.getenv("NODE_BINARY"),
+        "/opt/homebrew/bin/node",
+        "/usr/local/bin/node",
+    ]
+    def nvmDir = new File("${System.getProperty('user.home')}/.nvm/versions/node")
+    if (nvmDir.exists()) {
+        nvmDir.listFiles()?.each { dir ->
+            candidates.add("${dir.absolutePath}/bin/node")
+        }
+    }
+    System.getenv("PATH")?.split(File.pathSeparator)?.each {
+        candidates.add("$it/node")
+    }
+    for (String path : candidates) {
+        if (path && new File(path).exists() && new File(path).canExecute()) {
+            return path
+        }
+    }
+    return "node"
+}
+
+def nodeExecutable = findNodeExecutable()
+def cliScript = file("../node_modules/@react-native-community/cli/build/bin.js").absolutePath
+
+extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> 
+    ex.autolinkLibrariesFromCommand([nodeExecutable, cliScript, "config"]) 
+}
+rootProject.name = 'OHMC'
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')

@@ -63,29 +63,44 @@ const initialState: IAppWebViewConfigState = {
   allowsProtectedMedia: false,
 };
 
-const useAppWebViewConfigStore = create<IAppWebViewConfigState & IAppWebViewConfigActions>()(
+const useAppWebViewConfigStore = create<
+  IAppWebViewConfigState & IAppWebViewConfigActions
+>()(
   devtools(
     persist(
       set => ({
         ...initialState,
-        setMediaPlaybackRequiresUserAction: (value: boolean) => set(() => ({ mediaPlaybackRequiresUserAction: value })),
-        setScalesPageToFit: (value: boolean) => set(() => ({ scalesPageToFit: value })),
-        setDomStorageEnabled: (value: boolean) => set(() => ({ domStorageEnabled: value })),
-        setJavaScriptEnabled: (value: boolean) => set(() => ({ javaScriptEnabled: value })),
-        setThirdPartyCookiesEnabled: (value: boolean) => set(() => ({ thirdPartyCookiesEnabled: value })),
-        setUserAgent: (value: string | undefined) => set(() => ({ userAgent: value })),
-        setAllowsFullScreenVideo: (value: boolean) => set(() => ({ allowsFullScreenVideo: value })),
-        setAllowsInlineMediaPlayback: (value: boolean) => set(() => ({ allowsInlineMediaPlayback: value })),
-        setAllowsAirPlayForMediaPlayback: (value: boolean) => set(() => ({ allowsAirPlayForMediaPlayback: value })),
+        setMediaPlaybackRequiresUserAction: (value: boolean) =>
+          set(() => ({ mediaPlaybackRequiresUserAction: value })),
+        setScalesPageToFit: (value: boolean) =>
+          set(() => ({ scalesPageToFit: value })),
+        setDomStorageEnabled: (value: boolean) =>
+          set(() => ({ domStorageEnabled: value })),
+        setJavaScriptEnabled: (value: boolean) =>
+          set(() => ({ javaScriptEnabled: value })),
+        setThirdPartyCookiesEnabled: (value: boolean) =>
+          set(() => ({ thirdPartyCookiesEnabled: value })),
+        setUserAgent: (value: string | undefined) =>
+          set(() => ({ userAgent: value })),
+        setAllowsFullScreenVideo: (value: boolean) =>
+          set(() => ({ allowsFullScreenVideo: value })),
+        setAllowsInlineMediaPlayback: (value: boolean) =>
+          set(() => ({ allowsInlineMediaPlayback: value })),
+        setAllowsAirPlayForMediaPlayback: (value: boolean) =>
+          set(() => ({ allowsAirPlayForMediaPlayback: value })),
         setBounces: (value: boolean) => set(() => ({ bounces: value })),
         setContentMode: (value: string) => set(() => ({ contentMode: value })),
-        setGeolocationEnabled: (value: boolean) => set(() => ({ geolocationEnabled: value })),
-        setAllowFileAccessFromFileUrls: (value: boolean) => set(() => ({ allowFileAccessFromFileUrls: value })),
+        setGeolocationEnabled: (value: boolean) =>
+          set(() => ({ geolocationEnabled: value })),
+        setAllowFileAccessFromFileUrls: (value: boolean) =>
+          set(() => ({ allowFileAccessFromFileUrls: value })),
         setAllowsBackForwardNavigationGestures: (value: boolean) =>
           set(() => ({ allowsBackForwardNavigationGestures: value })),
-        setPullToRefreshEnabled: (value: boolean) => set(() => ({ pullToRefreshEnabled: value })),
+        setPullToRefreshEnabled: (value: boolean) =>
+          set(() => ({ pullToRefreshEnabled: value })),
         setForceDarkOn: (value: boolean) => set(() => ({ forceDarkOn: value })),
-        setAllowsProtectedMedia: (value: boolean) => set(() => ({ allowsProtectedMedia: value })),
+        setAllowsProtectedMedia: (value: boolean) =>
+          set(() => ({ allowsProtectedMedia: value })),
         reset: () => set(_state => ({ ...initialState })),
       }),
       {

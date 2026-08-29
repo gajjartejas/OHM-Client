@@ -37,8 +37,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 16,
   },
-  listSubHeader: {
-    marginLeft: 36,
+  listSubHeader: {},
+  itemContainer: {
+    paddingHorizontal: 16,
   },
   listItem: {
     marginHorizontal: 20,
@@ -59,6 +60,9 @@ const styles = StyleSheet.create({
   cardTablet: {
     width: '70%',
     alignSelf: 'center',
+  },
+  topMargin: {
+    marginTop: 6,
   },
 });
 

@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, Animated } from 'react-native';
+import { View, Animated, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 
 //ThirdParty
-import { Button, Dialog, IconButton, Menu, Portal, Snackbar, Text } from 'react-native-paper';
+import { Button, Dialog, IconButton, Menu, Portal, Snackbar, Text, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 //App modules
@@ -23,6 +22,11 @@ import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import getLiveURL from 'app/utils/getLiveURL';
 import inspectService from 'app/services/inspectService';
 
+interface IAppError {
+  message?: string;
+  code?: number;
+}
+
 const THRESHOLD_DIFF_Y = 100;
 
 //Params
@@ -30,9 +34,8 @@ type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'DeviceInfo'>;
 
 const DeviceInfo = ({ navigation }: Props) => {
   //Refs
-  const refDeviceInfoRequestInProgress = useRef(false);
-  const refCurrentURL = useRef<string | null>(null);
   const refJSONData = useRef<string | null>(null);
+  const refDeviceInfoRequestInProgress = useRef<boolean>(false);
 
   //Actions
 
@@ -54,9 +57,9 @@ const DeviceInfo = ({ navigation }: Props) => {
   });
 
   //States
+  const [deviceInfos, setDeviceInfos] = useState<ICardViewModel[]>([]);
   const [menuVisible, setMenuVisible] = useState(false);
   const [title, setTitle] = useState('');
-  const [deviceInfos, setDeviceInfos] = useState<ICardViewModel[]>([]);
   const [errorMessageTitle, setErrorMessageTitle] = useState<string | null>(null);
   const [errorMessageDesc, setErrorMessageDesc] = useState<string | null>(null);
   const [buttonTitle, setButtonTitle] = useState<string | null>(null);
@@ -66,8 +69,8 @@ const DeviceInfo = ({ navigation }: Props) => {
   const [subTitleDialogVisible, setSubTitleDialogVisible] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState<boolean>(false);
   const [appServerAltURL, setAppServerAltURL] = useState<string | null>(null);
-  const [switchUrlError, setSwitchUrlError] = useState<any | null>(null);
-  const [error, setError] = useState<any | null>(null);
+  const [switchUrlError, setSwitchUrlError] = useState<IAppError | null>(null);
+  const [error, setError] = useState<IAppError | null>(null);
 
   const urls: string[] = useMemo(() => {
     return selectedDevice
@@ -188,7 +191,7 @@ const DeviceInfo = ({ navigation }: Props) => {
     }
 
     setErrorMessageTitle(t('deviceInfo.emptyData.item4.title'));
-    setErrorMessageDesc(error.message);
+    setErrorMessageDesc(error.message ?? null);
     setButtonTitle(t('deviceInfo.emptyData.item4.button'));
   }, [deviceInfos, error, t]);
 
@@ -214,8 +217,8 @@ const DeviceInfo = ({ navigation }: Props) => {
       refJSONData.current = JSON.stringify(response);
       setError(null);
       setDeviceInfos(convertToViewModel(response));
-    } catch (e: any) {
-      setError(e);
+    } catch (e: unknown) {
+      setError(e as IAppError);
     }
 
     setConnecting(false);
@@ -259,7 +262,7 @@ const DeviceInfo = ({ navigation }: Props) => {
   }, []);
 
   const onOpenWith = useCallback(() => {
-    navigation.navigate('DeviceInfoWebView', {});
+    navigation.navigate('DeviceInfoWebView');
   }, [navigation]);
 
   const onInfo = useCallback(() => {
@@ -285,7 +288,7 @@ const DeviceInfo = ({ navigation }: Props) => {
   }, []);
 
   const handleScroll = useCallback(
-    (event: any) => {
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const { y } = event.nativeEvent.contentOffset;
 
       if (y < 0) {
@@ -305,7 +308,7 @@ const DeviceInfo = ({ navigation }: Props) => {
 
   const onScroll = Animated.event([{ nativeEvent: { contentOffset: {} } }], {
     useNativeDriver: true,
-    listener: event => handleScroll(event),
+    listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => handleScroll(event),
   });
 
   const contentContainerStyle = useMemo(
@@ -332,9 +335,7 @@ const DeviceInfo = ({ navigation }: Props) => {
 
   const onCopyDialog = useCallback(() => {
     setInfoDialogVisible(false);
-    if (refCurrentURL.current !== null) {
-      Clipboard.setString(refCurrentURL.current);
-    } else if (appServerURL) {
+    if (appServerURL) {
       Clipboard.setString(appServerURL);
     }
   }, [appServerURL]);
@@ -348,9 +349,7 @@ const DeviceInfo = ({ navigation }: Props) => {
   }, []);
 
   return (
-    <Components.AppBaseView
-      edges={['bottom', 'left', 'right']}
-      style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView edges={['bottom', 'left', 'right']} style={styles.container}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -362,7 +361,7 @@ const DeviceInfo = ({ navigation }: Props) => {
         }
       />
 
-      {errorMessageDesc && deviceInfos.length > 0 && (
+      {errorMessageDesc && (
         <Components.AppMiniBanner
           onPress={onPressSetting}
           RightViewComponent={
@@ -372,19 +371,22 @@ const DeviceInfo = ({ navigation }: Props) => {
         />
       )}
 
-      {deviceInfos.length > 0 && !connecting && (
+      {deviceInfos && (
         <View style={styles.subView}>
-          <Animated.ScrollView onScroll={onScroll} scrollEventThrottle={16} style={styles.scrollView}>
-            {deviceInfos.map(item => {
-              return <Components.CardSection key={item.id} value={item} root={true} />;
+          <Animated.ScrollView
+            style={styles.scrollView}
+            onScroll={onScroll}
+            scrollEventThrottle={16}>
+            {deviceInfos.map(m => {
+              return <Components.CardSection key={m.id.toString()} root={true} value={m} />;
             })}
           </Animated.ScrollView>
         </View>
       )}
 
-      {deviceInfos.length < 1 && error && !connecting && (
+      {deviceInfos.length < 1 && !!error && !connecting && (
         <Components.AppEmptyDataView
-          iconType={'font-awesome5'}
+          iconType={'fontawesome6'}
           iconName="box-open"
           style={styles.emptyView}
           header={errorMessageTitle}

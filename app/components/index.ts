@@ -14,6 +14,7 @@ import AppTextInput from './AppTextInput';
 import AppActionDialog from './AppActionDialog';
 import AppInputDialog from './AppInputDialog';
 import AppRadioSelectDialog from './AppRadioSelectDialog';
+import CommonIcon from './CommonIcon';
 
 const Components = {
   AppMiniBanner,
@@ -32,6 +33,7 @@ const Components = {
   AppActionDialog,
   AppInputDialog,
   AppRadioSelectDialog,
+  CommonIcon
 };
 
 export default Components;
