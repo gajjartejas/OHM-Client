@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   subView: {
-    marginHorizontal: 8,
+    marginHorizontal: 2,
     flex: 1,
   },
   noDataButtonsContainer: {

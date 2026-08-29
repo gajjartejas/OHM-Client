@@ -4,6 +4,8 @@ apply plugin: "com.facebook.react"
 apply plugin: "com.google.gms.google-services"
 apply plugin: "com.google.firebase.crashlytics"
 
+project.ext.set("REACT_NATIVE_NODE_MODULES_DIR", file("${rootDir}/../node_modules/react-native"))
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -144,6 +146,4 @@ dependencies {
         implementation jscFlavor
     }
 }
-
-apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
 

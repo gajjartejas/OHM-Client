@@ -148,6 +148,7 @@
   },
   "deviceInfo": {
     "card": {
+      "name": "Sensor",
       "min": "Min",
       "current": "Current",
       "max": "Max"
@@ -183,6 +184,8 @@
       "done": "Done"
     },
     "copyJSON": "Copy JSON",
+    "showMinValue": "Show Min Value",
+    "showMaxValue": "Show Max Value",
     "copyURL": "Copy URL",
     "info": "Info",
     "loading": "Loading...",

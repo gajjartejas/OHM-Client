@@ -6,6 +6,7 @@ buildscript {
         targetSdkVersion = 36
         ndkVersion = "27.1.12297006"
         kotlinVersion = "2.2.0"
+        REACT_NATIVE_NODE_MODULES_DIR = file("${rootDir}/../node_modules/react-native")
     }
     repositories {
         google()
@@ -66,6 +67,10 @@ static def resolveNodeExecutable() {
 }
 
 allprojects {
+    ext {
+        NODE_BINARY = resolveNodeExecutable()
+        REACT_NATIVE_NODE_MODULES_DIR = file("${rootDir}/../node_modules/react-native")
+    }
     plugins.withId("com.facebook.react") {
         def reactExt = project.extensions.findByName("react")
         if (reactExt != null) {

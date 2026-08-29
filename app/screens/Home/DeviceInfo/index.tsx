@@ -47,6 +47,10 @@ const DeviceInfo = ({ navigation }: Props) => {
 
   const selectedDevice = useAppConfigStore(store => store.selectedDevice);
   const switchDeviceIp = useAppConfigStore(store => store.switchDeviceIp);
+  const showMinValue = useAppConfigStore(store => store.showMinValue);
+  const toggleShowMinValue = useAppConfigStore(store => store.toggleShowMinValue);
+  const showMaxValue = useAppConfigStore(store => store.showMaxValue);
+  const toggleShowMaxValue = useAppConfigStore(store => store.toggleShowMaxValue);
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const diffClamp = Animated.diffClamp(scrollY, 0, THRESHOLD_DIFF_Y);
@@ -344,6 +348,16 @@ const DeviceInfo = ({ navigation }: Props) => {
     setInfoDialogVisible(false);
   }, []);
 
+  const onToggleMinValue = useCallback(() => {
+    toggleShowMinValue();
+    setMenuVisible(false);
+  }, [toggleShowMinValue]);
+
+  const onToggleMaxValue = useCallback(() => {
+    toggleShowMaxValue();
+    setMenuVisible(false);
+  }, [toggleShowMaxValue]);
+
   const onDismissSnackbar = useCallback(() => {
     setSnackbarVisible(false);
   }, []);
@@ -375,6 +389,7 @@ const DeviceInfo = ({ navigation }: Props) => {
         <View style={styles.subView}>
           <Animated.ScrollView
             style={styles.scrollView}
+            contentContainerStyle={{ paddingBottom: 85, paddingTop: 4 }}
             onScroll={onScroll}
             scrollEventThrottle={16}>
             {deviceInfos.map(m => {
@@ -408,6 +423,16 @@ const DeviceInfo = ({ navigation }: Props) => {
           onDismiss={onDismissModal}
           anchor={<IconButton icon={'dots-vertical'} size={26} onPress={onPressMore} />}>
           <Menu.Item leadingIcon={'content-copy'} onPress={onCopyJSON} title={t('deviceInfo.copyJSON')} />
+          <Menu.Item
+            leadingIcon={showMinValue ? 'checkbox-marked' : 'checkbox-blank-outline'}
+            onPress={onToggleMinValue}
+            title={t('deviceInfo.showMinValue')}
+          />
+          <Menu.Item
+            leadingIcon={showMaxValue ? 'checkbox-marked' : 'checkbox-blank-outline'}
+            onPress={onToggleMaxValue}
+            title={t('deviceInfo.showMaxValue')}
+          />
           <Menu.Item leadingIcon={'information-outline'} onPress={onInfo} title={t('deviceInfo.info')} />
         </Menu>
       </Animated.View>

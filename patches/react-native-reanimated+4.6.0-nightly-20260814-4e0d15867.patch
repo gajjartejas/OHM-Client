@@ -1,0 +1,84 @@
+diff --git a/node_modules/react-native-reanimated/android/build.gradle.kts b/node_modules/react-native-reanimated/android/build.gradle.kts
+index 8dc918d..8d99b8d 100644
+--- a/node_modules/react-native-reanimated/android/build.gradle.kts
++++ b/node_modules/react-native-reanimated/android/build.gradle.kts
+@@ -288,9 +288,54 @@ androidComponents {
+     }
+ }
+ 
++fun resolveNodeExecutable(): String {
++    val nodeProperty = safeAppExtGet("NODE_EXECUTABLE", null)?.toString()
++    if (!nodeProperty.isNullOrEmpty() && File(nodeProperty).exists()) {
++        return nodeProperty
++    }
++    val nodeEnv = System.getenv("NODE_BINARY")
++    if (!nodeEnv.isNullOrEmpty() && File(nodeEnv).exists()) {
++        return nodeEnv
++    }
++    val standardPaths = listOf(
++        "/opt/homebrew/bin/node",
++        "/usr/local/bin/node",
++        "/usr/bin/node",
++        "/bin/node"
++    )
++    for (path in standardPaths) {
++        if (File(path).exists()) return path
++    }
++    val userHome = System.getProperty("user.home") ?: ""
++    if (userHome.isNotEmpty()) {
++        val nvmDir = File(userHome, ".nvm/versions/node")
++        if (nvmDir.exists() && nvmDir.isDirectory) {
++            val nvmNodes = nvmDir.listFiles()
++                ?.filter { it.isDirectory }
++                ?.map { File(it, "bin/node") }
++                ?.filter { it.exists() }
++                ?.sortedByDescending { it.parentFile.parentFile.name }
++            if (!nvmNodes.isNullOrEmpty()) {
++                return nvmNodes.first().absolutePath
++            }
++        }
++        val managerPaths = listOf(
++            "$userHome/.local/share/fnm/current/bin/node",
++            "$userHome/.fnm/current/bin/node",
++            "$userHome/.volta/bin/node",
++            "$userHome/.asdf/shims/node",
++            "$userHome/.nodenv/shims/node"
++        )
++        for (path in managerPaths) {
++            if (File(path).exists()) return path
++        }
++    }
++    return "node"
++}
++
+ val validateReactNativeVersionResult = providers.exec {
+     workingDir(projectDir.path)
+-    commandLine("node", "./../scripts/validate-react-native-version.js", REACT_NATIVE_VERSION)
++    commandLine(resolveNodeExecutable(), "./../scripts/validate-react-native-version.js", REACT_NATIVE_VERSION)
+     isIgnoreExitValue = true
+ }
+ 
+@@ -307,7 +352,7 @@ tasks.named("preBuild") { dependsOn("assertMinimalReactNativeVersionTask") }
+ 
+ val validateWorkletsBuildResult = providers.exec {
+     workingDir(projectDir.path)
+-    commandLine("node", "./../scripts/validate-worklets-build.js")
++    commandLine(resolveNodeExecutable(), "./../scripts/validate-worklets-build.js")
+     isIgnoreExitValue = true
+ }
+ 
+diff --git a/node_modules/react-native-reanimated/src/ReanimatedModule/js-reanimated/JSReanimated.ts b/node_modules/react-native-reanimated/src/ReanimatedModule/js-reanimated/JSReanimated.ts
+index e53b3e1..57d173b 100644
+--- a/node_modules/react-native-reanimated/src/ReanimatedModule/js-reanimated/JSReanimated.ts
++++ b/node_modules/react-native-reanimated/src/ReanimatedModule/js-reanimated/JSReanimated.ts
+@@ -283,9 +283,7 @@ class JSReanimated implements IReanimatedModule {
+   }
+ 
+   setCSSEventHandler(_handler: CSSEventHandler): void {
+-    throw new Error(
+-      '[Reanimated] `setCSSEventHandler` is not available in JSReanimated.'
+-    );
++    // noop
+   }
+ 
+   markNodeAsRemovable(_shadowNodeWrapper: ShadowNodeWrapper): void {

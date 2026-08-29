@@ -78,11 +78,14 @@
   },
   "deviceInfo": {
     "card": {
+      "name": "Capteur",
       "current": "Actuel",
       "max": "Max.",
       "min": "Min."
     },
     "copyJSON": "Copier JSON",
+    "showMinValue": "Afficher la valeur min",
+    "showMaxValue": "Afficher la valeur max",
     "copyURL": "Copier l'URL",
     "emptyData": {
       "item1": {
