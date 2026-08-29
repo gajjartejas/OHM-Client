@@ -3,8 +3,7 @@ import { StyleSheet, View, ViewStyle } from 'react-native';
 
 //ThirdParty
 import { Text, useTheme } from 'react-native-paper';
-import Icon from 'react-native-easy-icon';
-import { IconType } from 'react-native-easy-icon/src/Icon';
+import CommonIcon, { IconType } from 'app/components/CommonIcon';
 
 //Interface
 interface IAppEmptyDataViewProps {
@@ -23,7 +22,7 @@ function AppEmptyDataView(props: IAppEmptyDataViewProps) {
   return (
     <View style={[styles.container, props.style]}>
       {props.iconName && props.iconType && (
-        <Icon type={props.iconType} name={props.iconName} color={`${colors.onBackground}66`} size={70} />
+        <CommonIcon type={props.iconType} name={props.iconName} color={`${colors.onBackground}66`} size={70} />
       )}
       {!!props.header && <Text style={[styles.headerText, { color: `${colors.onBackground}CC` }]}>{props.header}</Text>}
       {!!props.subHeader && (

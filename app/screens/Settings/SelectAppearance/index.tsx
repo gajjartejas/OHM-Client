@@ -4,22 +4,22 @@ import { View } from 'react-native';
 //ThirdParty
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import Icon from 'react-native-easy-icon';
 import { Divider, List, useTheme } from 'react-native-paper';
 
 //App modules
 import Components from 'app/components';
 import styles from './styles';
+import AppHeader from 'app/components/AppHeader';
+import CommonIcon from 'app/components/CommonIcon';
+import { LoggedInTabNavigatorParams } from 'app/navigation/types';
+import { SelectAccentDialogColor } from 'app/components/SelectAccentColorDialog';
+import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 
 //Modals
 import { ISettingItem, ISettingSection, ISettingThemeOptions } from 'app/models/viewModels/settingItem';
 
 //Redux
-import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 import useThemeConfigStore, { IAppearanceType } from 'app/store/themeConfig';
-import { SelectAccentDialogColor } from 'app/components/SelectAccentColorDialog';
-import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
-import AppHeader from 'app/components/AppHeader';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'SelectAppearance'>;
@@ -43,7 +43,7 @@ const SelectAppearance = ({ navigation }: Props) => {
         items: [
           {
             id: 0,
-            iconName: 'wb-sunny',
+            iconName: 'theme-light-dark',
             iconType: 'material',
             title: t('appearanceSettings.themeTitle'),
             description: t('appearanceSettings.themeSubTitle')!,
@@ -51,7 +51,7 @@ const SelectAppearance = ({ navigation }: Props) => {
           },
           {
             id: 1,
-            iconName: 'app-settings-alt',
+            iconName: 'palette',
             iconType: 'material',
             title: t('appearanceSettings.accentColorTitle'),
             description: t('appearanceSettings.accentColorSubTitle')!,
@@ -66,7 +66,7 @@ const SelectAppearance = ({ navigation }: Props) => {
           {
             id: 0,
             iconName: 'backup-restore',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('appearanceSettings.otherTitle'),
             description: t('appearanceSettings.otherSubTitle')!,
             route: 'SelectAppearance',
@@ -76,7 +76,6 @@ const SelectAppearance = ({ navigation }: Props) => {
     ];
   }, [t]);
 
-  //
   const [themeDialogVisible, setThemeDialogVisible] = useState(false);
   const themeOptions: ISettingThemeOptions[] = useMemo(() => {
     return [
@@ -98,7 +97,6 @@ const SelectAppearance = ({ navigation }: Props) => {
     ];
   }, [t]);
 
-  //
   const [accentColorDialogVisible, setAccentColorDialogVisible] = useState(false);
 
   const onGoBack = useCallback(() => {
@@ -165,7 +163,7 @@ const SelectAppearance = ({ navigation }: Props) => {
         style={{ backgroundColor: colors.background }}
       />
 
-      <Components.AppBaseView scroll edges={[]} style={styles.safeArea}>
+      <Components.AppBaseView edges={[]} scroll={true} style={styles.safeArea}>
         <View style={[styles.listContainer, largeScreenMode && styles.cardTablet]}>
           {apps.map((item, index) => {
             return (
@@ -175,13 +173,14 @@ const SelectAppearance = ({ navigation }: Props) => {
                   return (
                     <List.Item
                       key={subItem.id.toString()}
+                      style={styles.itemContainer}
                       titleStyle={{ color: colors.onSurface }}
-                      descriptionStyle={{ color: `${colors.onSurface}88` }}
+                      descriptionStyle={[{ color: `${colors.onSurface}88` }, styles.topMargin]}
                       onPress={() => onPressAppearanceOption(item, index, subItem, subIndex)}
                       title={subItem.title}
                       description={subItem.description}
                       left={() => (
-                        <Icon
+                        <CommonIcon
                           style={styles.listItemIcon}
                           type={subItem.iconType}
                           name={subItem.iconName}

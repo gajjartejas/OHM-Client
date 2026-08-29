@@ -27,15 +27,22 @@ interface IChangeLanguage {
 }
 
 //Params
-type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'ChangeLanguage'>;
+type Props = NativeStackScreenProps<
+  LoggedInTabNavigatorParams,
+  'ChangeLanguage'
+>;
 
 const ChangeLanguage = ({ navigation }: Props) => {
   //Constants
   const { t } = useTranslation();
   const { colors } = useTheme<AppTheme>();
   const largeScreenMode = useLargeScreenMode();
-  const selectedLanguageCode = useAppLangConfigStore(store => store.selectedLanguageCode);
-  const setSelectedLanguageCode = useAppLangConfigStore(store => store.setSelectedLanguageCode);
+  const selectedLanguageCode = useAppLangConfigStore(
+    store => store.selectedLanguageCode,
+  );
+  const setSelectedLanguageCode = useAppLangConfigStore(
+    store => store.setSelectedLanguageCode,
+  );
 
   //States
   const [finalLicense, setFinalLicense] = useState<IChangeLanguage[]>([]);
@@ -55,17 +62,30 @@ const ChangeLanguage = ({ navigation }: Props) => {
     navigation.pop();
   }, [navigation]);
 
-  const renderItem = ({ item, index }: { item: IChangeLanguage; index: number }) => {
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: IChangeLanguage;
+    index: number;
+  }) => {
     return (
       <List.Item
-        style={[styles.listItemContainer, { backgroundColor: `${colors.onBackground}20` }]}
+        style={[
+          styles.listItemContainer,
+          { backgroundColor: `${colors.onBackground}20` },
+        ]}
         titleStyle={{ color: colors.onSurface }}
         descriptionStyle={{ color: `${colors.onSurface}88` }}
         onPress={() => onPressItem(item, index)}
         title={item.language}
         description={item.translators.join(', ')}
         left={() => <Image source={item.icon} style={styles.listItemImage} />}
-        right={props => (item.selected ? <List.Icon {...props} icon="check" color={colors.primary} /> : null)}
+        right={props =>
+          item.selected ? (
+            <List.Icon {...props} icon="check" color={colors.primary} />
+          ) : null
+        }
       />
     );
   };
@@ -82,7 +102,8 @@ const ChangeLanguage = ({ navigation }: Props) => {
   return (
     <Components.AppBaseView
       edges={['bottom', 'left', 'right']}
-      style={[styles.container, { backgroundColor: colors.background }]}>
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}

@@ -5,12 +5,10 @@ import {
   View,
   StyleSheet,
   ViewStyle,
-  TextInputFocusEventData,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { NativeSyntheticEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 
 interface IAppTextInputProps extends TextInputProps {
   errorText?: string | null;
@@ -20,14 +18,23 @@ interface IAppTextInputProps extends TextInputProps {
   onPress?: () => void;
 }
 
-const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
+const AppTextInput = forwardRef<React.ComponentRef<typeof TextInput>, IAppTextInputProps>((props, ref) => {
   const theme = useTheme();
-  const { errorText, containerStyle, onBlur, onFocus, RightAccessoryView, onPress, viewOnly, ...otherProps } = props;
+  const {
+    errorText,
+    containerStyle,
+    onBlur,
+    onFocus,
+    RightAccessoryView,
+    onPress,
+    viewOnly,
+    ...otherProps
+  } = props;
   const [isFocused, setIsFocused] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
 
-  const handleOnBlur = useCallback(
-    (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
+  const handleOnBlur: TextInputProps['onBlur'] = useCallback(
+    event => {
       setIsBlurred(true);
       setIsFocused(false);
       if (onBlur) {
@@ -37,8 +44,8 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
     [onBlur],
   );
 
-  const handleOnFocus = useCallback(
-    (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
+  const handleOnFocus: TextInputProps['onFocus'] = useCallback(
+    event => {
       setIsFocused(true);
       setIsBlurred(false);
       if (onFocus) {
@@ -53,8 +60,14 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
       <Text
         style={[
           styles.titleTextStyle,
-          { color: isFocused && !isBlurred ? theme.colors.primary : `${theme.colors.onBackground}cc` },
-        ]}>
+          {
+            color:
+              isFocused && !isBlurred
+                ? theme.colors.primary
+                : `${theme.colors.onBackground}cc`,
+          },
+        ]}
+      >
         {props.placeholder}
       </Text>
 
@@ -64,12 +77,16 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
         style={[
           styles.textInputContainer,
           !viewOnly && {
-            borderBottomColor: isFocused && !isBlurred ? theme.colors.primary : `${theme.colors.onBackground}50`,
+            borderBottomColor:
+              isFocused && !isBlurred
+                ? theme.colors.primary
+                : `${theme.colors.onBackground}50`,
           },
           viewOnly && {
             borderBottomColor: `${theme.colors.onBackground}20`,
           },
-        ]}>
+        ]}
+      >
         <TextInput
           ref={ref}
           pointerEvents={onPress || viewOnly ? 'none' : 'auto'}
@@ -78,12 +95,20 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
           onFocus={handleOnFocus}
           placeholderTextColor={`${theme.colors.onBackground}40`}
           {...otherProps}
-          style={[styles.textInput, { color: theme.colors.onBackground }, otherProps.style]}
+          style={[
+            styles.textInput,
+            { color: theme.colors.onBackground },
+            otherProps.style,
+          ]}
         />
         {RightAccessoryView}
       </TouchableOpacity>
 
-      {isBlurred && !!errorText && <Text style={[styles.errorText, { color: theme.colors.error }]}>{errorText}</Text>}
+      {isBlurred && !!errorText && (
+        <Text style={[styles.errorText, { color: theme.colors.error }]}>
+          {errorText}
+        </Text>
+      )}
     </View>
   );
 });

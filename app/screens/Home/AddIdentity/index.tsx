@@ -2,9 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { View, ScrollView, Keyboard, TextInput } from 'react-native';
 
 //ThirdParty
-import { Button } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 import uuid from 'react-native-uuid';
 import { useTranslation } from 'react-i18next';
 
@@ -23,16 +22,16 @@ type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddIdentity'>;
 
 const AddIdentity = ({ navigation, route }: Props) => {
   //Refs
-  let nameRef = useRef<TextInput | null>(null);
-  let userNameRef = useRef<TextInput | null>(null);
-  let passwordRef = useRef<TextInput | null>(null);
+  let nameRef = useRef<React.ComponentRef<typeof TextInput>>(null);
+  let userNameRef = useRef<React.ComponentRef<typeof TextInput>>(null);
+  let passwordRef = useRef<React.ComponentRef<typeof TextInput>>(null);
 
   //Constants
   const { colors } = useTheme();
   const theme = useTheme();
   const { t } = useTranslation();
   const upsertIdentity = useAppConfigStore(store => store.upsertIdentity);
-  const identity = route.params.identity;
+  const identity = route?.params?.identity;
   const largeScreenMode = useLargeScreenMode();
 
   //States

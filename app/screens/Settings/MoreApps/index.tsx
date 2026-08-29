@@ -83,22 +83,29 @@ const MoreApps = ({ navigation }: Props) => {
     navigation.pop();
   }, [navigation]);
 
-  const onPressGithub = useCallback(async (item: IMoreAppItem, _index: number) => {
-    if (item.github != null) {
-      await Utils.openInAppBrowser(item.github);
-    }
-  }, []);
+  const onPressGithub = useCallback(
+    async (item: IMoreAppItem, _index: number) => {
+      if (item.github != null) {
+        await Utils.openInAppBrowser(item.github);
+      }
+    },
+    [],
+  );
 
-  const onPressPlayStore = useCallback(async (item: IMoreAppItem, _index: number) => {
-    if (item.playStore != null) {
-      await Utils.openBrowser(item.playStore);
-    }
-  }, []);
+  const onPressPlayStore = useCallback(
+    async (item: IMoreAppItem, _index: number) => {
+      if (item.playStore != null) {
+        await Utils.openBrowser(item.playStore);
+      }
+    },
+    [],
+  );
 
   return (
     <Components.AppBaseView
       edges={['bottom', 'left', 'right']}
-      style={[styles.container, { backgroundColor: colors.background }]}>
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -106,7 +113,9 @@ const MoreApps = ({ navigation }: Props) => {
         style={{ backgroundColor: colors.background }}
       />
       <Components.AppBaseView edges={[]} scroll={true} style={styles.safeArea}>
-        <View style={[styles.listContainer, largeScreenMode && styles.cardTablet]}>
+        <View
+          style={[styles.listContainer, largeScreenMode && styles.cardTablet]}
+        >
           {apps.map((item, index) => {
             return (
               <Components.MoreAppCard

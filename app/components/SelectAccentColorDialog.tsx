@@ -3,7 +3,13 @@ import { StyleSheet, View } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
-import { Dialog, TouchableRipple, useTheme, Button, Portal } from 'react-native-paper';
+import {
+  Dialog,
+  TouchableRipple,
+  useTheme,
+  Button,
+  Portal,
+} from 'react-native-paper';
 
 //App Modules
 import { AppTheme } from 'app/models/theme';
@@ -74,8 +80,14 @@ function SelectAccentDialog(props: ISelectAccentDialogProps) {
 
   return (
     <Portal>
-      <Dialog style={[largeScreenMode && styles.cardTablet]} visible={props.visible} onDismiss={onDismiss}>
-        <Dialog.Title style={{ color: colors.onSurface }}>{t('appearanceSettings.themeOption')}</Dialog.Title>
+      <Dialog
+        style={[largeScreenMode && styles.cardTablet]}
+        visible={props.visible}
+        onDismiss={onDismiss}
+      >
+        <Dialog.Title style={{ color: colors.onSurface }}>
+          {t('appearanceSettings.themeOption')}
+        </Dialog.Title>
         <Dialog.Content>
           <View style={styles.dialogContainer}>
             {accentColorOptions.map(item => {
@@ -86,7 +98,8 @@ function SelectAccentDialog(props: ISelectAccentDialogProps) {
                   borderless={true}
                   onPress={() => onSelect(item)}
                   centered={true}
-                  rippleColor="rgba(0, 0, 0, .32)">
+                  rippleColor="rgba(0, 0, 0, .32)"
+                >
                   <View />
                 </TouchableRipple>
               );

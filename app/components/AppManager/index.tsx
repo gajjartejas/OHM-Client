@@ -16,7 +16,9 @@ export type Props = {
 const AppManager = ({ children }: Props) => {
   const setIsDarkMode = useThemeConfigStore(store => store.setIsDarkMode);
   const appearance = useThemeConfigStore(store => store.appearance);
-  const selectedLanguageCode = useAppLangConfigStore(store => store.selectedLanguageCode);
+  const selectedLanguageCode = useAppLangConfigStore(
+    store => store.selectedLanguageCode,
+  );
 
   useEffect(() => {
     i18n.changeLanguage(selectedLanguageCode).then(() => {});

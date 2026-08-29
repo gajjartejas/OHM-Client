@@ -163,6 +163,11 @@
     "appsTitle": "Plus d'applications"
   },
   "scanDevices": {
+    "title": "Appareils à proximité",
+    "subTitle": "Appareils à proximité",
+    "scanning": "Numérisation du réseau...",
+    "scannedRatio": "{{scanned}} / {{total}} IP",
+    "discoveredCount": "Découverts : {{count}}",
     "emptyData": {
       "help": "Aide",
       "or": "OU",
@@ -170,9 +175,7 @@
       "subtitle": "Veuillez réessayer de numériser",
       "title": "Aucun appareil à proximité trouvé !"
     },
-    "refresh": "Rafraîchir",
-    "subTitle": "Appareils à proximité",
-    "title": "Appareils à proximité"
+    "refresh": "Rafraîchir"
   },
   "scanSetting": {
     "section1": {

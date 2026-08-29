@@ -13,13 +13,21 @@ interface IAppLoaderProps {
 const AppLoader = (props: IAppLoaderProps) => {
   //Const
   const { colors } = useTheme();
-  const { message, portal, overlay } = props;
+  const { message, portal = false, overlay = true } = props;
 
   const Child = useMemo(() => {
     return (
-      <View style={[styles.container, overlay && styles.overlay, { backgroundColor: `${colors.background}cc` }]}>
+      <View
+        style={[
+          styles.container,
+          overlay ? styles.overlay : styles.inline,
+          { backgroundColor: overlay ? `${colors.background}cc` : 'transparent' },
+        ]}
+      >
         <ActivityIndicator animating={true} color={colors.primary} />
-        <Text style={[styles.titleTextStyle, { color: colors.onSurface }]}>{message}</Text>
+        <Text style={[styles.titleTextStyle, { color: colors.onSurface }]}>
+          {message}
+        </Text>
       </View>
     );
   }, [colors.background, colors.onSurface, colors.primary, message, overlay]);
@@ -29,15 +37,12 @@ const AppLoader = (props: IAppLoaderProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
-  titleTextStyle: {
-    fontSize: 13,
-    fontWeight: '500',
-    marginLeft: 12,
+  inline: {
+    flex: 1,
   },
   overlay: {
     position: 'absolute',
@@ -45,6 +50,12 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    zIndex: 999,
+  },
+  titleTextStyle: {
+    fontSize: 13,
+    fontWeight: '500',
+    marginLeft: 12,
   },
 });
 

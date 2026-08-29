@@ -1,10 +1,18 @@
 import React, { memo, useEffect } from 'react';
-import { View, StyleSheet, TextInputProps, TextInput } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TextInputProps,
+  TextInput,
+  Modal,
+  KeyboardAvoidingView,
+  Pressable,
+  Platform,
+} from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
-import { Text, Button, useTheme, Portal } from 'react-native-paper';
-import Modal from 'react-native-modal';
+import { Text, Button, useTheme } from 'react-native-paper';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 
 interface IAppInputDialogProps extends TextInputProps {
@@ -13,129 +21,173 @@ interface IAppInputDialogProps extends TextInputProps {
   hint: string;
   onPressClose: () => void;
   onPressSave: () => void;
-  onBackButtonPress: () => void;
+  onBackButtonPress?: () => void;
 }
 
-const AppInputDialog = React.forwardRef((props: IAppInputDialogProps, ref: any) => {
-  //Const
-  const theme = useTheme();
-  const { t } = useTranslation();
-  const largeScreenMode = useLargeScreenMode();
+const AppInputDialog = React.forwardRef(
+  (props: IAppInputDialogProps, ref: any) => {
+    const theme = useTheme();
+    const { t } = useTranslation();
+    const largeScreenMode = useLargeScreenMode();
 
-  useEffect(() => {
-    if (!props.modalVisible) {
-      return;
-    }
-    const timeOut = setTimeout(() => {
-      ref.current && ref.current.focus();
-    }, 100);
+    const {
+      modalVisible,
+      header,
+      hint,
+      onPressClose,
+      onPressSave,
+      onBackButtonPress,
+      style,
+      ...textInputProps
+    } = props;
 
-    return () => {
-      clearInterval(timeOut);
-    };
-  }, [props.modalVisible, ref]);
+    const handleDismiss = onBackButtonPress || onPressClose;
 
-  return (
-    <Portal>
+    useEffect(() => {
+      if (!modalVisible) {
+        return;
+      }
+      const timer = setTimeout(() => {
+        if (ref && 'current' in ref && ref.current) {
+          ref.current.focus();
+        }
+      }, 150);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }, [modalVisible, ref]);
+
+    return (
       <Modal
-        style={styles.modal}
-        backdropColor={`${theme.colors.onBackground}33`}
-        coverScreen
-        animationInTiming={300}
-        animationIn={'slideInUp'}
-        avoidKeyboard
-        hideModalContentWhileAnimating
-        onBackButtonPress={props.onBackButtonPress}
-        isVisible={props.modalVisible}>
-        <View style={[styles.centeredView, largeScreenMode && styles.cardTablet]}>
-          <View style={[styles.modalView, { backgroundColor: `${theme.colors.background}` }]}>
-            <Text style={[styles.textSize, { color: theme.colors.primary }]}>{props.header}</Text>
+        visible={modalVisible}
+        transparent={true}
+        animationType="fade"
+        statusBarTranslucent={true}
+        onRequestClose={handleDismiss}
+      >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+          style={styles.keyboardAvoidingView}
+        >
+          <Pressable style={styles.backdrop} onPress={handleDismiss} />
+          <View
+            style={[
+              styles.modalContainer,
+              largeScreenMode && styles.cardTablet,
+              { backgroundColor: theme.colors.background },
+            ]}
+          >
+            <Text style={[styles.headerText, { color: theme.colors.primary }]}>
+              {header}
+            </Text>
+
             <TextInput
               ref={ref}
               autoCapitalize="none"
               style={[
                 styles.inputStyle,
-                styles.textInputShadow,
-                { borderBottomColor: theme.colors.primary, color: theme.colors.onBackground },
+                {
+                  borderBottomColor: theme.colors.primary,
+                  color: theme.colors.onBackground,
+                },
+                style,
               ]}
-              value={props.value}
-              onChangeText={props.onChangeText}
-              placeholder={props.placeholder}
-              placeholderTextColor={theme.colors.onSurface}
-              {...props}
+              placeholderTextColor={`${theme.colors.onSurface}88`}
+              {...textInputProps}
             />
 
-            {!!props.hint && <Text style={[styles.hintText, { color: theme.colors.onSurface }]}>{props.hint}</Text>}
+            {!!hint && (
+              <Text
+                style={[styles.hintText, { color: theme.colors.onSurface }]}
+              >
+                {hint}
+              </Text>
+            )}
 
             <View style={styles.buttonContainer}>
-              <Button mode={'contained'} style={styles.button} onPress={props.onPressClose}>
+              <Button
+                mode="contained"
+                style={styles.button}
+                onPress={onPressClose}
+              >
                 {t('general.close')}
               </Button>
 
               <View style={styles.spacing} />
 
-              <Button mode={'contained'} style={styles.button} onPress={props.onPressSave}>
+              <Button
+                mode="contained"
+                style={styles.button}
+                onPress={onPressSave}
+              >
                 {t('general.save')}
               </Button>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
-    </Portal>
-  );
-});
+    );
+  },
+);
 
 const styles = StyleSheet.create({
-  modal: { margin: 8, marginBottom: -4 },
-  buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  centeredView: {
+  keyboardAvoidingView: {
     flex: 1,
     justifyContent: 'flex-end',
-    alignItems: 'center',
   },
-  modalView: {
-    justifyContent: 'space-around',
+  backdrop: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+  },
+  modalContainer: {
     width: '100%',
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     paddingHorizontal: 20,
-    paddingTop: 10,
-    paddingBottom: 28,
+    paddingTop: 16,
+    paddingBottom: Platform.OS === 'ios' ? 34 : 24,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: -2,
     },
-    shadowOpacity: 0.55,
+    shadowOpacity: 0.25,
     shadowRadius: 8,
     elevation: 20,
   },
-  textSize: {
+  headerText: {
     textAlign: 'center',
     fontSize: 16,
-    marginVertical: 16,
+    fontWeight: '600',
+    marginVertical: 12,
   },
   inputStyle: {
+    borderBottomWidth: 1,
     width: '100%',
-    height: 50,
+    height: 48,
+    fontSize: 16,
   },
-  textInputShadow: {},
-  buttonContainer: {
-    flexDirection: 'row',
-  },
-  button: { flex: 1 },
-  spacing: { width: 8 },
   hintText: {
     fontSize: 12,
     marginVertical: 8,
     marginBottom: 16,
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: 8,
+  },
+  button: {
+    flex: 1,
+  },
+  spacing: {
+    width: 12,
+  },
   cardTablet: {
     width: '70%',
     alignSelf: 'center',
+    borderRadius: 20,
+    marginBottom: 20,
   },
 });
 

@@ -163,6 +163,11 @@
     "appsTitle": "Mais aplicativos"
   },
   "scanDevices": {
+    "title": "Dispositivos próximos",
+    "subTitle": "Dispositivos próximos",
+    "scanning": "Escaneando rede...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "Descobertos: {{count}}",
     "emptyData": {
       "help": "Ajuda",
       "or": "OU",
@@ -170,9 +175,7 @@
       "subtitle": "Tente digitalizar novamente",
       "title": "Nenhum dispositivo próximo encontrado!"
     },
-    "refresh": "Atualizar",
-    "subTitle": "Dispositivos próximos",
-    "title": "Dispositivos próximos"
+    "refresh": "Atualizar"
   },
   "scanSetting": {
     "section1": {

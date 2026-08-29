@@ -40,5 +40,4 @@ export default interface IAPIDeviceInfo {
   Value: string;
   Max: string;
   ImageURL: string;
-  // eslint-disable-next-line semi
 }

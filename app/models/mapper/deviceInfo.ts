@@ -13,12 +13,13 @@ const getHardwareFromImageFile = (typeNode: string): IAPIHardwareType | null => 
       return IAPIHardwareType.GpuIntel;
     case 'images_icon/hdd.png':
       return IAPIHardwareType.HDD;
-    case 'images_icon/bigng.png':
+    case 'images_icon/heatmaster.png':
       return IAPIHardwareType.Heatmaster;
     case 'images_icon/mainboard.png':
       return IAPIHardwareType.Mainboard;
     case 'images_icon/chip.png':
       return IAPIHardwareType.Chipset;
+    case 'images_icon/tbalancer.png':
     case 'images_icon/bigng.png':
       return IAPIHardwareType.TBalancer;
     case 'images_icon/ram.png':

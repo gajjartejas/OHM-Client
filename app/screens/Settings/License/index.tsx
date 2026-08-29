@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, InteractionManager } from 'react-native';
+import { FlatList } from 'react-native';
 
 //ThirdParty
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -47,22 +47,36 @@ const License = ({ navigation }: Props) => {
 
   //npx npm-license-crawler -onlyDirectDependencies -json licenses.json
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
-      const licenses: { [id: string]: ILicense } = require('../../../../licenses.json');
+    requestAnimationFrame(() => {
+      const licenses: {
+        [id: string]: ILicense;
+      } = require('../../../../licenses.json');
       const numberRegex = /\d+(\.\d+)*/;
       const atRegex = /@/gi;
       let newLicenses: IFinalLicense[] = [];
       for (const licensesKey in licenses) {
         const license = licenses[licensesKey];
         const version = licensesKey.match(numberRegex);
-        const nameWithoutVersion = licensesKey.replace(atRegex, '').replace(version ? version[0] : '', '');
-        newLicenses.push({ name: nameWithoutVersion, version: version ? version[0] : '', licenseSpecs: license });
+        const nameWithoutVersion = licensesKey
+          .replace(atRegex, '')
+          .replace(version ? version[0] : '', '');
+        newLicenses.push({
+          name: nameWithoutVersion,
+          version: version ? version[0] : '',
+          licenseSpecs: license,
+        });
       }
       setFinalLicense([...newLicenses]);
     });
   }, []);
 
-  const renderItem = ({ item, index }: { item: IFinalLicense; index: number }) => {
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: IFinalLicense;
+    index: number;
+  }) => {
     return (
       <List.Item
         style={styles.listItem}
@@ -71,19 +85,25 @@ const License = ({ navigation }: Props) => {
         onPress={() => onPressItem(item, index)}
         title={item.name}
         description={item.version}
-        left={props => <List.Icon {...props} color={`${colors.onSurface}88`} icon="web" />}
+        left={props => (
+          <List.Icon {...props} color={`${colors.onSurface}88`} icon="web" />
+        )}
       />
     );
   };
 
-  const onPressItem = useCallback(async (item: IFinalLicense, _index: number) => {
-    await Utils.openInAppBrowser(item.licenseSpecs.licenseUrl);
-  }, []);
+  const onPressItem = useCallback(
+    async (item: IFinalLicense, _index: number) => {
+      await Utils.openInAppBrowser(item.licenseSpecs.licenseUrl);
+    },
+    [],
+  );
 
   return (
     <Components.AppBaseView
       edges={['bottom', 'left', 'right']}
-      style={[styles.container, { backgroundColor: colors.background }]}>
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}

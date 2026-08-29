@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 //App modules
 import { AppTheme } from 'app/models/theme';
-import Icon from 'react-native-easy-icon';
+import CommonIcon from 'app/components/CommonIcon';
 
 interface AppHeaderProps {
   showBackButton?: boolean;
@@ -33,14 +33,22 @@ const AppHeader = (props: AppHeaderProps) => {
 
   //Const
   const insets = useSafeAreaInsets();
-  const statusBarHeight = props.statusBarHeight === undefined ? insets.top : props.statusBarHeight;
-  const backButtonPaddingForTitle = !props.showBackButton ? { marginLeft: 0 } : { marginLeft: 0, marginRight: 0 };
-  const tintColor = props.tintColor === undefined ? colors.onBackground : props.tintColor;
+  const statusBarHeight =
+    props.statusBarHeight === undefined ? insets.top : props.statusBarHeight;
+  const backButtonPaddingForTitle = !props.showBackButton
+    ? { marginLeft: 0 }
+    : { marginLeft: 0, marginRight: 0 };
+  const tintColor =
+    props.tintColor === undefined ? colors.onBackground : props.tintColor;
   const textStyle = props.textStyle === undefined ? {} : props.textStyle;
-  const LeftViewComponent = props.RightViewComponent === undefined ? <></> : props.LeftViewComponent;
-  const backArrowImage = props.backArrowImage === undefined ? 'chevron-left' : props.backArrowImage;
-  const RightViewComponent = props.RightViewComponent === undefined ? <></> : props.RightViewComponent;
-  const SubTitleComponent = props.SubTitleComponent === undefined ? <></> : props.SubTitleComponent;
+  const LeftViewComponent =
+    props.RightViewComponent === undefined ? <></> : props.LeftViewComponent;
+  const backArrowImage =
+    props.backArrowImage === undefined ? 'chevron-left' : props.backArrowImage;
+  const RightViewComponent =
+    props.RightViewComponent === undefined ? <></> : props.RightViewComponent;
+  const SubTitleComponent =
+    props.SubTitleComponent === undefined ? <></> : props.SubTitleComponent;
 
   return (
     <View
@@ -50,20 +58,36 @@ const AppHeader = (props: AppHeaderProps) => {
         paddingRight: insets.right,
         backgroundColor: colors.background,
         ...props.style,
-      }}>
+      }}
+    >
       <View style={[styles.statusBar, { height: statusBarHeight }]} />
-      <View style={[styles.navigationContainer, props.largeHeader && styles.largeStatusBarHeight]}>
+      <View
+        style={[
+          styles.navigationContainer,
+          props.largeHeader && styles.largeStatusBarHeight,
+        ]}
+      >
         <View style={[StyleSheet.absoluteFill, styles.titleViewStyle]}>
           {!!props.title && (
             <Text
               numberOfLines={1}
               ellipsizeMode={'tail'}
-              style={{ ...styles.titleTextStyle, color: colors.text, ...backButtonPaddingForTitle, ...textStyle }}>
+              style={{
+                ...styles.titleTextStyle,
+                color: colors.text,
+                ...backButtonPaddingForTitle,
+                ...textStyle,
+              }}
+            >
               {props.title}
             </Text>
           )}
           {!!props.subTitle && (
-            <Text numberOfLines={1} ellipsizeMode={'tail'} style={{ ...styles.subTitleTextStyle, color: colors.text }}>
+            <Text
+              numberOfLines={1}
+              ellipsizeMode={'tail'}
+              style={{ ...styles.subTitleTextStyle, color: colors.text }}
+            >
               {props.subTitle}
             </Text>
           )}
@@ -71,13 +95,26 @@ const AppHeader = (props: AppHeaderProps) => {
         </View>
         {LeftViewComponent}
         {props.showBackButton && (
-          <TouchableOpacity activeOpacity={0.8} style={styles.menuButton} onPress={props.onPressBackButton!}>
-            <Icon type="entypo" name={backArrowImage} color={tintColor!} size={26} />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.menuButton}
+            onPress={props.onPressBackButton!}
+          >
+            <CommonIcon
+              type="fontawesome6"
+              name={backArrowImage}
+              color={tintColor!}
+              size={26}
+            />
           </TouchableOpacity>
         )}
 
         <View style={styles.leftTitleViewStyle}>
-          <Text numberOfLines={2} ellipsizeMode={'tail'} style={{ ...styles.titleTextStyle, ...textStyle }}>
+          <Text
+            numberOfLines={2}
+            ellipsizeMode={'tail'}
+            style={{ ...styles.titleTextStyle, ...textStyle }}
+          >
             {props.leftTitle}
           </Text>
         </View>

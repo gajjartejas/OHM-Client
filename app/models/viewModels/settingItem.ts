@@ -1,6 +1,6 @@
 //Interfaces
 import { IAppearanceType } from 'app/store/themeConfig';
-import { IconType } from 'react-native-easy-icon/src/Icon';
+import { IconType } from 'app/components/CommonIcon';
 
 export interface ISettingItem {
   id: number;

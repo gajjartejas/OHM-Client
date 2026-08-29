@@ -1,4 +1,7 @@
-const getLiveURL = (serverURLs: string[], controller: AbortController): Promise<string> => {
+const getLiveURL = (
+  serverURLs: string[],
+  controller: AbortController,
+): Promise<string> => {
   return new Promise<string>((resolve, reject) => {
     const { signal } = controller;
     for (let i = 0; i < serverURLs.length; i++) {

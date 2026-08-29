@@ -11,9 +11,8 @@ import {
 } from 'react-native';
 
 //ThirdParty
-import { Button, IconButton, List } from 'react-native-paper';
+import { Button, IconButton, List, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 
 //App modules
 import styles from './styles';
@@ -40,20 +39,20 @@ type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddDevice'>;
 
 const AddDevice = ({ navigation, route }: Props) => {
   //Refs
-  const connectionNameRef = useRef<TextInput | null>(null);
-  const ipAddressRef = useRef<TextInput | null>(null);
-  const portRef = useRef<TextInput | null>(null);
-  const identityRef = useRef<TextInput | null>(null);
-  const refreshRateInMsRef = useRef<TextInput | null>(null);
-  const ipAddress1Ref = useRef<TextInput | null>(null);
-  const ipAddress2Ref = useRef<TextInput | null>(null);
-  const ipAddress3Ref = useRef<TextInput | null>(null);
+  const connectionNameRef = useRef<React.ComponentRef<typeof TextInput>>(null);
+  const ipAddressRef = useRef<React.ComponentRef<typeof TextInput>>(null);
+  const portRef = useRef<React.ComponentRef<typeof TextInput>>(null);
+  const identityRef = useRef<React.ComponentRef<typeof TextInput>>(null);
+  const refreshRateInMsRef = useRef<React.ComponentRef<typeof TextInput>>(null);
+  const ipAddress1Ref = useRef<React.ComponentRef<typeof TextInput>>(null);
+  const ipAddress2Ref = useRef<React.ComponentRef<typeof TextInput>>(null);
+  const ipAddress3Ref = useRef<React.ComponentRef<typeof TextInput>>(null);
 
   //Constants
   const { colors } = useTheme();
   const theme = useTheme();
   const { t } = useTranslation();
-  const mode = route.params.mode;
+  const mode = route?.params?.mode ?? 'create';
   const upsertDevice = useAppConfigStore(store => store.upsertDevice);
   const defaultConfigPath = useAppScanConfigStore(store => store.path);
   const defaultConfigPort = useAppScanConfigStore(store => store.port);
@@ -98,8 +97,8 @@ const AddDevice = ({ navigation, route }: Props) => {
   }, [mode, t]);
 
   useEffect(() => {
-    setDevice(route.params.device ? route.params.device : null);
-  }, [route.params.device]);
+    setDevice(route?.params?.device ? route.params.device : null);
+  }, [route?.params?.device]);
 
   useEffect(() => {
     if (device) {
@@ -241,11 +240,13 @@ const AddDevice = ({ navigation, route }: Props) => {
       } else if (Platform.OS === 'ios') {
         Alert.alert(t('addDevice.connectionOk'));
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
+      const err = e as { code?: number; message?: string };
+      const msg = err.code === 401 ? t('addDevice.authRequired') : (err.message ?? t('addDevice.connectionError'));
       if (Platform.OS === 'android') {
-        ToastAndroid.show(e.code === 401 ? t('addDevice.authRequired') : e.message, ToastAndroid.SHORT);
+        ToastAndroid.show(msg, ToastAndroid.SHORT);
       } else if (Platform.OS === 'ios') {
-        Alert.alert(e.code === 401 ? t('addDevice.authRequired') : e.message);
+        Alert.alert(msg);
       }
     }
 

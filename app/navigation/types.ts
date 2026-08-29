@@ -2,22 +2,22 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 import IConnectionIdentity from 'app/models/models/identity';
 import IDevice from 'app/models/models/device';
 
-export interface LoadingParams {}
-export interface MoreAppsParams {}
-export interface SettingsParams {}
-export interface LicenseTypes {}
-export interface AboutParams {}
-export interface SelectAppearanceParams {}
-export interface TranslatorsParams {}
-export interface DeviceInfoParams {}
+export type LoadingParams = undefined | Record<string, never>;
+export type MoreAppsParams = undefined | Record<string, never>;
+export type SettingsParams = undefined | Record<string, never>;
+export type LicenseTypes = undefined | Record<string, never>;
+export type AboutParams = undefined | Record<string, never>;
+export type SelectAppearanceParams = undefined | Record<string, never>;
+export type TranslatorsParams = undefined | Record<string, never>;
+export type DeviceInfoParams = undefined | Record<string, never>;
 export interface PurchaseScreenParams {
   fromTheme: boolean;
 }
 
-export interface HomeTabsParams {}
+export type HomeTabsParams = undefined | Record<string, never>;
 
-export interface MoreTabParams {}
-export interface ScanSettingParams {}
+export type MoreTabParams = undefined | Record<string, never>;
+export type ScanSettingParams = undefined | Record<string, never>;
 export interface AddDeviceParams {
   device?: IDevice;
   mode?: 'create' | 'edit' | 'connect';
@@ -31,10 +31,10 @@ export interface ManageDevicesParams {
 export interface AddIdentityParams {
   identity?: IConnectionIdentity;
 }
-export interface ScanDevicesParams {}
-export interface ChangeLanguageParams {}
-export interface WebViewSettingParams {}
-export interface DeviceInfoWebViewParams {}
+export type ScanDevicesParams = undefined | Record<string, never>;
+export type ChangeLanguageParams = undefined | Record<string, never>;
+export type WebViewSettingParams = undefined | Record<string, never>;
+export type DeviceInfoWebViewParams = undefined | Record<string, never>;
 
 export type LoggedInTabNavigatorParams = {
   Loading: LoadingParams;

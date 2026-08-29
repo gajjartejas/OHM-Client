@@ -20,7 +20,10 @@ const useLargeScreenMode = () => {
 
     checkScreenSize();
 
-    const dimensionChangeListener = Dimensions.addEventListener('change', checkScreenSize);
+    const dimensionChangeListener = Dimensions.addEventListener(
+      'change',
+      checkScreenSize,
+    );
 
     return () => {
       dimensionChangeListener.remove();

@@ -4,7 +4,6 @@ import { Platform, ScrollView, TextInput, View } from 'react-native';
 //ThirdParty
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import Icon from 'react-native-easy-icon';
 import { Divider, List, Switch, useTheme } from 'react-native-paper';
 
 //App modules
@@ -12,7 +11,10 @@ import Components from 'app/components';
 import styles from './styles';
 
 //Modals
-import { ISettingItem, ISettingSection } from 'app/models/viewModels/settingItem';
+import {
+  ISettingItem,
+  ISettingSection,
+} from 'app/models/viewModels/settingItem';
 
 //Redux
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
@@ -20,9 +22,13 @@ import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import AppHeader from 'app/components/AppHeader';
 import useAppWebViewConfigStore from 'app/store/webViewConfig';
 import CookieManager from '@react-native-cookies/cookies';
+import CommonIcon from 'app/components/CommonIcon';
 
 //Params
-type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'WebViewSetting'>;
+type Props = NativeStackScreenProps<
+  LoggedInTabNavigatorParams,
+  'WebViewSetting'
+>;
 
 const WebViewSetting = ({ navigation }: Props) => {
   //Ref
@@ -33,61 +39,112 @@ const WebViewSetting = ({ navigation }: Props) => {
   const { colors } = useTheme();
 
   const largeScreenMode = useLargeScreenMode();
-  const [mediaPlaybackRequiresUserAction, setMediaPlaybackRequiresUserAction] = useAppWebViewConfigStore(store => [
-    store.mediaPlaybackRequiresUserAction,
-    store.setMediaPlaybackRequiresUserAction,
-  ]);
-  const [scalesPageToFit, setScalesPageToFit] = useAppWebViewConfigStore(store => [
-    store.scalesPageToFit,
-    store.setScalesPageToFit,
-  ]);
-  const [domStorageEnabled, setDomStorageEnabled] = useAppWebViewConfigStore(store => [
-    store.domStorageEnabled,
-    store.setDomStorageEnabled,
-  ]);
-  const [javaScriptEnabled, setJavaScriptEnabled] = useAppWebViewConfigStore(store => [
-    store.javaScriptEnabled,
-    store.setJavaScriptEnabled,
-  ]);
-  const [thirdPartyCookiesEnabled, setThirdPartyCookiesEnabled] = useAppWebViewConfigStore(store => [
-    store.thirdPartyCookiesEnabled,
-    store.setThirdPartyCookiesEnabled,
-  ]);
-  const [userAgent, setUserAgent] = useAppWebViewConfigStore(store => [store.userAgent, store.setUserAgent]);
-  const [allowsFullScreenVideo, setAllowsFullScreenVideo] = useAppWebViewConfigStore(store => [
-    store.allowsFullScreenVideo,
-    store.setAllowsFullScreenVideo,
-  ]);
-  const [allowsInlineMediaPlayback, setAllowsInlineMediaPlayback] = useAppWebViewConfigStore(store => [
-    store.allowsInlineMediaPlayback,
-    store.setAllowsInlineMediaPlayback,
-  ]);
-  const [allowsAirPlayForMediaPlayback, setAllowsAirPlayForMediaPlayback] = useAppWebViewConfigStore(store => [
-    store.allowsAirPlayForMediaPlayback,
-    store.setAllowsAirPlayForMediaPlayback,
-  ]);
-  const [bounces, setBounces] = useAppWebViewConfigStore(store => [store.bounces, store.setBounces]);
-  const [contentMode, setContentMode] = useAppWebViewConfigStore(store => [store.contentMode, store.setContentMode]);
-  const [geolocationEnabled, setGeolocationEnabled] = useAppWebViewConfigStore(store => [
-    store.geolocationEnabled,
-    store.setGeolocationEnabled,
-  ]);
-  const [allowFileAccessFromFileUrls, setAllowFileAccessFromFileUrls] = useAppWebViewConfigStore(store => [
-    store.allowFileAccessFromFileUrls,
-    store.setAllowFileAccessFromFileUrls,
-  ]);
-  const [allowsBackForwardNavigationGestures, setAllowsBackForwardNavigationGestures] = useAppWebViewConfigStore(
-    store => [store.allowsBackForwardNavigationGestures, store.setAllowsBackForwardNavigationGestures],
+  const mediaPlaybackRequiresUserAction = useAppWebViewConfigStore(
+    store => store.mediaPlaybackRequiresUserAction,
   );
-  const [pullToRefreshEnabled, setPullToRefreshEnabled] = useAppWebViewConfigStore(store => [
-    store.pullToRefreshEnabled,
-    store.setPullToRefreshEnabled,
-  ]);
-  const [forceDarkOn, setForceDarkOn] = useAppWebViewConfigStore(store => [store.forceDarkOn, store.setForceDarkOn]);
-  const [allowsProtectedMedia, setAllowsProtectedMedia] = useAppWebViewConfigStore(store => [
-    store.allowsProtectedMedia,
-    store.setAllowsProtectedMedia,
-  ]);
+  const setMediaPlaybackRequiresUserAction = useAppWebViewConfigStore(
+    store => store.setMediaPlaybackRequiresUserAction,
+  );
+
+  const scalesPageToFit = useAppWebViewConfigStore(
+    store => store.scalesPageToFit,
+  );
+  const setScalesPageToFit = useAppWebViewConfigStore(
+    store => store.setScalesPageToFit,
+  );
+
+  const domStorageEnabled = useAppWebViewConfigStore(
+    store => store.domStorageEnabled,
+  );
+  const setDomStorageEnabled = useAppWebViewConfigStore(
+    store => store.setDomStorageEnabled,
+  );
+
+  const javaScriptEnabled = useAppWebViewConfigStore(
+    store => store.javaScriptEnabled,
+  );
+  const setJavaScriptEnabled = useAppWebViewConfigStore(
+    store => store.setJavaScriptEnabled,
+  );
+
+  const thirdPartyCookiesEnabled = useAppWebViewConfigStore(
+    store => store.thirdPartyCookiesEnabled,
+  );
+  const setThirdPartyCookiesEnabled = useAppWebViewConfigStore(
+    store => store.setThirdPartyCookiesEnabled,
+  );
+
+  const userAgent = useAppWebViewConfigStore(store => store.userAgent);
+  const setUserAgent = useAppWebViewConfigStore(store => store.setUserAgent);
+
+  const allowsFullScreenVideo = useAppWebViewConfigStore(
+    store => store.allowsFullScreenVideo,
+  );
+  const setAllowsFullScreenVideo = useAppWebViewConfigStore(
+    store => store.setAllowsFullScreenVideo,
+  );
+
+  const allowsInlineMediaPlayback = useAppWebViewConfigStore(
+    store => store.allowsInlineMediaPlayback,
+  );
+  const setAllowsInlineMediaPlayback = useAppWebViewConfigStore(
+    store => store.setAllowsInlineMediaPlayback,
+  );
+
+  const allowsAirPlayForMediaPlayback = useAppWebViewConfigStore(
+    store => store.allowsAirPlayForMediaPlayback,
+  );
+  const setAllowsAirPlayForMediaPlayback = useAppWebViewConfigStore(
+    store => store.setAllowsAirPlayForMediaPlayback,
+  );
+
+  const bounces = useAppWebViewConfigStore(store => store.bounces);
+  const setBounces = useAppWebViewConfigStore(store => store.setBounces);
+
+  const contentMode = useAppWebViewConfigStore(store => store.contentMode);
+  const setContentMode = useAppWebViewConfigStore(
+    store => store.setContentMode,
+  );
+
+  const geolocationEnabled = useAppWebViewConfigStore(
+    store => store.geolocationEnabled,
+  );
+  const setGeolocationEnabled = useAppWebViewConfigStore(
+    store => store.setGeolocationEnabled,
+  );
+
+  const allowFileAccessFromFileUrls = useAppWebViewConfigStore(
+    store => store.allowFileAccessFromFileUrls,
+  );
+  const setAllowFileAccessFromFileUrls = useAppWebViewConfigStore(
+    store => store.setAllowFileAccessFromFileUrls,
+  );
+
+  const allowsBackForwardNavigationGestures = useAppWebViewConfigStore(
+    store => store.allowsBackForwardNavigationGestures,
+  );
+  const setAllowsBackForwardNavigationGestures = useAppWebViewConfigStore(
+    store => store.setAllowsBackForwardNavigationGestures,
+  );
+
+  const pullToRefreshEnabled = useAppWebViewConfigStore(
+    store => store.pullToRefreshEnabled,
+  );
+  const setPullToRefreshEnabled = useAppWebViewConfigStore(
+    store => store.setPullToRefreshEnabled,
+  );
+
+  const forceDarkOn = useAppWebViewConfigStore(store => store.forceDarkOn);
+  const setForceDarkOn = useAppWebViewConfigStore(
+    store => store.setForceDarkOn,
+  );
+
+  const allowsProtectedMedia = useAppWebViewConfigStore(
+    store => store.allowsProtectedMedia,
+  );
+  const setAllowsProtectedMedia = useAppWebViewConfigStore(
+    store => store.setAllowsProtectedMedia,
+  );
 
   const reset = useAppWebViewConfigStore(store => store.reset);
 
@@ -110,7 +167,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 0,
             iconName: 'movie-open-play',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row1.title'),
             description: t('webViewSetting.section1.row1.subTitle'),
             route: '',
@@ -120,7 +177,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 1,
             iconName: 'resize',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row2.title'),
             description: t('webViewSetting.section1.row2.subTitle'),
             route: '',
@@ -130,7 +187,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 2,
             iconName: 'harddisk',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row3.title'),
             description: t('webViewSetting.section1.row3.subTitle'),
             route: '',
@@ -140,7 +197,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 3,
             iconName: 'language-javascript',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row4.title'),
             description: t('webViewSetting.section1.row4.subTitle'),
             route: '',
@@ -150,7 +207,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 4,
             iconName: 'cookie',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row5.title'),
             description: t('webViewSetting.section1.row5.subTitle'),
             route: '',
@@ -160,7 +217,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 5,
             iconName: 'face-agent',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row6.title'),
             description: t('webViewSetting.section1.row6.subTitle'),
             route: '',
@@ -170,7 +227,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 6,
             iconName: 'fullscreen',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row7.title'),
             description: t('webViewSetting.section1.row7.subTitle'),
             route: '',
@@ -180,7 +237,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 7,
             iconName: 'movie-play',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row8.title'),
             description: t('webViewSetting.section1.row8.subTitle'),
             route: '',
@@ -190,7 +247,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 8,
             iconName: 'airplay',
-            iconType: 'feather',
+            iconType: 'material',
             title: t('webViewSetting.section1.row9.title'),
             description: t('webViewSetting.section1.row9.subTitle'),
             route: '',
@@ -200,7 +257,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 9,
             iconName: 'gesture-swipe-vertical',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row10.title'),
             description: t('webViewSetting.section1.row10.subTitle'),
             route: '',
@@ -210,7 +267,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 10,
             iconName: 'database-arrow-down',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row11.title'),
             description: t('webViewSetting.section1.row11.subTitle'),
             route: '',
@@ -220,7 +277,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 11,
             iconName: 'map-marker',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row12.title'),
             description: t('webViewSetting.section1.row12.subTitle'),
             route: '',
@@ -230,7 +287,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 12,
             iconName: 'file-link',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row13.title'),
             description: t('webViewSetting.section1.row13.subTitle'),
             route: '',
@@ -240,7 +297,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 13,
             iconName: 'gesture-swipe-horizontal',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row14.title'),
             description: t('webViewSetting.section1.row14.subTitle'),
             route: '',
@@ -250,7 +307,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 14,
             iconName: 'gesture-swipe-down',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row15.title'),
             description: t('webViewSetting.section1.row15.subTitle'),
             route: '',
@@ -260,7 +317,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 15,
             iconName: 'theme-light-dark',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row16.title'),
             description: t('webViewSetting.section1.row16.subTitle'),
             route: '',
@@ -270,7 +327,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 16,
             iconName: 'movie-play',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section1.row17.title'),
             description: t('webViewSetting.section1.row17.subTitle'),
             route: '',
@@ -286,7 +343,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 0,
             iconName: 'broom',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section2.row1.title'),
             description: t('webViewSetting.section2.row1.subTitle')!,
             route: 'WebViewSetting',
@@ -294,7 +351,7 @@ const WebViewSetting = ({ navigation }: Props) => {
           {
             id: 1,
             iconName: 'backup-restore',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('webViewSetting.section2.row2.title'),
             description: t('webViewSetting.section2.row2.subTitle')!,
             route: 'WebViewSetting',
@@ -328,7 +385,12 @@ const WebViewSetting = ({ navigation }: Props) => {
   }, [navigation]);
 
   const onPressOption = useCallback(
-    (item: ISettingSection, index: number, subItem: ISettingItem, _subIndex: number) => {
+    (
+      item: ISettingSection,
+      index: number,
+      subItem: ISettingItem,
+      _subIndex: number,
+    ) => {
       switch (true) {
         case index === 0 && subItem.id === 0:
           setMediaPlaybackRequiresUserAction(!subItem.value);
@@ -421,7 +483,8 @@ const WebViewSetting = ({ navigation }: Props) => {
   return (
     <Components.AppBaseView
       edges={['bottom', 'left', 'right']}
-      style={[styles.container, { backgroundColor: colors.background }]}>
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -430,22 +493,36 @@ const WebViewSetting = ({ navigation }: Props) => {
       />
 
       <ScrollView style={styles.safeArea}>
-        <View style={[styles.listContainer, largeScreenMode && styles.cardTablet]}>
+        <View
+          style={[styles.listContainer, largeScreenMode && styles.cardTablet]}
+        >
           {apps.map((item, index) => {
             return (
               <View key={item.id.toString()}>
-                <List.Subheader style={[styles.listSubHeader, { color: colors.primary }]}>{item.title}</List.Subheader>
+                <List.Subheader
+                  style={[styles.listSubHeader, { color: colors.primary }]}
+                >
+                  {item.title}
+                </List.Subheader>
                 {item.items.map((subItem, subIndex) => {
                   return (
                     <List.Item
                       key={subItem.id.toString()}
-                      titleStyle={[{ color: colors.onSurface }, styles.rowOffset]}
-                      descriptionStyle={[{ color: `${colors.onSurface}88` }, styles.rowOffset]}
-                      onPress={() => onPressOption(item, index, subItem, subIndex)}
+                      titleStyle={[
+                        { color: colors.onSurface },
+                        styles.rowOffset,
+                      ]}
+                      descriptionStyle={[
+                        { color: `${colors.onSurface}88` },
+                        styles.rowOffset,
+                      ]}
+                      onPress={() =>
+                        onPressOption(item, index, subItem, subIndex)
+                      }
                       title={subItem.title}
                       description={subItem.description}
                       left={() => (
-                        <Icon
+                        <CommonIcon
                           style={styles.listItemIcon}
                           type={subItem.iconType}
                           name={subItem.iconName}
@@ -457,7 +534,9 @@ const WebViewSetting = ({ navigation }: Props) => {
                         subItem.inputType === 'switch'
                           ? () => (
                               <Switch
-                                onValueChange={() => onPressOption(item, index, subItem, subIndex)}
+                                onValueChange={() =>
+                                  onPressOption(item, index, subItem, subIndex)
+                                }
                                 value={subItem.value}
                               />
                             )

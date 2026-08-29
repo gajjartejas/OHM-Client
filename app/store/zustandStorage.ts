@@ -1,7 +1,7 @@
 import { StateStorage } from 'zustand/middleware';
-import { MMKV } from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 
-const storage = new MMKV();
+const storage = createMMKV();
 
 const zustandStorage: StateStorage = {
   setItem: (name, value) => {
@@ -12,7 +12,7 @@ const zustandStorage: StateStorage = {
     return value ?? null;
   },
   removeItem: name => {
-    return storage.delete(name);
+    storage.remove(name);
   },
 };
 

@@ -14,16 +14,24 @@ interface IAppLangConfigActions {
 }
 
 const DEVICE_LANGUAGE_CODE = RNLocalize.getLocales()[0].languageCode;
-const FOUND_LANGUAGE = SUPPORTED_LANGUAGES.filter(v => v.code === DEVICE_LANGUAGE_CODE);
+const FOUND_LANGUAGE = SUPPORTED_LANGUAGES.filter(
+  v => v.code === DEVICE_LANGUAGE_CODE,
+);
 
 const initialState: IAppLangConfigState = {
   selectedLanguageCode:
-    FOUND_LANGUAGE && FOUND_LANGUAGE.length > 0 ? FOUND_LANGUAGE[0].code : SUPPORTED_LANGUAGES[0].code,
+    FOUND_LANGUAGE && FOUND_LANGUAGE.length > 0
+      ? FOUND_LANGUAGE[0].code
+      : SUPPORTED_LANGUAGES[0].code,
   selectedLanguageName:
-    FOUND_LANGUAGE && FOUND_LANGUAGE.length > 0 ? FOUND_LANGUAGE[0].language : SUPPORTED_LANGUAGES[0].language,
+    FOUND_LANGUAGE && FOUND_LANGUAGE.length > 0
+      ? FOUND_LANGUAGE[0].language
+      : SUPPORTED_LANGUAGES[0].language,
 };
 
-const useAppLangConfigStore = create<IAppLangConfigState & IAppLangConfigActions>()(
+const useAppLangConfigStore = create<
+  IAppLangConfigState & IAppLangConfigActions
+>()(
   devtools(
     persist(
       set => ({
@@ -31,7 +39,9 @@ const useAppLangConfigStore = create<IAppLangConfigState & IAppLangConfigActions
         setSelectedLanguageCode: (value: string) =>
           set(() => ({
             selectedLanguageCode: value,
-            selectedLanguageName: SUPPORTED_LANGUAGES.filter(v => v.code === value)[0].language,
+            selectedLanguageName: SUPPORTED_LANGUAGES.filter(
+              v => v.code === value,
+            )[0].language,
           })),
       }),
       {

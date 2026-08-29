@@ -16,9 +16,14 @@ const AppMiniBanner = (props: IAppMiniBanner) => {
   const { message, RightViewComponent, onPress } = props;
 
   return (
-    <TouchableRipple onPress={onPress} style={[styles.container, { backgroundColor: colors.error }]}>
+    <TouchableRipple
+      onPress={onPress}
+      style={[styles.container, { backgroundColor: colors.error }]}
+    >
       <>
-        <Text style={[styles.titleTextStyle, { color: colors.onSurface }]}>{message}</Text>
+        <Text style={[styles.titleTextStyle, { color: colors.onSurface }]}>
+          {message}
+        </Text>
         {RightViewComponent}
       </>
     </TouchableRipple>
