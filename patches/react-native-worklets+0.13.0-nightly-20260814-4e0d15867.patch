@@ -59,40 +59,333 @@ index 8a77bff..22e29bb 100644
  }
  
 diff --git a/node_modules/react-native-worklets/lib/module/WorkletsModule/NativeWorklets.native.js b/node_modules/react-native-worklets/lib/module/WorkletsModule/NativeWorklets.native.js
-index 8965d28..d9722b5 100644
+index 8965d28..05d67cc 100644
 --- a/node_modules/react-native-worklets/lib/module/WorkletsModule/NativeWorklets.native.js
 +++ b/node_modules/react-native-worklets/lib/module/WorkletsModule/NativeWorklets.native.js
-@@ -187,13 +187,16 @@ function installUnpackers(workletsModuleProxy) {
-   const shareableHost = installShareableHostUnpacker.__initData;
-   const shareableGuest = installShareableGuestUnpacker.__initData;
-   const remoteFunction = installRemoteFunctionUnpacker.__initData;
-+  if (!value) {
-+    return;
+@@ -179,21 +179,169 @@ See https://docs.swmansion.com/react-native-worklets/docs/guides/troubleshooting
+     return WorkletsTurboModule?.toggleSlowAnimationsOnUIRuntime() ?? false;
+   }
+ }
+-export const WorkletsModule = new NativeWorklets();
++const fallbackValueCode = `(function installValueUnpacker() {
++  var workletsCache = new Map();
++  var handleCache = new WeakMap();
++  function valueUnpacker(objectToUnpack) {
++    var workletHash = objectToUnpack.__workletHash;
++    if (workletHash !== undefined) {
++      var workletFun = workletsCache.get(workletHash);
++      if (workletFun === undefined) {
++        var initData = objectToUnpack.__initData;
++        if (initData.bytecode !== undefined) {
++          workletFun = globalThis.evalBytecode(initData.bytecode);
++        } else if (globalThis.evalWithSourceMap && initData.sourceMap) {
++          workletFun = globalThis.evalWithSourceMap(initData.code, initData.location, initData.sourceMap);
++        } else if (globalThis.evalWithSourceUrl) {
++          workletFun = globalThis.evalWithSourceUrl(initData.code, "worklet_" + workletHash);
++        } else {
++          workletFun = eval(initData.code);
++        }
++        workletsCache.set(workletHash, workletFun);
++      }
++      var functionInstance = workletFun.bind(objectToUnpack);
++      objectToUnpack._recur = functionInstance;
++      return functionInstance;
++    } else if (objectToUnpack.__init !== undefined) {
++      var value = handleCache.get(objectToUnpack);
++      if (value === undefined) {
++        value = objectToUnpack.__init();
++        handleCache.set(objectToUnpack, value);
++      }
++      return value;
++    } else {
++      throw new Error('[Worklets] Data type not recognized by value unpacker: "' + globalThis._toString(objectToUnpack) + '".');
++    }
 +  }
-   if (value.bytecode !== undefined) {
++  globalThis.__valueUnpacker = valueUnpacker;
++})`;
++
++const fallbackSynchronizableCode = `(function installSynchronizableUnpacker() {
++  var serializer = function(value) { return globalThis.__serializer ? globalThis.__serializer(value) : value; };
++  function synchronizableUnpacker(synchronizableRef) {
++    var synchronizable = synchronizableRef;
++    var proxy = globalThis.__workletsModuleProxy;
++    synchronizable.__synchronizableRef = true;
++    synchronizable.getDirty = function() { return proxy.synchronizableGetDirty(synchronizable); };
++    synchronizable.getBlocking = function() { return proxy.synchronizableGetBlocking(synchronizable); };
++    synchronizable.setBlocking = function(valueOrFunction) {
++      var newValue;
++      if (typeof valueOrFunction === 'function') {
++        synchronizable.lock();
++        var prev = synchronizable.getBlocking();
++        newValue = valueOrFunction(prev);
++        proxy.synchronizableSetBlocking(synchronizable, serializer(newValue));
++        synchronizable.unlock();
++      } else {
++        newValue = valueOrFunction;
++        proxy.synchronizableSetBlocking(synchronizable, serializer(newValue));
++      }
++    };
++    synchronizable.lock = function() { proxy.synchronizableLock(synchronizable); };
++    synchronizable.unlock = function() { proxy.synchronizableUnlock(synchronizable); };
++    return synchronizable;
++  }
++  globalThis.__synchronizableUnpacker = synchronizableUnpacker;
++})`;
++
++const fallbackCustomSerializableCode = `(function installCustomSerializableUnpacker() {
++  if (!globalThis.__customSerializationRegistry) {
++    globalThis.__customSerializationRegistry = [];
++  }
++  var registry = globalThis.__customSerializationRegistry;
++  function customSerializableUnpacker(value, typeId) {
++    var data = registry[typeId];
++    if (!data) {
++      throw new Error('[Worklets] No custom serializable registered for type ID ' + typeId + '.');
++    }
++    return data.unpack(value);
++  }
++  globalThis.__customSerializableUnpacker = customSerializableUnpacker;
++})`;
++
++const fallbackShareableHostCode = `(function installShareableHostUnpacker() {
++  function shareableHostUnpacker(initial, hostDecorator) {
++    var hostShareable = {
++      isHost: true,
++      __shareableRef: true,
++      value: initial
++    };
++    if (hostDecorator) {
++      hostShareable = hostDecorator(hostShareable);
++    }
++    return hostShareable;
++  }
++  globalThis.__shareableHostUnpacker = shareableHostUnpacker;
++})`;
++
++const fallbackShareableGuestCode = `(function installShareableGuestUnpacker() {
++  var serializer = function(value) { return globalThis.__serializer ? globalThis.__serializer(value) : value; };
++  var proxy = globalThis.__workletsModuleProxy;
++  function shareableGuestUnpacker(hostId, shareableRef, guestDecorator) {
++    var shareableGuest = shareableRef;
++    shareableGuest.isHost = false;
++    shareableGuest.__shareableRef = true;
++    shareableGuest.get = function() {
++      var serializedWorklet = serializer(function() { return globalThis.__serializer(shareableGuest.value); });
++      return proxy.runOnRuntimeSyncWithId(hostId, serializedWorklet);
++    };
++    shareableGuest.set = function(value) {
++      var serializedWorklet = serializer(function() { shareableGuest.value = value; });
++      proxy.scheduleOnRuntimeWithId(hostId, serializedWorklet);
++    };
++    if (guestDecorator) {
++      shareableGuest = guestDecorator(shareableGuest);
++    }
++    return shareableGuest;
++  }
++  globalThis.__shareableGuestUnpacker = shareableGuestUnpacker;
++})`;
++
++const fallbackRemoteFunctionCode = `(function installRemoteFunctionUnpacker() {
++  function remoteFunctionUnpacker(remoteFunctionName) {
++    remoteFunctionName = remoteFunctionName ? remoteFunctionName : 'anonymous';
++    var fun = function remoteFunctionGuard() {
++      throw new Error('[Worklets] Tried to synchronously call a Remote Function. Called "' + remoteFunctionName + '" on the ' + globalThis.__RUNTIME_NAME + ' Runtime.');
++    };
++    fun.__remoteFunction = true;
++    return fun;
++  }
++  globalThis.__remoteFunctionUnpacker = remoteFunctionUnpacker;
++})`;
++
+ function installUnpackers(workletsModuleProxy) {
+-  const value = installValueUnpacker.__initData;
+-  const synchronizable = installSynchronizableUnpacker.__initData;
+-  const customSerializable = installCustomSerializableUnpacker.__initData;
+-  const shareableHost = installShareableHostUnpacker.__initData;
+-  const shareableGuest = installShareableGuestUnpacker.__initData;
+-  const remoteFunction = installRemoteFunctionUnpacker.__initData;
+-  if (value.bytecode !== undefined) {
++  const value = installValueUnpacker?.__initData;
++  const synchronizable = installSynchronizableUnpacker?.__initData;
++  const customSerializable = installCustomSerializableUnpacker?.__initData;
++  const shareableHost = installShareableHostUnpacker?.__initData;
++  const shareableGuest = installShareableGuestUnpacker?.__initData;
++  const remoteFunction = installRemoteFunctionUnpacker?.__initData;
++  if (value?.bytecode !== undefined) {
      if (__DEV__) {
        throw new Error('[Worklets] Unpackers were compiled to Hermes bytecode in a development build, which is not supported.');
      }
 -    workletsModuleProxy.loadUnpackersWithBytecode(value.bytecode, synchronizable.bytecode, customSerializable.bytecode, shareableHost.bytecode, shareableGuest.bytecode, remoteFunction.bytecode);
--  } else {
--    workletsModuleProxy.loadUnpackersWithCode(value.code, value.location ?? '', value.sourceMap ?? '', synchronizable.code, synchronizable.location ?? '', synchronizable.sourceMap ?? '', customSerializable.code, customSerializable.location ?? '', customSerializable.sourceMap ?? '', shareableHost.code, shareableHost.location ?? '', shareableHost.sourceMap ?? '', shareableGuest.code, shareableGuest.location ?? '', shareableGuest.sourceMap ?? '', remoteFunction.code, remoteFunction.location ?? '', remoteFunction.sourceMap ?? '');
 +    workletsModuleProxy.loadUnpackersWithBytecode(value.bytecode, synchronizable?.bytecode, customSerializable?.bytecode, shareableHost?.bytecode, shareableGuest?.bytecode, remoteFunction?.bytecode);
-+  } else if (value.code) {
-+    workletsModuleProxy.loadUnpackersWithCode(value.code, value.location ?? '', value.sourceMap ?? '', synchronizable?.code ?? '', synchronizable?.location ?? '', synchronizable?.sourceMap ?? '', customSerializable?.code ?? '', customSerializable?.location ?? '', customSerializable?.sourceMap ?? '', shareableHost?.code ?? '', shareableHost?.location ?? '', shareableHost?.sourceMap ?? '', shareableGuest?.code ?? '', shareableGuest?.location ?? '', shareableGuest?.sourceMap ?? '', remoteFunction?.code ?? '', remoteFunction?.location ?? '', remoteFunction?.sourceMap ?? '');
+   } else {
+-    workletsModuleProxy.loadUnpackersWithCode(value.code, value.location ?? '', value.sourceMap ?? '', synchronizable.code, synchronizable.location ?? '', synchronizable.sourceMap ?? '', customSerializable.code, customSerializable.location ?? '', customSerializable.sourceMap ?? '', shareableHost.code, shareableHost.location ?? '', shareableHost.sourceMap ?? '', shareableGuest.code, shareableGuest.location ?? '', shareableGuest.sourceMap ?? '', remoteFunction.code, remoteFunction.location ?? '', remoteFunction.sourceMap ?? '');
++    workletsModuleProxy.loadUnpackersWithCode(
++      value?.code || fallbackValueCode,
++      value?.location ?? '',
++      value?.sourceMap ?? '',
++      synchronizable?.code || fallbackSynchronizableCode,
++      synchronizable?.location ?? '',
++      synchronizable?.sourceMap ?? '',
++      customSerializable?.code || fallbackCustomSerializableCode,
++      customSerializable?.location ?? '',
++      customSerializable?.sourceMap ?? '',
++      shareableHost?.code || fallbackShareableHostCode,
++      shareableHost?.location ?? '',
++      shareableHost?.sourceMap ?? '',
++      shareableGuest?.code || fallbackShareableGuestCode,
++      shareableGuest?.location ?? '',
++      shareableGuest?.sourceMap ?? '',
++      remoteFunction?.code || fallbackRemoteFunctionCode,
++      remoteFunction?.location ?? '',
++      remoteFunction?.sourceMap ?? ''
++    );
    }
  }
  //# sourceMappingURL=NativeWorklets.native.js.map
 \ No newline at end of file
 diff --git a/node_modules/react-native-worklets/src/WorkletsModule/NativeWorklets.native.ts b/node_modules/react-native-worklets/src/WorkletsModule/NativeWorklets.native.ts
-index 3d19d9c..374b864 100644
+index 3d19d9c..9cab0b7 100644
 --- a/node_modules/react-native-worklets/src/WorkletsModule/NativeWorklets.native.ts
 +++ b/node_modules/react-native-worklets/src/WorkletsModule/NativeWorklets.native.ts
-@@ -411,18 +411,22 @@ See https://docs.swmansion.com/react-native-worklets/docs/guides/troubleshooting
+@@ -408,23 +408,153 @@ See https://docs.swmansion.com/react-native-worklets/docs/guides/troubleshooting
+   }
+ }
+ 
++const fallbackValueCode = `(function installValueUnpacker() {
++  var workletsCache = new Map();
++  var handleCache = new WeakMap();
++  function valueUnpacker(objectToUnpack) {
++    var workletHash = objectToUnpack.__workletHash;
++    if (workletHash !== undefined) {
++      var workletFun = workletsCache.get(workletHash);
++      if (workletFun === undefined) {
++        var initData = objectToUnpack.__initData;
++        if (initData.bytecode !== undefined) {
++          workletFun = globalThis.evalBytecode(initData.bytecode);
++        } else if (globalThis.evalWithSourceMap && initData.sourceMap) {
++          workletFun = globalThis.evalWithSourceMap(initData.code, initData.location, initData.sourceMap);
++        } else if (globalThis.evalWithSourceUrl) {
++          workletFun = globalThis.evalWithSourceUrl(initData.code, "worklet_" + workletHash);
++        } else {
++          workletFun = eval(initData.code);
++        }
++        workletsCache.set(workletHash, workletFun);
++      }
++      var functionInstance = workletFun.bind(objectToUnpack);
++      objectToUnpack._recur = functionInstance;
++      return functionInstance;
++    } else if (objectToUnpack.__init !== undefined) {
++      var value = handleCache.get(objectToUnpack);
++      if (value === undefined) {
++        value = objectToUnpack.__init();
++        handleCache.set(objectToUnpack, value);
++      }
++      return value;
++    } else {
++      throw new Error('[Worklets] Data type not recognized by value unpacker: "' + globalThis._toString(objectToUnpack) + '".');
++    }
++  }
++  globalThis.__valueUnpacker = valueUnpacker;
++})`;
++
++const fallbackSynchronizableCode = `(function installSynchronizableUnpacker() {
++  var serializer = function(value) { return globalThis.__serializer ? globalThis.__serializer(value) : value; };
++  function synchronizableUnpacker(synchronizableRef) {
++    var synchronizable = synchronizableRef;
++    var proxy = globalThis.__workletsModuleProxy;
++    synchronizable.__synchronizableRef = true;
++    synchronizable.getDirty = function() { return proxy.synchronizableGetDirty(synchronizable); };
++    synchronizable.getBlocking = function() { return proxy.synchronizableGetBlocking(synchronizable); };
++    synchronizable.setBlocking = function(valueOrFunction) {
++      var newValue;
++      if (typeof valueOrFunction === 'function') {
++        synchronizable.lock();
++        var prev = synchronizable.getBlocking();
++        newValue = valueOrFunction(prev);
++        proxy.synchronizableSetBlocking(synchronizable, serializer(newValue));
++        synchronizable.unlock();
++      } else {
++        newValue = valueOrFunction;
++        proxy.synchronizableSetBlocking(synchronizable, serializer(newValue));
++      }
++    };
++    synchronizable.lock = function() { proxy.synchronizableLock(synchronizable); };
++    synchronizable.unlock = function() { proxy.synchronizableUnlock(synchronizable); };
++    return synchronizable;
++  }
++  globalThis.__synchronizableUnpacker = synchronizableUnpacker;
++})`;
++
++const fallbackCustomSerializableCode = `(function installCustomSerializableUnpacker() {
++  if (!globalThis.__customSerializationRegistry) {
++    globalThis.__customSerializationRegistry = [];
++  }
++  var registry = globalThis.__customSerializationRegistry;
++  function customSerializableUnpacker(value, typeId) {
++    var data = registry[typeId];
++    if (!data) {
++      throw new Error('[Worklets] No custom serializable registered for type ID ' + typeId + '.');
++    }
++    return data.unpack(value);
++  }
++  globalThis.__customSerializableUnpacker = customSerializableUnpacker;
++})`;
++
++const fallbackShareableHostCode = `(function installShareableHostUnpacker() {
++  function shareableHostUnpacker(initial, hostDecorator) {
++    var hostShareable = {
++      isHost: true,
++      __shareableRef: true,
++      value: initial
++    };
++    if (hostDecorator) {
++      hostShareable = hostDecorator(hostShareable);
++    }
++    return hostShareable;
++  }
++  globalThis.__shareableHostUnpacker = shareableHostUnpacker;
++})`;
++
++const fallbackShareableGuestCode = `(function installShareableGuestUnpacker() {
++  var serializer = function(value) { return globalThis.__serializer ? globalThis.__serializer(value) : value; };
++  var proxy = globalThis.__workletsModuleProxy;
++  function shareableGuestUnpacker(hostId, shareableRef, guestDecorator) {
++    var shareableGuest = shareableRef;
++    shareableGuest.isHost = false;
++    shareableGuest.__shareableRef = true;
++    shareableGuest.get = function() {
++      var serializedWorklet = serializer(function() { return globalThis.__serializer(shareableGuest.value); });
++      return proxy.runOnRuntimeSyncWithId(hostId, serializedWorklet);
++    };
++    shareableGuest.set = function(value) {
++      var serializedWorklet = serializer(function() { shareableGuest.value = value; });
++      proxy.scheduleOnRuntimeWithId(hostId, serializedWorklet);
++    };
++    if (guestDecorator) {
++      shareableGuest = guestDecorator(shareableGuest);
++    }
++    return shareableGuest;
++  }
++  globalThis.__shareableGuestUnpacker = shareableGuestUnpacker;
++})`;
++
++const fallbackRemoteFunctionCode = `(function installRemoteFunctionUnpacker() {
++  function remoteFunctionUnpacker(remoteFunctionName) {
++    remoteFunctionName = remoteFunctionName ? remoteFunctionName : 'anonymous';
++    var fun = function remoteFunctionGuard() {
++      throw new Error('[Worklets] Tried to synchronously call a Remote Function. Called "' + remoteFunctionName + '" on the ' + globalThis.__RUNTIME_NAME + ' Runtime.');
++    };
++    fun.__remoteFunction = true;
++    return fun;
++  }
++  globalThis.__remoteFunctionUnpacker = remoteFunctionUnpacker;
++})`;
++
  export const WorkletsModule: IWorkletsModule = new NativeWorklets();
  
  function installUnpackers(workletsModuleProxy: WorkletsModuleProxy) {
 -  const value = (installValueUnpacker as WorkletFunction).__initData!;
-+  const value = (installValueUnpacker as WorkletFunction).__initData;
++  const value = (installValueUnpacker as WorkletFunction)?.__initData;
    const synchronizable = (installSynchronizableUnpacker as WorkletFunction)
 -    .__initData!;
 +    ?.__initData;
@@ -109,14 +402,13 @@ index 3d19d9c..374b864 100644
    const remoteFunction = (installRemoteFunctionUnpacker as WorkletFunction)
 -    .__initData!;
 +    ?.__initData;
-+
-+  if (!value) {
-+    return;
-+  }
  
-   if (value.bytecode !== undefined) {
+-  if (value.bytecode !== undefined) {
++  if (value?.bytecode !== undefined) {
      if (__DEV__) {
-@@ -432,15 +436,15 @@ function installUnpackers(workletsModuleProxy: WorkletsModuleProxy) {
+       throw new Error(
+         '[Worklets] Unpackers were compiled to Hermes bytecode in a development build, which is not supported.'
+@@ -432,32 +562,32 @@ function installUnpackers(workletsModuleProxy: WorkletsModuleProxy) {
      }
      workletsModuleProxy.loadUnpackersWithBytecode(
        value.bytecode,
@@ -131,11 +423,44 @@ index 3d19d9c..374b864 100644
 +      shareableGuest?.bytecode!,
 +      remoteFunction?.bytecode!
      );
--  } else {
-+  } else if (value.code) {
+   } else {
      workletsModuleProxy.loadUnpackersWithCode(
 -      value.code!,
-+      value.code,
-       value.location ?? '',
-       value.sourceMap ?? '',
-       synchronizable.code!,
+-      value.location ?? '',
+-      value.sourceMap ?? '',
+-      synchronizable.code!,
+-      synchronizable.location ?? '',
+-      synchronizable.sourceMap ?? '',
+-      customSerializable.code!,
+-      customSerializable.location ?? '',
+-      customSerializable.sourceMap ?? '',
+-      shareableHost.code!,
+-      shareableHost.location ?? '',
+-      shareableHost.sourceMap ?? '',
+-      shareableGuest.code!,
+-      shareableGuest.location ?? '',
+-      shareableGuest.sourceMap ?? '',
+-      remoteFunction.code!,
+-      remoteFunction.location ?? '',
+-      remoteFunction.sourceMap ?? ''
++      value?.code || fallbackValueCode,
++      value?.location ?? '',
++      value?.sourceMap ?? '',
++      synchronizable?.code || fallbackSynchronizableCode,
++      synchronizable?.location ?? '',
++      synchronizable?.sourceMap ?? '',
++      customSerializable?.code || fallbackCustomSerializableCode,
++      customSerializable?.location ?? '',
++      customSerializable?.sourceMap ?? '',
++      shareableHost?.code || fallbackShareableHostCode,
++      shareableHost?.location ?? '',
++      shareableHost?.sourceMap ?? '',
++      shareableGuest?.code || fallbackShareableGuestCode,
++      shareableGuest?.location ?? '',
++      shareableGuest?.sourceMap ?? '',
++      remoteFunction?.code || fallbackRemoteFunctionCode,
++      remoteFunction?.location ?? '',
++      remoteFunction?.sourceMap ?? ''
+     );
+   }
+ }
