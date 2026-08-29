@@ -184,8 +184,11 @@
       "done": "Done"
     },
     "copyJSON": "Copy JSON",
+    "openInBrowser": "Open in Browser",
+    "autoRefresh": "Auto Refresh",
     "showMinValue": "Show Min Value",
     "showMaxValue": "Show Max Value",
+    "essentialOnly": "Required Info Only",
     "copyURL": "Copy URL",
     "info": "Info",
     "loading": "Loading...",

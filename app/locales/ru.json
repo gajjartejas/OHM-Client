@@ -84,8 +84,11 @@
       "min": "Мин"
     },
     "copyJSON": "Копировать JSON",
+    "openInBrowser": "Открыть в браузере",
+    "autoRefresh": "Автообновление",
     "showMinValue": "Показать мин. значение",
     "showMaxValue": "Показать макс. значение",
+    "essentialOnly": "Только важная информация",
     "copyURL": "Копировать URL",
     "emptyData": {
       "item1": {

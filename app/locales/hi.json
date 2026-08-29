@@ -84,8 +84,11 @@
       "min": "मिन"
     },
     "copyJSON": "JSON कॉपी करें",
+    "openInBrowser": "ब्राउज़र में खोलें",
+    "autoRefresh": "स्वतः रीफ़्रेश",
     "showMinValue": "न्यूनतम मान दिखाएं",
     "showMaxValue": "अधिकतम मान दिखाएं",
+    "essentialOnly": "केवल आवश्यक जानकारी",
     "copyURL": "यूआरएल कॉपी करें",
     "emptyData": {
       "item1": {

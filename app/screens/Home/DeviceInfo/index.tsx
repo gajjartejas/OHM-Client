@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, Animated, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { View, Animated, NativeSyntheticEvent, NativeScrollEvent, RefreshControl } from 'react-native';
 
 //ThirdParty
 import { Button, Dialog, IconButton, Menu, Portal, Snackbar, Text, useTheme } from 'react-native-paper';
@@ -21,6 +21,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import getLiveURL from 'app/utils/getLiveURL';
 import inspectService from 'app/services/inspectService';
+import { filterEssentialViewModel } from 'app/utils/sensorFilter';
 
 interface IAppError {
   message?: string;
@@ -36,6 +37,7 @@ const DeviceInfo = ({ navigation }: Props) => {
   //Refs
   const refJSONData = useRef<string | null>(null);
   const refDeviceInfoRequestInProgress = useRef<boolean>(false);
+  const refDeviceInfos = useRef<ICardViewModel[]>([]);
 
   //Actions
 
@@ -51,6 +53,12 @@ const DeviceInfo = ({ navigation }: Props) => {
   const toggleShowMinValue = useAppConfigStore(store => store.toggleShowMinValue);
   const showMaxValue = useAppConfigStore(store => store.showMaxValue);
   const toggleShowMaxValue = useAppConfigStore(store => store.toggleShowMaxValue);
+  const viewMode = useAppConfigStore(store => store.viewMode);
+  const toggleViewMode = useAppConfigStore(store => store.toggleViewMode);
+  const essentialSensorsOnly = useAppConfigStore(store => store.essentialSensorsOnly);
+  const toggleEssentialSensorsOnly = useAppConfigStore(store => store.toggleEssentialSensorsOnly);
+  const autoRefresh = useAppConfigStore(store => store.autoRefresh);
+  const toggleAutoRefresh = useAppConfigStore(store => store.toggleAutoRefresh);
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const diffClamp = Animated.diffClamp(scrollY, 0, THRESHOLD_DIFF_Y);
@@ -68,6 +76,7 @@ const DeviceInfo = ({ navigation }: Props) => {
   const [errorMessageDesc, setErrorMessageDesc] = useState<string | null>(null);
   const [buttonTitle, setButtonTitle] = useState<string | null>(null);
   const [connecting, setConnecting] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [infoDialogVisible, setInfoDialogVisible] = useState<boolean>(false);
   const [appServerURL, setAppServerURL] = useState<string | null>(null);
   const [subTitleDialogVisible, setSubTitleDialogVisible] = useState(false);
@@ -220,7 +229,9 @@ const DeviceInfo = ({ navigation }: Props) => {
       });
       refJSONData.current = JSON.stringify(response);
       setError(null);
-      setDeviceInfos(convertToViewModel(response));
+      const vms = convertToViewModel(response);
+      refDeviceInfos.current = vms;
+      setDeviceInfos(vms);
     } catch (e: unknown) {
       setError(e as IAppError);
     }
@@ -235,10 +246,16 @@ const DeviceInfo = ({ navigation }: Props) => {
     }
 
     (async () => {
-      setConnecting(true);
+      if (refDeviceInfos.current.length === 0) {
+        setConnecting(true);
+      }
       await loadRequest();
       setConnecting(false);
     })();
+
+    if (!autoRefresh) {
+      return;
+    }
 
     const to = setInterval(async () => {
       await loadRequest();
@@ -247,7 +264,7 @@ const DeviceInfo = ({ navigation }: Props) => {
     return () => {
       clearInterval(to);
     };
-  }, [error, loadRequest, selectedDevice]);
+  }, [autoRefresh, error, loadRequest, selectedDevice]);
 
   const renderNoDataButtons = useCallback(() => {
     return (
@@ -266,6 +283,7 @@ const DeviceInfo = ({ navigation }: Props) => {
   }, []);
 
   const onOpenWith = useCallback(() => {
+    setMenuVisible(false);
     navigation.navigate('DeviceInfoWebView');
   }, [navigation]);
 
@@ -278,10 +296,21 @@ const DeviceInfo = ({ navigation }: Props) => {
     setMenuVisible(true);
   }, []);
 
+  const onPullToRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await loadRequest();
+    setRefreshing(false);
+  }, [loadRequest]);
+
   const onWRefresh = useCallback(async () => {
-    setConnecting(true);
+    if (refDeviceInfos.current.length === 0) {
+      setConnecting(true);
+    } else {
+      setRefreshing(true);
+    }
     await loadRequest();
     setConnecting(false);
+    setRefreshing(false);
   }, [loadRequest]);
 
   const onCopyJSON = useCallback(() => {
@@ -348,6 +377,11 @@ const DeviceInfo = ({ navigation }: Props) => {
     setInfoDialogVisible(false);
   }, []);
 
+  const onToggleAutoRefresh = useCallback(() => {
+    toggleAutoRefresh();
+    setMenuVisible(false);
+  }, [toggleAutoRefresh]);
+
   const onToggleMinValue = useCallback(() => {
     toggleShowMinValue();
     setMenuVisible(false);
@@ -357,6 +391,18 @@ const DeviceInfo = ({ navigation }: Props) => {
     toggleShowMaxValue();
     setMenuVisible(false);
   }, [toggleShowMaxValue]);
+
+  const onToggleEssentialSensors = useCallback(() => {
+    toggleEssentialSensorsOnly();
+    setMenuVisible(false);
+  }, [toggleEssentialSensorsOnly]);
+
+  const displayedDeviceInfos = useMemo(() => {
+    if (essentialSensorsOnly) {
+      return filterEssentialViewModel(deviceInfos);
+    }
+    return deviceInfos;
+  }, [deviceInfos, essentialSensorsOnly]);
 
   const onDismissSnackbar = useCallback(() => {
     setSnackbarVisible(false);
@@ -385,21 +431,33 @@ const DeviceInfo = ({ navigation }: Props) => {
         />
       )}
 
-      {deviceInfos && (
+      {displayedDeviceInfos && (
         <View style={styles.subView}>
           <Animated.ScrollView
             style={styles.scrollView}
             contentContainerStyle={{ paddingBottom: 85, paddingTop: 4 }}
             onScroll={onScroll}
-            scrollEventThrottle={16}>
-            {deviceInfos.map(m => {
-              return <Components.CardSection key={m.id.toString()} root={true} value={m} />;
-            })}
+            scrollEventThrottle={16}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onPullToRefresh}
+                colors={[colors.primary]}
+                tintColor={colors.primary}
+              />
+            }>
+            {viewMode === 'grid' ? (
+              <Components.GridCardView deviceInfos={displayedDeviceInfos} />
+            ) : (
+              displayedDeviceInfos.map(m => {
+                return <Components.CardSection key={m.id.toString()} root={true} value={m} />;
+              })
+            )}
           </Animated.ScrollView>
         </View>
       )}
 
-      {deviceInfos.length < 1 && !!error && !connecting && (
+      {displayedDeviceInfos.length < 1 && !!error && !connecting && (
         <Components.AppEmptyDataView
           iconType={'fontawesome6'}
           iconName="box-open"
@@ -415,14 +473,26 @@ const DeviceInfo = ({ navigation }: Props) => {
         <View style={styles.homeBackFwdButtonContainer}>
           <IconButton icon={'swap-horizontal'} disabled={false} size={26} style={{}} onPress={onSwitchURL} />
           <IconButton icon={'refresh'} size={26} style={{}} disabled={false} onPress={onWRefresh} />
-          <IconButton icon={'open-in-app'} size={26} disabled={false} style={{}} onPress={onOpenWith} />
+          <IconButton
+            icon={viewMode === 'grid' ? 'table-large' : 'view-grid-outline'}
+            size={26}
+            disabled={false}
+            style={{}}
+            onPress={toggleViewMode}
+          />
         </View>
 
         <Menu
           visible={menuVisible}
           onDismiss={onDismissModal}
           anchor={<IconButton icon={'dots-vertical'} size={26} onPress={onPressMore} />}>
+          <Menu.Item leadingIcon={'open-in-app'} onPress={onOpenWith} title={t('deviceInfo.openInBrowser')} />
           <Menu.Item leadingIcon={'content-copy'} onPress={onCopyJSON} title={t('deviceInfo.copyJSON')} />
+          <Menu.Item
+            leadingIcon={autoRefresh ? 'checkbox-marked' : 'checkbox-blank-outline'}
+            onPress={onToggleAutoRefresh}
+            title={t('deviceInfo.autoRefresh')}
+          />
           <Menu.Item
             leadingIcon={showMinValue ? 'checkbox-marked' : 'checkbox-blank-outline'}
             onPress={onToggleMinValue}
@@ -432,6 +502,11 @@ const DeviceInfo = ({ navigation }: Props) => {
             leadingIcon={showMaxValue ? 'checkbox-marked' : 'checkbox-blank-outline'}
             onPress={onToggleMaxValue}
             title={t('deviceInfo.showMaxValue')}
+          />
+          <Menu.Item
+            leadingIcon={essentialSensorsOnly ? 'checkbox-marked' : 'checkbox-blank-outline'}
+            onPress={onToggleEssentialSensors}
+            title={t('deviceInfo.essentialOnly')}
           />
           <Menu.Item leadingIcon={'information-outline'} onPress={onInfo} title={t('deviceInfo.info')} />
         </Menu>
@@ -466,7 +541,7 @@ const DeviceInfo = ({ navigation }: Props) => {
         selectedItem={selectedDevice ? selectedDevice.selectedIp : '-'}
       />
 
-      {connecting && <Components.AppLoader message={t('deviceInfo.loading')} />}
+      {connecting && deviceInfos.length === 0 && <Components.AppLoader message={t('deviceInfo.loading')} />}
     </Components.AppBaseView>
   );
 };
