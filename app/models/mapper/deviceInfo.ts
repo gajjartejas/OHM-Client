@@ -8,26 +8,33 @@ const getHardwareFromImageFile = (typeNode: string): IAPIHardwareType | null => 
     case 'images_icon/nvidia.png':
       return IAPIHardwareType.GpuNvidia;
     case 'images_icon/ati.png':
-      return IAPIHardwareType.GpuAti;
+    case 'images_icon/amd.png':
+      return IAPIHardwareType.GpuAmd;
     case 'images_icon/intel.png':
       return IAPIHardwareType.GpuIntel;
     case 'images_icon/hdd.png':
-      return IAPIHardwareType.HDD;
+      return IAPIHardwareType.Storage;
     case 'images_icon/heatmaster.png':
       return IAPIHardwareType.Heatmaster;
     case 'images_icon/mainboard.png':
-      return IAPIHardwareType.Mainboard;
+      return IAPIHardwareType.Motherboard;
     case 'images_icon/chip.png':
-      return IAPIHardwareType.Chipset;
+      return IAPIHardwareType.SuperIO;
     case 'images_icon/tbalancer.png':
     case 'images_icon/bigng.png':
       return IAPIHardwareType.TBalancer;
     case 'images_icon/ram.png':
-      return IAPIHardwareType.RAM;
+      return IAPIHardwareType.Memory;
     case 'images_icon/nic.png':
-      return IAPIHardwareType.NIC;
+      return IAPIHardwareType.Network;
     case 'images_icon/battery.png':
       return IAPIHardwareType.Battery;
+    case 'images_icon/fan.png':
+      return IAPIHardwareType.Cooler;
+    case 'images_icon/power-supply.png':
+      return IAPIHardwareType.Psu;
+    case 'images_icon/powermonitor.png':
+      return IAPIHardwareType.PowerMonitor;
     default:
       return null;
   }
@@ -37,12 +44,16 @@ const getSensorTypeFromImageFile = (typeNode: string): IAPISensorType | null => 
   switch (typeNode) {
     case 'images_icon/voltage.png':
       return IAPISensorType.Voltage;
+    case 'images_icon/current.png':
+      return IAPISensorType.Current;
+    case 'images_icon/power.png':
+      return IAPISensorType.Power;
     case 'images_icon/clock.png':
       return IAPISensorType.Clock;
-    case 'images_icon/load.png':
-      return IAPISensorType.Load;
     case 'images_icon/temperature.png':
       return IAPISensorType.Temperature;
+    case 'images_icon/load.png':
+      return IAPISensorType.Load;
     case 'images_icon/fan.png':
       return IAPISensorType.Fan;
     case 'images_icon/flow.png':
@@ -51,12 +62,18 @@ const getSensorTypeFromImageFile = (typeNode: string): IAPISensorType | null => 
       return IAPISensorType.Control;
     case 'images_icon/level.png':
       return IAPISensorType.Level;
-    case 'images_icon/power.png':
-      return IAPISensorType.Power;
+    case 'images_icon/factor.png':
+      return IAPISensorType.Factor;
+    case 'images_icon/data.png':
+      return IAPISensorType.Data;
     case 'images_icon/throughput.png':
       return IAPISensorType.Throughput;
-    case 'images_icon/current.png':
-      return IAPISensorType.Current;
+    case 'images_icon/time.png':
+      return IAPISensorType.TimeSpan;
+    case 'images_icon/loudspeaker.png':
+      return IAPISensorType.Noise;
+    case 'images_icon/humidity.png':
+      return IAPISensorType.Humidity;
     default:
       return null;
   }
@@ -80,12 +97,20 @@ const convertNodeToModel = (node: IAPIDeviceInfo): DeviceInfo => {
     max: node.Max,
     imageURL: node.ImageURL,
     type: null,
-  } as DeviceInfo;
-  const imageURL = node.ImageURL;
-  if (imageURL) {
-    const system = getSystemFromImageFile(imageURL);
-    const hardware = getHardwareFromImageFile(imageURL);
-    const sensor = getSensorTypeFromImageFile(imageURL);
+    hardwareId: node.HardwareId,
+    sensorId: node.SensorId,
+    rawMin: node.RawMin,
+    rawValue: node.RawValue,
+    rawMax: node.RawMax,
+    children: [],
+  } as unknown as DeviceInfo;
+
+  if (node.Type && Object.values(IAPISensorType).includes(node.Type as IAPISensorType)) {
+    newNode.type = node.Type as IAPISensorType;
+  } else if (node.ImageURL) {
+    const system = getSystemFromImageFile(node.ImageURL);
+    const hardware = getHardwareFromImageFile(node.ImageURL);
+    const sensor = getSensorTypeFromImageFile(node.ImageURL);
     if (system) {
       newNode.type = system;
     } else if (hardware) {
@@ -96,25 +121,23 @@ const convertNodeToModel = (node: IAPIDeviceInfo): DeviceInfo => {
   }
 
   if (node.Children && node.Children.length > 0) {
-    const childrenNodes = node.Children;
-    for (const key in childrenNodes) {
-      if (Object.prototype.hasOwnProperty.call(childrenNodes, key)) {
-        const childNode = childrenNodes[key];
-        const nodeModel = convertNodeToModel(childNode);
-        const nodeName = (newNode.type ? newNode.type : newNode.text).toLowerCase();
-        // @ts-ignore
-        if (!newNode[nodeName]) {
-          // @ts-ignore
-          newNode[nodeName] = [nodeModel];
-        } else {
-          // @ts-ignore
-          newNode[nodeName].push(nodeModel);
-        }
+    const childrenModels: DeviceInfo[] = [];
+    for (const childNode of node.Children) {
+      const nodeModel = convertNodeToModel(childNode);
+      childrenModels.push(nodeModel);
+      const nodeName = (newNode.type ? newNode.type : newNode.text).toLowerCase();
+      const targetObj = newNode as Record<string, unknown>;
+      if (!Array.isArray(targetObj[nodeName])) {
+        targetObj[nodeName] = [nodeModel];
+      } else {
+        (targetObj[nodeName] as DeviceInfo[]).push(nodeModel);
       }
     }
+    newNode.children = childrenModels;
   }
 
   return newNode;
 };
 
 export default convertNodeToModel;
+

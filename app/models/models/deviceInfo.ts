@@ -8,8 +8,16 @@ interface IDeviceInfo {
   max: string;
   imageURL: string;
   type: IAPISensorType | IAPIHardwareType | IAPISystemType | null;
-  sensor: IDeviceSensor[];
-  ipAddress: string;
+  sensor?: IDeviceSensor[];
+  computer?: IDeviceComputer[];
+  hardwareId?: string;
+  sensorId?: string;
+  rawMin?: string;
+  rawValue?: string;
+  rawMax?: string;
+  children?: IDeviceInfo[];
+  ipAddress?: string;
+  [key: string]: unknown;
 }
 
 export interface IDeviceSensor {
@@ -20,7 +28,13 @@ export interface IDeviceSensor {
   max: string;
   imageURL: string;
   type: string;
-  computer: IDeviceComputer[];
+  computer?: IDeviceComputer[];
+  hardwareId?: string;
+  sensorId?: string;
+  rawMin?: string;
+  rawValue?: string;
+  rawMax?: string;
+  children?: IDeviceInfo[];
 }
 
 export interface IDeviceComputer {
@@ -31,6 +45,12 @@ export interface IDeviceComputer {
   max: string;
   imageURL: string;
   type: string;
+  hardwareId?: string;
+  sensorId?: string;
+  rawMin?: string;
+  rawValue?: string;
+  rawMax?: string;
+  children?: IDeviceInfo[];
   mainboard?: IDeviceMainboard[];
   cpu?: IDeviceCPU[];
   ram?: IDeviceRAM[];
@@ -40,6 +60,7 @@ export interface IDeviceComputer {
   hdd?: IDeviceHDD[];
   nic?: IDeviceNIC[];
   battery?: IDeviceBattery[];
+  [key: string]: unknown;
 }
 
 export interface IDeviceCPU {
@@ -49,11 +70,19 @@ export interface IDeviceCPU {
   value: string;
   max: string;
   imageURL: string;
-  type: null;
+  type: IAPISensorType | IAPIHardwareType | null;
+  hardwareId?: string;
+  sensorId?: string;
+  rawMin?: string;
+  rawValue?: string;
+  rawMax?: string;
+  children?: IDeviceInfo[];
   clock?: IDeviceSensorData[];
   temperature?: IDeviceSensorData[];
   load?: IDeviceSensorData[];
   power?: IDeviceSensorData[];
+  voltage?: IDeviceSensorData[];
+  [key: string]: unknown;
 }
 
 export interface IDeviceSensorData {
@@ -63,7 +92,14 @@ export interface IDeviceSensorData {
   value: string;
   max: string;
   imageURL: string;
-  type: null;
+  type: IAPISensorType | IAPIHardwareType | null;
+  hardwareId?: string;
+  sensorId?: string;
+  rawMin?: string;
+  rawValue?: string;
+  rawMax?: string;
+  children?: IDeviceInfo[];
+  [key: string]: unknown;
 }
 
 export interface IDeviceGpuati {
